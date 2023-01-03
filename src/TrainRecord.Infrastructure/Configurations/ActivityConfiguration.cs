@@ -16,9 +16,6 @@ public class ActivityConfiguration : IEntityTypeConfiguration<Activity>
         builder.Property(a => a.Id).ValueGeneratedNever();
 
         builder.Property(a => a.CreatedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.CreatedAt).HasDefaultValueSql("getdate()");
-
         builder.Property(a => a.LastModifiedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.LastModifiedAt).HasDefaultValueSql("getdate()");
     }
 }

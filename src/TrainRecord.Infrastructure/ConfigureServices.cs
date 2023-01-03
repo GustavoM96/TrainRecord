@@ -5,9 +5,9 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure;
 
-public static class ConfigurationExtention
+public static class ConfigureServices
 {
-    public static IServiceCollection AddInfrastuctureConfiguration(
+    public static IServiceCollection AddInfrastuctureServices(
         this IServiceCollection services,
         IConfiguration configuration
     )
