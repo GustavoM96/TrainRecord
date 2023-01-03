@@ -21,8 +21,8 @@ public class RegisterUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
     public string LastName { get; init; }
 }
 
-
-public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>
+public class RegisterUserCommandHandler
+    : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>
 {
     private readonly DbSet<User> _userDbSet;
     public AppDbContext _context { get; }
@@ -33,7 +33,10 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, E
         _userDbSet = context.Set<User>();
     }
 
-    public async Task<ErrorOr<RegisterUserResponse>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<RegisterUserResponse>> Handle(
+        RegisterUserCommand request,
+        CancellationToken cancellationToken
+    )
     {
         var user = request.Adapt<User>();
 
@@ -49,4 +52,3 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, E
         return user.Adapt<RegisterUserResponse>();
     }
 }
-

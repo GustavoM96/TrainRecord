@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +8,7 @@ namespace TrainRecord.Application.Errors
 {
     public static class UserError
     {
-        public static Error EmailExists => Error.Conflict(
-            "User.EmailExists", "já esxiste um email cadastrado");
+        public static Error EmailExists =>
+            Error.Conflict("User.EmailExists", "já esxiste um email cadastrado");
     }
 }

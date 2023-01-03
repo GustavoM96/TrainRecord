@@ -19,7 +19,8 @@ namespace Infrastructure.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
                 oldNullable: true,
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -28,7 +29,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "LastModifiedAt",
@@ -38,7 +40,8 @@ namespace Infrastructure.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
                 oldNullable: true,
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -47,7 +50,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "LastModifiedAt",
@@ -57,7 +61,8 @@ namespace Infrastructure.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
                 oldNullable: true,
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -66,7 +71,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldDefaultValueSql: "getdate()");
+                oldDefaultValueSql: "getdate()"
+            );
         }
 
         /// <inheritdoc />
@@ -80,7 +86,8 @@ namespace Infrastructure.Migrations
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -89,7 +96,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
-                oldType: "DATETIME");
+                oldType: "DATETIME"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "LastModifiedAt",
@@ -99,7 +107,8 @@ namespace Infrastructure.Migrations
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -108,7 +117,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
-                oldType: "DATETIME");
+                oldType: "DATETIME"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "LastModifiedAt",
@@ -118,7 +128,8 @@ namespace Infrastructure.Migrations
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
                 oldType: "DATETIME",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedAt",
@@ -127,7 +138,8 @@ namespace Infrastructure.Migrations
                 nullable: false,
                 defaultValueSql: "getdate()",
                 oldClrType: typeof(DateTime),
-                oldType: "DATETIME");
+                oldType: "DATETIME"
+            );
         }
     }
 }

@@ -18,6 +18,5 @@ namespace TrainRecord.Application
 
             return services;
         }
-
     }
 }
