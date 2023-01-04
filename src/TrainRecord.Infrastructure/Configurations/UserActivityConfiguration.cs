@@ -18,9 +18,6 @@ public class UserActivityConfiguration : IEntityTypeConfiguration<UserActivity>
         builder.HasOne<Activity>().WithMany().HasForeignKey(ua => ua.ActivityId);
 
         builder.Property(a => a.CreatedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.CreatedAt).HasDefaultValueSql("getdate()");
-
         builder.Property(a => a.LastModifiedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.LastModifiedAt).HasDefaultValueSql("getdate()");
     }
 }

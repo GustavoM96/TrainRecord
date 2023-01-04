@@ -15,9 +15,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasKey(u => u.Id);
 
         builder.Property(a => a.CreatedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.CreatedAt).HasDefaultValueSql("getdate()");
-
         builder.Property(a => a.LastModifiedAt).HasColumnType("DATETIME");
-        builder.Property(a => a.LastModifiedAt).HasDefaultValueSql("getdate()");
     }
 }

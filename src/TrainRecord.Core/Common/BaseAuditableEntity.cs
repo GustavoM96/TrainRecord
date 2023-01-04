@@ -2,13 +2,13 @@ namespace TrainRecord.Core.Commum;
 
 public class BaseAuditableEntity
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; init; } = Guid.NewGuid();
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; }
 
-    public string? CreatedBy { get; set; }
+    public string? CreatedBy { get; init; }
 
-    public DateTime? LastModifiedAt { get; set; }
+    public DateTime? LastModifiedAt { get; init; }
 
-    public string? LastModifiedBy { get; set; }
+    public string? LastModifiedBy { get; init; }
 }
