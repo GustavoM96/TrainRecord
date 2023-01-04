@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Interfaces;
 using ErrorOr;
 using Mapster;
 using MediatR;
@@ -25,11 +26,14 @@ public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>
 {
     private readonly DbSet<User> _userDbSet;
+    private readonly IGenaratorHash _genaratorHash;
+
     public AppDbContext _context { get; }
 
-    public RegisterUserCommandHandler(AppDbContext context)
+    public RegisterUserCommandHandler(AppDbContext context, IGenaratorHash genaratorHash)
     {
         _context = context;
+        _genaratorHash = genaratorHash;
         _userDbSet = context.Set<User>();
     }
 
@@ -38,17 +42,26 @@ public class RegisterUserCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var user = request.Adapt<User>();
+        var userRequest = request.Adapt<User>();
 
-        var userFound = await _userDbSet.AnyAsync(u => u.Email == request.Email);
+        var userFound = await _userDbSet.AnyAsync(u => u.Email == userRequest.Email);
         if (userFound)
         {
             return UserError.EmailExists;
         }
 
-        await _userDbSet.AddAsync(user);
+        var passwordHash = _genaratorHash.Generate(userRequest, userRequest.Password);
+        var newUser = new User()
+        {
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Password = passwordHash
+        };
+
+        await _userDbSet.AddAsync(newUser);
         await _context.SaveChangesAsync();
 
-        return user.Adapt<RegisterUserResponse>();
+        return newUser.Adapt<RegisterUserResponse>();
     }
 }

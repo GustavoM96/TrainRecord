@@ -18,7 +18,6 @@ public static class ConfigureServices
             options.UseSqlite(conn);
         });
 
-
         return services;
     }
 };

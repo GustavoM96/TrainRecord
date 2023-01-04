@@ -4,18 +4,18 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
 ## Comum
 
-- template projeto (Api, Infra,Core, Application)
-- Db e conn
-- huskies
+- ✔️ template projeto (Api, Infra,Core, Application)
+- ✔️ Db e conn
+- ✔️ huskies
 
 ## Criar conta
 
-- entidade user
-- controller/rota
-- mediator (comando, handler)
-- validação
-- response
-- salvar senha criptografada
+- ✔️ entidade user
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação
+- ✔️ response
+- ✔️ salvar senha criptografada
 
 ## Login conta
 
@@ -23,7 +23,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - controller/rota
 - mediator (comando, handler)
 - validação
-- comparar senha criptografada, com request
+- ❌ comparar senha criptografada, com request
 - gerar token de aunteicação
 - response
 
