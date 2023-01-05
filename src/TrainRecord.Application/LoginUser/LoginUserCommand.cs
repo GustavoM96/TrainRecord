@@ -39,7 +39,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         CancellationToken cancellationToken
     )
     {
-        var userFound = await _userDbSet.FindAsync(request.Email);
+        var userFound = await _userDbSet.SingleOrDefaultAsync(u => u.Email == request.Email);
         if (userFound is null)
         {
             return UserError.LoginInvalid;

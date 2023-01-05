@@ -43,3 +43,5 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 ## Listar todas as atividades do aluno
 
 ## Adicionar uma nova atividade
+
+# Pendências

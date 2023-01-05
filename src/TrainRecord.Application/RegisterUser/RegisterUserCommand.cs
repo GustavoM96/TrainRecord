@@ -42,16 +42,16 @@ public class RegisterUserCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var userRequest = request.Adapt<User>();
+        var user = request.Adapt<User>();
 
-        var userFound = await _userDbSet.AnyAsync(u => u.Email == userRequest.Email);
+        var userFound = await _userDbSet.AnyAsync(u => u.Email == user.Email);
         if (userFound)
         {
             return UserError.EmailExists;
         }
 
-        var passwordHash = _genaratorHash.Generate(userRequest);
-        var newUser = (userRequest, passwordHash).Adapt<User>();
+        var passwordHash = _genaratorHash.Generate(user);
+        var newUser = (user, passwordHash).Adapt<User>();
 
         await _userDbSet.AddAsync(newUser);
         await _context.SaveChangesAsync();
