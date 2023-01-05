@@ -22,13 +22,13 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
 ## Login conta
 
-- entidade user
-- controller/rota
-- mediator (comando, handler)
-- validação
-- ❌ comparar senha criptografada, com request
-- gerar token de aunteicação
-- response
+- ✔️ entidade user
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação
+- ✔️ comparar senha criptografada, com request
+- ❌ gerar token de aunteicação
+- ❌ response
 
 ## Criar atividade
 

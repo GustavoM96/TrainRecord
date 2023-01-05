@@ -12,7 +12,7 @@ using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.RegisterUser;
+namespace TrainRecord.Application.LoginUser;
 
 public class LoginUserCommand : IRequest<ErrorOr<string>>
 {
