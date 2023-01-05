@@ -48,4 +48,10 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
 ## Listar todas as atividades do aluno
 
+- ✔️ entidade activity
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação campos
+- ✔️ response
+
 # Pendências
