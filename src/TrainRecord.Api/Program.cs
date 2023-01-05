@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using TrainRecord.Api;
 using TrainRecord.Application;
+using TrainRecord.Core;
 using TrainRecord.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,7 @@ services.AddSwaggerGen();
 services.AddInfrastuctureServices(config);
 services.AddApplicationServices();
 services.AddApiServices();
+services.AddCoreServices();
 
 var app = builder.Build();
 

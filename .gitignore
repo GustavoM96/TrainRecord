@@ -182,7 +182,8 @@ ClientBin/
 *.pfx
 *.publishsettings
 orleans.codegen.cs
-*.db
+*.db-shm
+*.db-wal
 /node_modules
 
 # RIA/Silverlight projects

@@ -19,4 +19,15 @@ public class AuthController : ApiControllerBase
             errors => BadRequest(errors)
         );
     }
+
+    [HttpPost("[action]")]
+    public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
+    {
+        var registerResult = await Mediator.Send(loginUserCommand);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
+            errors => BadRequest(errors)
+        );
+    }
 }
