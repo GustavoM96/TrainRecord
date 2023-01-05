@@ -42,7 +42,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         var userFound = await _userDbSet.FindAsync(request.Email);
         if (userFound is null)
         {
-            return UserError.NotFound;
+            return UserError.LoginInvalid;
         }
 
         var verificationResult = _genaratorHash.VerifyHashedPassword(
@@ -53,7 +53,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 
         if (verificationResult.Equals(PasswordVerificationResult.Failed))
         {
-            return UserError.NotFound;
+            return UserError.LoginInvalid;
         }
 
         if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))

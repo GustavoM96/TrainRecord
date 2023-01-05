@@ -21,9 +21,9 @@ public class AuthController : ApiControllerBase
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Login(RegisterUserCommand userRegisterCommand)
+    public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
     {
-        var registerResult = await Mediator.Send(userRegisterCommand);
+        var registerResult = await Mediator.Send(loginUserCommand);
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
