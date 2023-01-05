@@ -11,10 +11,10 @@ using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.CreateActivity;
+namespace TrainRecord.Application.CreateUserActivity;
 
-public class CreateActivityResponse
+public class CreateUserActivityRequest
 {
-    public Guid Id { get; init; }
-    public string Name { get; init; }
+    public int Weight { get; init; }
+    public int Repetition { get; init; }
 }

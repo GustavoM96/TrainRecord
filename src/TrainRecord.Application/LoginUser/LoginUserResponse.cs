@@ -15,8 +15,5 @@ namespace TrainRecord.Application.LoginUser;
 
 public class LoginUserResponse
 {
-    public Guid Id { get; init; }
-    public string Email { get; init; }
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
+    public string IdToken { get; init; }
 }

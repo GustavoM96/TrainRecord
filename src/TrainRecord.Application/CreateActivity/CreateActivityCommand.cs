@@ -15,13 +15,13 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.CreateActivity;
 
-public class CreateActivityCommand : IRequest<ErrorOr<CreateActivityResponse>>
+public class CreateActivityCommand : IRequest<ErrorOr<Activity>>
 {
     public string Name { get; init; }
 }
 
 public class CreateActivityCommandHandler
-    : IRequestHandler<CreateActivityCommand, ErrorOr<CreateActivityResponse>>
+    : IRequestHandler<CreateActivityCommand, ErrorOr<Activity>>
 {
     private readonly DbSet<Activity> _activityDbSet;
     public AppDbContext _context { get; }
@@ -32,12 +32,12 @@ public class CreateActivityCommandHandler
         _activityDbSet = context.Set<Activity>();
     }
 
-    public async Task<ErrorOr<CreateActivityResponse>> Handle(
+    public async Task<ErrorOr<Activity>> Handle(
         CreateActivityCommand request,
         CancellationToken cancellationToken
     )
     {
-        var newActivity = new Activity() { Name = request.Name };
+        var newActivity = request.Adapt<Activity>();
 
         var userFound = await _activityDbSet.AnyAsync(a => a.Name == request.Name);
         if (userFound)
@@ -48,6 +48,6 @@ public class CreateActivityCommandHandler
         await _activityDbSet.AddAsync(newActivity);
         await _context.SaveChangesAsync();
 
-        return newActivity.Adapt<CreateActivityResponse>();
+        return newActivity;
     }
 }
