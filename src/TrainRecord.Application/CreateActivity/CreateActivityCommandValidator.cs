@@ -11,16 +11,15 @@ using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.LoginUser;
+namespace TrainRecord.Application.CreateActivity;
 
-public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
+public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
 {
     private readonly string _passwordPattern =
         @"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,100})";
 
-    public LoginUserCommandValidator()
+    public CreateActivityCommandValidator()
     {
-        RuleFor(u => u.Email).EmailAddress().NotEmpty();
-        RuleFor(u => u.Password).Matches(_passwordPattern).NotEmpty();
+        RuleFor(a => a.Name).NotEmpty();
     }
 }
