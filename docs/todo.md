@@ -32,16 +32,20 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
 ## Criar atividade
 
-- entidade activity
-- controller/rota
-- mediator (comando, handler)
-- validação
-- response
+- ✔️ entidade activity
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação
+- ✔️ response
 
 ## Adicionar registro de alteração de atividade
 
-## Listar todas as atividades do aluno
+- ✔️ entidade activity
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação
+- ✔️ response
 
-## Adicionar uma nova atividade
+## Listar todas as atividades do aluno
 
 # Pendências
