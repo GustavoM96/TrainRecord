@@ -7,16 +7,14 @@ using FluentValidation;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TrainRecord.Application.GetUserActivity;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.CreateActivity;
+namespace TrainRecord.Application.GetUserActivity;
 
-public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
+public class GetUserActivityQueryValidator : AbstractValidator<GetUserActivityQuery>
 {
-    public CreateActivityCommandValidator()
-    {
-        RuleFor(a => a.Name).NotEmpty();
-    }
+    public GetUserActivityQueryValidator() { }
 }

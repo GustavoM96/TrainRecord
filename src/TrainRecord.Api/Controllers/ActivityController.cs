@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.GetUserActivity;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
 
@@ -16,7 +17,7 @@ namespace TrainRecord.Controllers;
 public class ActivityController : ApiControllerBase
 {
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     public async Task<IActionResult> Create(CreateActivityCommand createActivityCommand)
     {
         var registerResult = await Mediator.Send(createActivityCommand);
@@ -28,7 +29,7 @@ public class ActivityController : ApiControllerBase
     }
 
     [HttpPost("{id}/[action]")]
-    // [Authorize]
+    [Authorize]
     public async Task<IActionResult> Record(
         [FromRoute] Guid id,
         [FromBody] CreateUserActivityRequest createUserActivityResquest
@@ -45,6 +46,21 @@ public class ActivityController : ApiControllerBase
         };
 
         var registerResult = await Mediator.Send(command);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
+            errors => BadRequest(errors)
+        );
+    }
+
+    [HttpGet("[action]")]
+    [Authorize]
+    public async Task<IActionResult> GetActivitiesByUser()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.Sid);
+        var query = new GetUserActivityQuery() { UserId = new Guid(userId) };
+
+        var registerResult = await Mediator.Send(query);
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
