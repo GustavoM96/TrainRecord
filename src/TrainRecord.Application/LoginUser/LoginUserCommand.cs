@@ -14,27 +14,33 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.LoginUser;
 
-public class LoginUserCommand : IRequest<ErrorOr<string>>
+public class LoginUserCommand : IRequest<ErrorOr<LoginUserResponse>>
 {
     public string Email { get; init; }
     public string Password { get; init; }
 }
 
-public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<string>>
+public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
     private readonly DbSet<User> _userDbSet;
     private readonly IGenaratorHash _genaratorHash;
+    private readonly IGenaratorToken _genaratorToken;
 
     public AppDbContext _context { get; }
 
-    public LoginUserCommandHandler(AppDbContext context, IGenaratorHash genaratorHash)
+    public LoginUserCommandHandler(
+        AppDbContext context,
+        IGenaratorHash genaratorHash,
+        IGenaratorToken genaratorToken
+    )
     {
         _context = context;
         _genaratorHash = genaratorHash;
         _userDbSet = context.Set<User>();
+        _genaratorToken = genaratorToken;
     }
 
-    public async Task<ErrorOr<string>> Handle(
+    public async Task<ErrorOr<LoginUserResponse>> Handle(
         LoginUserCommand request,
         CancellationToken cancellationToken
     )
@@ -61,7 +67,8 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
             UpdateHashedPassword(userFound);
         }
 
-        return "id";
+        var token = _genaratorToken.Generate(userFound);
+        return new LoginUserResponse() { IdToken = token };
     }
 
     private User UpdateHashedPassword(User user)

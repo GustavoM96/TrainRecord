@@ -11,12 +11,13 @@ using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.CreateActivity;
+namespace TrainRecord.Application.CreateUserActivity;
 
-public class CreateActivityCommandValidator : AbstractValidator<CreateActivityCommand>
+public class CreateUserActivityCommandValidator : AbstractValidator<CreateUserActivityCommand>
 {
-    public CreateActivityCommandValidator()
+    public CreateUserActivityCommandValidator()
     {
-        RuleFor(a => a.Name).NotEmpty();
+        RuleFor(ua => ua.Repetition).GreaterThan(0);
+        RuleFor(ua => ua.Weight).GreaterThanOrEqualTo(0);
     }
 }

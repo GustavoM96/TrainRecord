@@ -174,21 +174,12 @@ sem corpo de requisição
 
 ```json
 {
-  "userId": "00000000-0000-0000-0000-000000000000",
-  "userActivities": [
+  [
     {
-      "activityDiscription": {
-        "id": "00000000-0000-0000-0000-000000000000",
-        "name": "flexão de braço",
-        "muscles": ["trícipes", "peitoral"]
-      },
-      "Records": [
-        {
-          "weight": 20,
-          "repetition": 4,
-          "createdAt": "2022-03-04 00:00:00"
-        }
-      ]
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 20,
+      "repetition": 4
     }
   ]
 }

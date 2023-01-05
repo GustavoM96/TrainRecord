@@ -15,6 +15,8 @@ public class ActivityConfiguration : IEntityTypeConfiguration<Activity>
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id).ValueGeneratedNever();
 
+        builder.HasIndex(u => u.Name).IsUnique();
+
         builder.Property(a => a.CreatedAt).HasColumnType("DATETIME");
         builder.Property(a => a.LastModifiedAt).HasColumnType("DATETIME");
     }
