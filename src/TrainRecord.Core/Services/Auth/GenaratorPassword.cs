@@ -2,18 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Services.Auth
 {
     public class GenaratorHash : IGenaratorHash
     {
-        public string Generate(User user, string password)
+        public string Generate(User user)
         {
             var hasher = new PasswordHasher<User>();
-            return hasher.HashPassword(user, password);
+            return hasher.HashPassword(user, user.Password);
         }
 
         public PasswordVerificationResult VerifyHashedPassword(

@@ -2,13 +2,16 @@
 
 Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
-## Comum
+## ✔️ Comum
 
 - ✔️ template projeto (Api, Infra,Core, Application)
-- ✔️ Db e conn
-- ✔️ huskies
+- ✔️ config Db e conn
+- ✔️ config huskies
+- config autenticação de rota
+- haldler errors api return
+- save Db on success request
 
-## Criar conta
+## ✔️ Criar conta
 
 - ✔️ entidade user
 - ✔️ controller/rota

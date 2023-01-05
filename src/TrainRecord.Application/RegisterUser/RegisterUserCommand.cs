@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Interfaces;
 using ErrorOr;
 using Mapster;
 using MediatR;
@@ -10,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.RegisterUser;
@@ -50,14 +50,8 @@ public class RegisterUserCommandHandler
             return UserError.EmailExists;
         }
 
-        var passwordHash = _genaratorHash.Generate(userRequest, userRequest.Password);
-        var newUser = new User()
-        {
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Password = passwordHash
-        };
+        var passwordHash = _genaratorHash.Generate(userRequest);
+        var newUser = (userRequest, passwordHash).Adapt<User>();
 
         await _userDbSet.AddAsync(newUser);
         await _context.SaveChangesAsync();
