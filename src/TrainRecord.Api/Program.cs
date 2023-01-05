@@ -1,25 +1,12 @@
-using System.Collections.Immutable;
-using TrainRecord.Api;
-using TrainRecord.Application;
-using TrainRecord.Core;
-using TrainRecord.Infrastructure;
-
 var builder = WebApplication.CreateBuilder(args);
-var config = builder.Configuration;
-var services = builder.Services;
 
 // Add services to the container.
 
-services.AddControllers();
+builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-services.AddEndpointsApiExplorer();
-services.AddSwaggerGen();
-
-services.AddInfrastuctureServices(config);
-services.AddApplicationServices();
-services.AddApiServices();
-services.AddCoreServices();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -36,5 +23,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(name: "default", pattern: "{controller}/{action=Index}/{id?}");
 
 app.Run();

@@ -39,7 +39,7 @@ como formatador de C# está sendo utilizado o [csharpier](https://csharpier.com)
 
 ## Criar conta
 
-- Autenticação Anônimo
+- Autenticação - Anônimo
 - Detalhes - registrar usuário dentro da plataforma
 
 ### Request
@@ -53,52 +53,19 @@ Post /api/auth/register
   "email": "josé.silva@gmail.com",
   "password": "sd#fd$904&3jkdf",
   "firstName": "José",
-  "lastName": "Silva"
+  "LastName": "Silva"
 }
 ```
 
 ### Response
 
 ```json
-201
-{
-  "id": "00000000-0000-0000-0000-000000000000",
-  "email": "josé.silva@gmail.com",
-  "firstName": "José",
-  "lastName": "Silva"
-}
-```
-
-## Criar atividade
-
-- Autenticação Admin
-- Detalhes - registrar atividade dentro da plataforma
-
-### Request
-
-```
-Post /api/auth/register
-```
-
-```json
-{
-  "name": "bícipes"
-}
-```
-
-### Response
-
-```json
-201
-{
-  "id": "00000000-0000-0000-0000-000000000000",
-  "name": "bícipes"
-}
+201 Created
 ```
 
 ## Login conta
 
-- Autenticação Anônimo,
+- Autenticação - Anônimo,
 - Detalhes - autenticação do usuário
 
 ### Request
@@ -117,13 +84,16 @@ Post /api/auth/login
 ### Response
 
 ```json
-200
+200 OK
+```
+
+```json
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
 ## Adicionar registro de alteração de atividade
 
-- Autenticação Apenas o dono do recurso,
+- Autenticação - Apenas o dono do recurso,
 - Detalhes - Adicionar registro de alteração de atividade
 
 ```
@@ -142,18 +112,12 @@ Post /api/activity/{id}/record
 ### Response
 
 ```json
-201
-{
-  "userId": "00000000-0000-0000-0000-000000000000",
-  "activityId": "00000000-0000-0000-0000-000000000000",
-  "weight": 20,
-  "repetition": 4
-}
+201 Created
 ```
 
 ## Listar todas as atividades do aluno
 
-- Autenticação Apenas o dono do recurso,
+- Autenticação - Apenas o dono do recurso,
 - Detalhes - Listar todas as atividades do aluno
 
 ```
