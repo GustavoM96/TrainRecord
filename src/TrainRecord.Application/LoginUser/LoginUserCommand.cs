@@ -24,14 +24,20 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 {
     private readonly DbSet<User> _userDbSet;
     private readonly IGenaratorHash _genaratorHash;
+    private readonly IGenaratorToken _genaratorToken;
 
     public AppDbContext _context { get; }
 
-    public LoginUserCommandHandler(AppDbContext context, IGenaratorHash genaratorHash)
+    public LoginUserCommandHandler(
+        AppDbContext context,
+        IGenaratorHash genaratorHash,
+        IGenaratorToken genaratorToken
+    )
     {
         _context = context;
         _genaratorHash = genaratorHash;
         _userDbSet = context.Set<User>();
+        _genaratorToken = genaratorToken;
     }
 
     public async Task<ErrorOr<LoginUserResponse>> Handle(
@@ -61,7 +67,8 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
             UpdateHashedPassword(userFound);
         }
 
-        return new LoginUserResponse() { IdToken = "id" };
+        var token = _genaratorToken.Generate(userFound);
+        return new LoginUserResponse() { IdToken = token };
     }
 
     private User UpdateHashedPassword(User user)

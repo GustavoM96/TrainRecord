@@ -19,7 +19,7 @@ services.AddSwaggerGen();
 services.AddInfrastuctureServices(config);
 services.AddApplicationServices();
 services.AddApiServices();
-services.AddCoreServices();
+services.AddCoreServices(config);
 
 var app = builder.Build();
 
@@ -33,6 +33,7 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -16,7 +16,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ entidade user
 - ✔️ controller/rota
 - ✔️ mediator (comando, handler)
-- ✔️ validação
+- ✔️ validação campos
 - ✔️ response
 - ✔️ salvar senha criptografada
 
@@ -25,17 +25,17 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ entidade user
 - ✔️ controller/rota
 - ✔️ mediator (comando, handler)
-- ✔️ validação
+- ✔️ validação campos
 - ✔️ comparar senha criptografada, com request
-- ❌ gerar token de aunteicação
-- ❌ response
+- ✔️ gerar token de aunteicação
+- ✔️❌ response
 
 ## Criar atividade
 
 - ✔️ entidade activity
 - ✔️ controller/rota
 - ✔️ mediator (comando, handler)
-- ✔️ validação
+- ✔️ validação campos
 - ✔️ response
 
 ## Adicionar registro de alteração de atividade
@@ -43,7 +43,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ entidade activity
 - ✔️ controller/rota
 - ✔️ mediator (comando, handler)
-- ✔️ validação
+- ✔️ validação campos
 - ✔️ response
 
 ## Listar todas as atividades do aluno
