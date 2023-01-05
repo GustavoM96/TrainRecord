@@ -30,7 +30,8 @@ namespace TrainRecord.Core.Services.Auth
                     new Claim[]
                     {
                         new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                        new Claim(ClaimTypes.Email, user.Email)
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.Role.ToString())
                     }
                 ),
                 Expires = DateTime.UtcNow.AddHours(100),
