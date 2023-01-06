@@ -17,7 +17,7 @@ public class AuthController : ApiController
         var registerResult = await Mediator.Send(userRegisterCommand);
 
         return registerResult.Match<IActionResult>(
-            result => CreatedAtAction("Login", result),
+            result => Ok(result),
             errors => ProblemErrors(errors)
         );
     }
