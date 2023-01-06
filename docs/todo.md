@@ -11,9 +11,9 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ config autenticação de rota
 - ✔️ regras de policy autenticação de rota
 - ✔️ handler errors api return
-- save Db on success request
+- ✔️ Behaviours to log performance
 - ✔️ tratar lançamento de erros
-- configurar createdBy createdAt
+- ✔️ configurar createdBy createdAt
 - ✔️ handler erros from fluent validation
 
 ## ✔️ Criar conta
