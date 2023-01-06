@@ -10,10 +10,11 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ config huskies
 - ✔️ config autenticação de rota
 - ✔️ regras de policy autenticação de rota
-- handler errors api return
+- ✔️ handler errors api return
 - save Db on success request
-- tratar lançamento de erros
+- ✔️ tratar lançamento de erros
 - configurar createdBy createdAt
+- ✔️ handler erros from fluent validation
 
 ## ✔️ Criar conta
 

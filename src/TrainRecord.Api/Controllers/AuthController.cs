@@ -2,13 +2,14 @@
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
+using TrainRecord.Api.Common.Base;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
 
 namespace TrainRecord.Controllers;
 
 [ApiController]
-public class AuthController : ApiControllerBase
+public class AuthController : ApiController
 {
     [HttpPost("[action]")]
     public async Task<IActionResult> Register(RegisterUserCommand userRegisterCommand)
@@ -17,7 +18,7 @@ public class AuthController : ApiControllerBase
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
-            errors => BadRequest(errors)
+            errors => ProblemErrors(errors)
         );
     }
 
@@ -28,7 +29,7 @@ public class AuthController : ApiControllerBase
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
-            errors => BadRequest(errors)
+            errors => ProblemErrors(errors)
         );
     }
 }
