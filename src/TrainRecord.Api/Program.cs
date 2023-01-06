@@ -30,12 +30,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseRouting();
-
+app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();
