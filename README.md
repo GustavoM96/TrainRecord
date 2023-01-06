@@ -14,6 +14,7 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 - ErrorOr: para retorno de api com erro ou o response.
 - Jwt: para autenticação do usuário.
 - PasswordHasher: hasher de senha do usuário.
+- Sqlite: apenas como banco de dados de desenvolvimento
 
 ## Prettier
 
