@@ -1,10 +1,11 @@
-# TrainRecord 🏋️‍♀️
+# TrainRecord
 
 TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade de gerenciar atividades de academia para alunos e professores.
 
-# Tecnologias 💻
+# Tecnologias
 
-- AspNet.Core SDK 7.0.100-rc.2.22477.23
+# Rodando a aplicação
+
 
 ## Pacotes
 
@@ -29,48 +30,34 @@ No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do 
 
 # Rodando a aplicação ⚙️
 
-Simplismente em seu terminal.
-
 ```sh
- git clone https://github.com/GustavoM96/TrainRecord.git
- dotnet build
+ git clone https://github.com/
  dotnet run --project src/TrainRecord.Api
 ```
 
-# Arquitetura 🏛️
+# Arquitetura
 
 ## Pastas
 
 ### Docs
 
-- release: contém dados de cada release.
-- todo: contendo os requesitos de desenvolvimento.
+- release - contém dados de cada release
 
 ### Src
 
-<img src="assets/Arch.png" alt="drawing" width="500px"/>
+- Api - Camada de configuração de api, direcionar os dados de request e response para o usuário
 
-- Api - Camada de configuração de api, direcionar os dados de request e response para o usuário.
+- Application - Camada respnsável por criar os comandos e queries que conecta a api com a Infrastructure no padrão CQRS
 
-- Application - Camada responsável por criar os comandos e queries que conecta a api com a Infrastructure no padrão CQRS.
+- Core - Camada de entidades, enums, exceptions e regras de negócio
 
-- Core - Camada de entidades, enums, exceptions e regras de negócio.
+- Infrastructure - Camada que obtem dados externos como api, banco de dados, filas e outros
 
-- Infrastructure - Camada que obtem dados externos como api, banco de dados, filas e outros.
+## Prettier
 
-### Assets
+como formatador de C# está sendo utilizado o [csharpier](https://csharpier.com) e suas configurações estão no arquivo .csharpierrc.json localizado na raiz deste projeto
 
-- contém imagens utilizadas.
-
-# Documentação API 💼
-
-Mapeamento das rotas
-
-<img src="assets/RouteApi.jpg" alt="drawing" width="500px"/>
-
-Entidades de Banco de dados
-
-<img src="assets/TrainRecordDB.png" alt="drawing" width="500px"/>
+# Documentação API
 
 ## Criar conta
 
@@ -92,14 +79,42 @@ Post /api/auth/register
 }
 ```
 
-### Response 201 Created
+### Response
 
 ```json
+201
 {
   "id": "00000000-0000-0000-0000-000000000000",
   "email": "josé.silva@gmail.com",
   "firstName": "José",
   "lastName": "Silva"
+}
+```
+
+## Criar atividade
+
+- Autenticação Admin
+- Detalhes - registrar atividade dentro da plataforma
+
+### Request
+
+```
+Post /api/auth/register
+```
+
+```json
+{
+  "name": "bícipes"
+}
+```
+
+### Response
+
+```json
+201
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "name": "bícipes"
 }
 ```
 
@@ -116,14 +131,15 @@ Post /api/auth/login
 
 ```json
 {
-  "email": "josé.silva@gmail.com",
-  "password": "sd#fd$904&3jkdf"
+  "email": "string",
+  "password": "string"
 }
 ```
 
-### Response 200 Ok
+### Response
 
 ```json
+200
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
@@ -145,9 +161,10 @@ Post /api/activity/{id}/record
 }
 ```
 
-### Response 201 Created
+### Response
 
 ```json
+201
 {
   "userId": "00000000-0000-0000-0000-000000000000",
   "activityId": "00000000-0000-0000-0000-000000000000",
@@ -171,7 +188,11 @@ Post /api/activity
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+### Response
+
+```json
+200 OK
+```
 
 ```json
 {
@@ -199,28 +220,23 @@ Post /api/activity
 
 ```json
 {
-  "name": "flexão de braço"
+  "name": "flexão de braço",
+  "muscles": ["trícipes", "peitoral"]
 }
 ```
 
-### Response 201 Created
+### Response
 
 ```json
-{
-  "id": "00000000-0000-0000-0000-000000000000",
-  "name": "flexão de braço"
-}
+201 Created
 ```
 
-# Release 📦
+# Release
 
-- 0.1.0
-  - Public release
+# Autores
 
-# Autores 🧑‍🤝‍🧑
+- Gustavo Henrique Messias [GitHub](https://github.com/GustavoM96)
 
-- Gustavo Henrique Messias [GitHub](https://github.com/GustavoM96) | [Porttfolio](https://gustavo-messias.vercel.app)
-
-# License 🪪
+# License
 
 This project is licensed under the terms of the [MIT]() license.

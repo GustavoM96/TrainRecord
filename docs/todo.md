@@ -25,7 +25,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ response
 - ✔️ salvar senha criptografada
 
-## ✔️ Login conta
+## Login conta
 
 - ✔️ entidade user
 - ✔️ controller/rota
@@ -35,7 +35,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ gerar token de aunteicação
 - ✔️ response
 
-## ✔️ Criar atividade
+## Criar atividade
 
 - ✔️ entidade activity
 - ✔️ controller/rota
@@ -43,7 +43,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ validação campos
 - ✔️ response
 
-## ✔️ Adicionar registro de alteração de atividade
+## Adicionar registro de alteração de atividade
 
 - ✔️ entidade activity
 - ✔️ controller/rota
@@ -51,7 +51,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ validação campos
 - ✔️ response
 
-## ✔️ Listar todas as atividades do aluno
+## Listar todas as atividades do aluno
 
 - ✔️ entidade activity
 - ✔️ controller/rota

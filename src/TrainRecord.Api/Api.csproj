@@ -30,6 +30,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\TrainRecord.Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\TrainRecord.Application\Application.csproj" />
   </ItemGroup>
 
