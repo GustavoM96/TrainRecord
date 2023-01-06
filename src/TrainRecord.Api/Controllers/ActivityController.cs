@@ -4,6 +4,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TrainRecord.Api.Common.Base;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
@@ -15,7 +16,7 @@ using TrainRecord.Core.Enum;
 namespace TrainRecord.Controllers;
 
 [ApiController]
-public class ActivityController : ApiControllerBase
+public class ActivityController : ApiController
 {
     [HttpPost]
     [Authorize(Roles = "Adm")]
@@ -25,11 +26,12 @@ public class ActivityController : ApiControllerBase
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
-            errors => BadRequest(errors)
+            errors => ProblemErrors(errors)
         );
     }
 
     [HttpPost("{id}/[action]")]
+    [Authorize]
     public async Task<IActionResult> Record(
         [FromRoute] Guid id,
         [FromBody] CreateUserActivityRequest createUserActivityResquest
@@ -49,7 +51,7 @@ public class ActivityController : ApiControllerBase
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
-            errors => BadRequest(errors)
+            errors => ProblemErrors(errors)
         );
     }
 
@@ -64,7 +66,7 @@ public class ActivityController : ApiControllerBase
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
-            errors => BadRequest(errors)
+            errors => ProblemErrors(errors)
         );
     }
 }
