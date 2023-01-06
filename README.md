@@ -6,7 +6,29 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 
 # Rodando a aplicação
 
-Simplismente em seu terminal
+
+## Pacotes
+
+- Mediatr: para gerenciar comandos e queries no padrão CQRS.
+- FluentValidation: para validação dos campos de request.
+- Mapster: para mapeamento dos objetos com Adapt<>().
+- ErrorOr: para retorno de api com erro ou o response.
+- Jwt: para autenticação do usuário.
+- PasswordHasher: hasher de senha do usuário.
+- Sqlite: apenas como banco de dados de desenvolvimento
+
+## Prettier
+
+Como formatador de C# está sendo utilizado o [csharpier](https://csharpier.com) e suas configurações estão no arquivo .csharpierrc.json localizado na raiz deste projeto.
+
+## Husky
+
+As mensagens de commits deste repo seguem o seguinte regex
+`^(feat|fix|ci|chore|docs|test|style|refactor|perf|build|revert)(\(.+?\))?: .{1,}$`.
+
+No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do commit.
+
+# Rodando a aplicação ⚙️
 
 ```sh
  git clone https://github.com/
