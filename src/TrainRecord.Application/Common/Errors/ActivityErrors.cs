@@ -11,6 +11,6 @@ namespace TrainRecord.Application.Errors
         public static Error NameExists =>
             Error.Conflict("Activity.NameExists", "nome de atividade já cadastrado");
         public static Error NotFound =>
-            Error.Conflict("Activity.NameExists", "atividade não encontrada");
+            Error.NotFound("Activity.NameExists", "atividade não encontrada");
     }
 }
