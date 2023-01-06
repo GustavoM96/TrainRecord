@@ -223,4 +223,4 @@ Post /api/activity
 
 # License 🪪
 
-This project is licensed under the terms of the [MIT]() license.
+This project is licensed under the terms of the [MIT](https://github.com/GustavoM96/TrainRecord/blob/main/LICENSE) license.
