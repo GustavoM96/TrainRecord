@@ -25,7 +25,7 @@ public class ActivityController : ApiController
         var registerResult = await Mediator.Send(createActivityCommand);
 
         return registerResult.Match<IActionResult>(
-            result => Ok(result),
+            result => CreatedAtAction("GetActivitiesByUser", result),
             errors => ProblemErrors(errors)
         );
     }
@@ -50,7 +50,7 @@ public class ActivityController : ApiController
         var registerResult = await Mediator.Send(command);
 
         return registerResult.Match<IActionResult>(
-            result => Ok(result),
+            result => CreatedAtAction("GetActivitiesByUser", result),
             errors => ProblemErrors(errors)
         );
     }
