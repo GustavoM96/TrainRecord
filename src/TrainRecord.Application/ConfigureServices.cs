@@ -8,6 +8,7 @@ using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TrainRecord.Application.Common.Behaviours;
 
 namespace TrainRecord.Application
 {
@@ -16,6 +17,8 @@ namespace TrainRecord.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             var config = TypeAdapterConfig.GlobalSettings;
