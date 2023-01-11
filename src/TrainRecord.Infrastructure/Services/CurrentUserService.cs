@@ -16,4 +16,5 @@ public class CurrentUserService : ICurrentUserService
     public string? UserIdFromRoute =>
         _httpContext?.Request.RouteValues.GetValueOrDefault("userId").ToString();
     public string? UserId => _httpContext?.User?.FindFirstValue(ClaimTypes.Sid);
+    public string? Role => _httpContext?.User?.FindFirstValue(ClaimTypes.Role);
 }

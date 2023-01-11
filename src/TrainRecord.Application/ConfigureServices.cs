@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Mapster;
 using MapsterMapper;
 using MediatR;
@@ -26,6 +27,7 @@ namespace TrainRecord.Application
 
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
+            services.AddFluentValidation();
 
             return services;
         }

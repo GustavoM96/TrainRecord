@@ -69,4 +69,11 @@ public class ActivityController : ApiController
             errors => ProblemErrors(errors)
         );
     }
+
+    [HttpGet("[action]/{userId}")]
+    // [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> Teste(int userId)
+    {
+        return Ok(userId);
+    }
 }

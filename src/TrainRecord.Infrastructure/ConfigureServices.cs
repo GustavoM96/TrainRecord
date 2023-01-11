@@ -17,6 +17,7 @@ public static class ConfigureServices
     {
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
+        services.AddHttpContextAccessor();
 
         var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;
         services.AddDbContext<AppDbContext>(options =>
