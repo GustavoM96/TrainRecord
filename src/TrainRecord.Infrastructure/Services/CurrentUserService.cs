@@ -6,12 +6,14 @@ namespace TrainRecord.Infrastructure.Services;
 
 public class CurrentUserService : ICurrentUserService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly HttpContext _httpContext;
 
     public CurrentUserService(IHttpContextAccessor httpContextAccessor)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _httpContext = httpContextAccessor.HttpContext;
     }
 
-    public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Sid);
+    public string? UserIdFromRoute =>
+        _httpContext?.Request.RouteValues.GetValueOrDefault("userId").ToString();
+    public string? UserId => _httpContext?.User?.FindFirstValue(ClaimTypes.Sid);
 }
