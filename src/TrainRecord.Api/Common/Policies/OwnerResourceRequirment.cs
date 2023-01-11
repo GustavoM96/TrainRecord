@@ -24,15 +24,15 @@ namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
             OwnerResourceRequirment requirement
         )
         {
-            var userId = _currentUserService.UserId;
-            var userIdFromRoute = _currentUserService.UserIdFromRoute;
+            var isAdmin = _currentUserService.IsAdmin;
+            var isOwnerResource = _currentUserService.IsOwnerResource;
 
-            if (userId is null || userIdFromRoute is null)
+            if (isAdmin)
             {
-                return Task.CompletedTask;
+                context.Succeed(requirement);
             }
 
-            if (userId == userIdFromRoute)
+            if (isOwnerResource)
             {
                 context.Succeed(requirement);
             }

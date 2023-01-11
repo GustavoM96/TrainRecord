@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using TrainRecord.Api.Common.Policies.OwnerResourceRequirment;
 
 namespace TrainRecord.Api
 {
@@ -10,7 +13,16 @@ namespace TrainRecord.Api
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
-            services.AddFluentValidation();
+            services.AddSingleton<IAuthorizationHandler, OwnerResourceHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "OwnerResource",
+                    policyBuilder => policyBuilder.AddRequirements(new OwnerResourceRequirment())
+                );
+            });
+
             return services;
         }
     }
