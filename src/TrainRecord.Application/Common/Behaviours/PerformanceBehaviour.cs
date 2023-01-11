@@ -25,14 +25,14 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         CancellationToken cancellationToken
     )
     {
-        var requestName = typeof(TRequest).Name;
-        var userId = string.Empty;
-
         _timer.Start();
         var response = await next();
         _timer.Stop();
 
         var elapsedMilliseconds = _timer.ElapsedMilliseconds;
+
+        var requestName = typeof(TRequest).Name;
+        var userId = _currentUserService.UserId ?? string.Empty;
 
         _logger.LogWarning(
             "CleanArchitecture Long Running: {Name} Time: ({ElapsedMilliseconds} milliseconds) UserID: {@UserId} {@Request}",
