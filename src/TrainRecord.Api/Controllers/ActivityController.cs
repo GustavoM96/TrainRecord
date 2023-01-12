@@ -29,44 +29,4 @@ public class ActivityController : ApiController
             errors => ProblemErrors(errors)
         );
     }
-
-    [HttpPost("{id}/[action]")]
-    [Authorize]
-    public async Task<IActionResult> Record(
-        [FromRoute] Guid id,
-        [FromBody] CreateUserActivityRequest createUserActivityResquest
-    )
-    {
-        var userId = User.FindFirstValue(ClaimTypes.Sid);
-
-        var command = new CreateUserActivityCommand()
-        {
-            Weight = createUserActivityResquest.Weight,
-            Repetition = createUserActivityResquest.Repetition,
-            ActivityId = id,
-            UserId = new Guid(userId)
-        };
-
-        var registerResult = await Mediator.Send(command);
-
-        return registerResult.Match<IActionResult>(
-            result => CreatedAtAction("GetActivitiesByUser", result),
-            errors => ProblemErrors(errors)
-        );
-    }
-
-    [HttpGet("[action]")]
-    [Authorize]
-    public async Task<IActionResult> GetActivitiesByUser()
-    {
-        var userId = User.FindFirstValue(ClaimTypes.Sid);
-        var query = new GetUserActivityQuery() { UserId = new Guid(userId) };
-
-        var registerResult = await Mediator.Send(query);
-
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
-    }
 }
