@@ -12,6 +12,7 @@ using TrainRecord.Application.GetAllActivity;
 using TrainRecord.Application.GetUserActivity;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
+using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Controllers;
@@ -33,8 +34,9 @@ public class ActivityController : ApiController
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllActivityQuery getAllActivityQuery)
+    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
+        var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
         var registerResult = await Mediator.Send(getAllActivityQuery);
 
         return registerResult.Match<IActionResult>(

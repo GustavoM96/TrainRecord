@@ -17,7 +17,10 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.GetAllActivity;
 
-public class GetAllActivityQuery : Pagination, IRequest<ErrorOr<Page<Activity>>> { }
+public class GetAllActivityQuery : IRequest<ErrorOr<Page<Activity>>>
+{
+    public Pagination Pagination { get; init; }
+}
 
 public class GetAllActivityQueryHandler
     : IRequestHandler<GetAllActivityQuery, ErrorOr<Page<Activity>>>
@@ -36,6 +39,6 @@ public class GetAllActivityQueryHandler
         CancellationToken cancellationToken
     )
     {
-        return _activityDbSet.AsQueryable().Pagination(request);
+        return _activityDbSet.AsQueryable().Pagination(request.Pagination);
     }
 }
