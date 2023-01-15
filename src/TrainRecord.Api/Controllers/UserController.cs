@@ -8,9 +8,11 @@ using TrainRecord.Api.Common.Base;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.GetAllUserQuery;
 using TrainRecord.Application.GetUserActivity;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
+using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Controllers;
@@ -47,6 +49,20 @@ public class UserController : ApiController
     public async Task<IActionResult> Activity(Guid userId)
     {
         var query = new GetUserActivityQuery() { UserId = userId };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "Adm")]
+    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
+    {
+        var query = new GetAllUserQuery() { Pagination = pagination };
 
         var registerResult = await Mediator.Send(query);
 
