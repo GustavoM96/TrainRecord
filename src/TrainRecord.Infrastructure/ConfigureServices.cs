@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrainRecord.Infrastructure.Interceptions;
-using TrainRecord.Infrastructure.Interfaces;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Services;
 
@@ -16,7 +15,6 @@ public static class ConfigureServices
     )
     {
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
-        services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
         var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;
         services.AddDbContext<AppDbContext>(options =>

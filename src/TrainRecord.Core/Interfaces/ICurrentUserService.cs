@@ -1,4 +1,4 @@
-namespace TrainRecord.Infrastructure.Interfaces;
+namespace TrainRecord.Core.Interfaces;
 
 public interface ICurrentUserService
 {
