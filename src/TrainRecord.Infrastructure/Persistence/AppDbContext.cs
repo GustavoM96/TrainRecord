@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interceptions;
+using TrainRecord.Infrastructure.Persistence.Interceptions;
 
 namespace TrainRecord.Infrastructure.Persistence;
 

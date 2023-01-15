@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TrainRecord.Infrastructure.Interceptions;
 using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Infrastructure.Persistence.Interceptions;
 using TrainRecord.Infrastructure.Services;
 
 namespace TrainRecord.Infrastructure;

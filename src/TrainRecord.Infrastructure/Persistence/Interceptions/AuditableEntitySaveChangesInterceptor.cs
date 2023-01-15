@@ -9,7 +9,7 @@ using TrainRecord.Core.Commum;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Extentions;
 
-namespace TrainRecord.Infrastructure.Interceptions
+namespace TrainRecord.Infrastructure.Persistence.Interceptions
 {
     public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     {
