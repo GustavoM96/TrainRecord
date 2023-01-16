@@ -212,6 +212,78 @@ Post /api/activity
 }
 ```
 
+## Listar todas as atividade
+
+- Autenticação - usuários autenticados,
+- Detalhes - Listar todas as atividade
+
+```
+Get /api/activity
+```
+
+### Request
+
+```json
+sem corpo de requisição
+```
+
+### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "flexão de braço"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "name": "pular corda"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+## Listar todas os Usuários
+
+- Autenticação - Apenas Adm,
+- Detalhes - Listar todas os Usuários
+
+```
+Get /api/user
+```
+
+### Request
+
+```json
+sem corpo de requisição
+```
+
+### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
 # Release 📦
 
 - 0.1.0
