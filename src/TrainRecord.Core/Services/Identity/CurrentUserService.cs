@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using TrainRecord.Infrastructure.Interfaces;
+using TrainRecord.Core.Interfaces;
 
-namespace TrainRecord.Infrastructure.Services;
+namespace TrainRecord.Infrastructure.Services.Identity;
 
 public class CurrentUserService : ICurrentUserService
 {

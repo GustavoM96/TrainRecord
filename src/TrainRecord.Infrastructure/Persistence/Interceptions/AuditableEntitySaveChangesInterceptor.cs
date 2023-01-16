@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Extentions;
-using TrainRecord.Infrastructure.Interfaces;
 
-namespace TrainRecord.Infrastructure.Interceptions
+namespace TrainRecord.Infrastructure.Persistence.Interceptions
 {
     public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     {

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using TrainRecord.Infrastructure.Interfaces;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Common.Behaviours;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using TrainRecord.Infrastructure.Interfaces;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
 {

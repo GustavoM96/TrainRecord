@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TrainRecord.Core.Entities;
 
-namespace TrainRecord.Infrastructure.Configurations;
+namespace TrainRecord.Infrastructure.Persistence.Configurations;
 
 public class UserActivityConfiguration : IEntityTypeConfiguration<UserActivity>
 {
