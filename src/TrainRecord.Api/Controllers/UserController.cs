@@ -46,9 +46,9 @@ public class UserController : ApiController
 
     [HttpGet("{userId}/[action]")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Activity(Guid userId)
+    public async Task<IActionResult> Activity(Guid userId, [FromQuery] Pagination pagination)
     {
-        var query = new GetUserActivityQuery() { UserId = userId };
+        var query = new GetUserActivityQuery() { UserId = userId, Pagination = pagination };
 
         var registerResult = await Mediator.Send(query);
 
