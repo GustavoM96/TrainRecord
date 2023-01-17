@@ -9,17 +9,17 @@ namespace TrainRecord.Core.Common
 {
     public class Page<T> : Pagination
     {
-        public IEnumerable<T> Itens { get; private set; }
+        public IEnumerable<T> Items { get; private set; }
 
-        public void AddItens(IEnumerable<T> itens)
+        public void AddItems(IEnumerable<T> itens)
         {
-            if (Itens is not null)
+            if (Items is not null)
             {
                 throw new PageException(
                     "Não é possível adicionar itens a essa página, pois essa já possui"
                 );
             }
-            Itens = itens;
+            Items = itens;
         }
     }
 
