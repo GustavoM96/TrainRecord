@@ -2,7 +2,7 @@
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
-using TrainRecord.Api.Common.Base;
+using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
 

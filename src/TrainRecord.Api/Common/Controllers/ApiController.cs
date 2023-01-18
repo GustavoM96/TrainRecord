@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace TrainRecord.Api.Common.Base;
+namespace TrainRecord.Api.Common.Controller;
 
 [Route("api/[controller]")]
 public abstract class ApiController : ControllerBase

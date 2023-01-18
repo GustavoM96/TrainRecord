@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ErrorOr;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TrainRecord.Api.Common.Base;
+using TrainRecord.Api.Common.Controller;
 
 namespace TrainRecord.Controllers
 {
