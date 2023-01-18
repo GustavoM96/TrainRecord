@@ -8,8 +8,8 @@ using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure;
-using TrainRecord.Infrastructure.Interfaces;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Core.Repositories
@@ -31,7 +31,12 @@ namespace TrainRecord.Core.Repositories
             await DbSet.AddAsync(entity);
         }
 
-        public async Task<bool> AnyByExpressionAsync(Expression<Func<TEntity, bool>> expression)
+        public void Update(TEntity entity)
+        {
+            DbSet.Update(entity);
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await DbSet.AnyAsync(expression);
         }
@@ -44,6 +49,11 @@ namespace TrainRecord.Core.Repositories
         public async Task<TEntity> FindByIdAsync(Guid id)
         {
             return await DbSet.FindAsync(id);
+        }
+
+        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
+        {
+            return await DbSet.SingleOrDefaultAsync(expression);
         }
 
         public IQueryable<TEntity> GetAsQueryable()

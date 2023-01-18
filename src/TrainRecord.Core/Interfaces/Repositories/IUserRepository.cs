@@ -1,8 +1,7 @@
 using TrainRecord.Core.Entities;
 
-namespace TrainRecord.Infrastructure.Interfaces;
+namespace TrainRecord.Core.Interfaces.Repositories;
 
 public interface IUserRepository : IRepositoryBase<User>
 {
-    Task<bool> AnyByEmailAsync(string email);
 }

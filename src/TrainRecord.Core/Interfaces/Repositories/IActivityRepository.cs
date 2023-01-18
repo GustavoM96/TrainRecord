@@ -1,5 +1,5 @@
 using TrainRecord.Core.Entities;
 
-namespace TrainRecord.Infrastructure.Interfaces;
+namespace TrainRecord.Core.Interfaces.Repositories;
 
 public interface IActivityRepository : IRepositoryBase<Activity> { }
