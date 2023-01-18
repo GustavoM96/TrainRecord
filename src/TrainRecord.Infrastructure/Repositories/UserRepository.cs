@@ -16,7 +16,7 @@ namespace TrainRecord.Infrastructure.Repositories
 
         public async Task<bool> AnyByEmailAsync(string email)
         {
-            return await _dbSet.AnyAsync(u => u.Email == email);
+            return await DbSet.AnyAsync(u => u.Email == email);
         }
     }
 }

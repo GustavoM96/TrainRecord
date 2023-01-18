@@ -5,7 +5,7 @@ namespace TrainRecord.Infrastructure.Interfaces;
 
 public interface IRepositoryBase<TEntity>
 {
-    Task<TEntity> FindByIdAsync(int id);
+    Task<TEntity> FindByIdAsync(Guid id);
     Task AddAsync(TEntity entity);
     Task<bool> AnyByExpressionAsync(Expression<Func<TEntity, bool>> expression);
     IQueryable<TEntity> GetAsQueryable();

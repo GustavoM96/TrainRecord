@@ -18,38 +18,37 @@ namespace TrainRecord.Core.Repositories
         where TEntity : BaseAuditableEntity
     {
         private readonly AppDbContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
+        protected readonly DbSet<TEntity> DbSet;
 
         public RepositoryBase(AppDbContext context)
         {
-            _dbSet = context.Set<TEntity>();
-            var a = context.Set<User>().AsQueryable().GetPage<User, Activity>(new Pagination());
+            DbSet = context.Set<TEntity>();
             _context = context;
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await _dbSet.AddAsync(entity);
+            await DbSet.AddAsync(entity);
         }
 
         public async Task<bool> AnyByExpressionAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbSet.AnyAsync(expression);
+            return await DbSet.AnyAsync(expression);
         }
 
         public async Task<bool> AnyByIdAsync(Guid id)
         {
-            return await _dbSet.AnyAsync(e => e.Id == id);
+            return await DbSet.AnyAsync(e => e.Id == id);
         }
 
-        public async Task<TEntity> FindByIdAsync(int id)
+        public async Task<TEntity> FindByIdAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await DbSet.FindAsync(id);
         }
 
         public IQueryable<TEntity> GetAsQueryable()
         {
-            return _dbSet.AsQueryable();
+            return DbSet.AsQueryable();
         }
 
         public Page<TEntity> GetPage(Pagination pagination)
