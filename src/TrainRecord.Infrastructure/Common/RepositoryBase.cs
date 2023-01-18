@@ -14,7 +14,7 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Core.Repositories
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
+    public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : BaseAuditableEntity
     {
         private readonly AppDbContext _context;

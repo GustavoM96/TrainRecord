@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
+using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.LoginUser;
@@ -22,22 +23,19 @@ public class LoginUserCommand : IRequest<ErrorOr<LoginUserResponse>>
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
-    private readonly DbSet<User> _userDbSet;
     private readonly IGenaratorHash _genaratorHash;
     private readonly IGenaratorToken _genaratorToken;
-
-    public AppDbContext _context { get; }
+    public readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
-        AppDbContext context,
         IGenaratorHash genaratorHash,
-        IGenaratorToken genaratorToken
+        IGenaratorToken genaratorToken,
+        IUserRepository userRepository
     )
     {
-        _context = context;
         _genaratorHash = genaratorHash;
-        _userDbSet = context.Set<User>();
         _genaratorToken = genaratorToken;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<LoginUserResponse>> Handle(
@@ -45,7 +43,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         CancellationToken cancellationToken
     )
     {
-        var userFound = await _userDbSet.SingleOrDefaultAsync(u => u.Email == request.Email);
+        var userFound = await _userRepository.GetByEmail(request.Email);
         if (userFound is null)
         {
             return UserError.LoginInvalid;
@@ -75,7 +73,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
     {
         var reHashedPassword = _genaratorHash.Generate(user);
         var updatedUser = (user, reHashedPassword).Adapt<User>();
-        _userDbSet.Update(updatedUser);
+        _userRepository.Update(updatedUser);
 
         return updatedUser;
     }

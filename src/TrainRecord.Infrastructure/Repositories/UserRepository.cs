@@ -13,5 +13,10 @@ namespace TrainRecord.Infrastructure.Repositories
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         public UserRepository(AppDbContext context) : base(context) { }
+
+        public async Task<User> GetByEmail(string email)
+        {
+            return await SingleOrDefaultAsync(u => u.Email == email);
+        }
     }
 }
