@@ -4,7 +4,7 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TrainRecord.Api.Common.Base;
+using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
