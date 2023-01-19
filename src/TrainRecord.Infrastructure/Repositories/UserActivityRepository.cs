@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Core.Repositories;
 using TrainRecord.Core.Responses;
+using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Repositories
@@ -19,7 +19,7 @@ namespace TrainRecord.Infrastructure.Repositories
         public IQueryable<Activity> GetActivitiesByUserId(Guid userId)
         {
             return Where(ua => ua.UserId == userId)
-                .Join(_context.Activities, ua => ua.ActivityId, a => a.Id, (_, a) => a)
+                .Join(Context.Activities, ua => ua.ActivityId, a => a.Id, (_, a) => a)
                 .Distinct();
         }
 

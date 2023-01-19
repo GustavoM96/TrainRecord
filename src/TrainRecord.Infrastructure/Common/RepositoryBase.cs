@@ -12,60 +12,60 @@ using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Core.Repositories
+namespace TrainRecord.Infrastructure.Common
 {
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : BaseAuditableEntity
     {
-        protected readonly AppDbContext _context;
-        protected readonly DbSet<TEntity> _dbSet;
+        protected readonly AppDbContext Context;
+        protected readonly DbSet<TEntity> DbSet;
 
         public RepositoryBase(AppDbContext context)
         {
-            _dbSet = context.Set<TEntity>();
-            _context = context;
+            DbSet = context.Set<TEntity>();
+            Context = context;
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await _dbSet.AddAsync(entity);
+            await DbSet.AddAsync(entity);
         }
 
         public void Update(TEntity entity)
         {
-            _dbSet.Update(entity);
+            DbSet.Update(entity);
         }
 
         protected async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbSet.AnyAsync(expression);
+            return await DbSet.AnyAsync(expression);
         }
 
         protected async Task<TEntity> SingleOrDefaultAsync(
             Expression<Func<TEntity, bool>> expression
         )
         {
-            return await _dbSet.SingleOrDefaultAsync(expression);
+            return await DbSet.SingleOrDefaultAsync(expression);
         }
 
         protected IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
         {
-            return _dbSet.Where(expression);
+            return DbSet.Where(expression);
         }
 
         public async Task<bool> AnyByIdAsync(Guid id)
         {
-            return await _dbSet.AnyAsync(e => e.Id == id);
+            return await DbSet.AnyAsync(e => e.Id == id);
         }
 
         public async Task<TEntity> FindByIdAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await DbSet.FindAsync(id);
         }
 
         public IQueryable<TEntity> AsQueryable()
         {
-            return _dbSet.AsQueryable();
+            return DbSet.AsQueryable();
         }
 
         public Page<TEntity> AsPage(Pagination pagination)
@@ -80,7 +80,7 @@ namespace TrainRecord.Core.Repositories
 
         public async Task<int> SaveChangesAsync()
         {
-            return await _context.SaveChangesAsync();
+            return await Context.SaveChangesAsync();
         }
     }
 }
