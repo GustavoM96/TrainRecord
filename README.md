@@ -145,7 +145,8 @@ Post /api/user/{userID}/activity/{id}/record
 ```json
 {
   "weight": 20,
-  "repetition": 4
+  "repetition": 4,
+  "serie": 2
 }
 ```
 
@@ -156,7 +157,8 @@ Post /api/user/{userID}/activity/{id}/record
   "userId": "00000000-0000-0000-0000-000000000000",
   "activityId": "00000000-0000-0000-0000-000000000000",
   "weight": 20,
-  "repetition": 4
+  "repetition": 4,
+  "serie": 2
 }
 ```
 
@@ -219,6 +221,7 @@ sem corpo de requisição
       "activityId": "00000000-0000-0000-0000-000000000000",
       "weight": 0,
       "repetition": 30,
+      "serie": 2,
       "id": "00000000-0000-0000-0000-000000000000"
     },
     {
@@ -226,6 +229,7 @@ sem corpo de requisição
       "activityId": "00000000-0000-0000-0000-000000000000",
       "weight": 0,
       "repetition": 100,
+      "serie": 5,
       "id": "00000000-0000-0000-0000-000000000000"
     }
   ],
