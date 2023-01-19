@@ -127,13 +127,13 @@ Post /api/auth/login
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
-## Adicionar registro de alteração de atividade
+## Adicionar record de atividade
 
 - Autenticação Apenas o dono do recurso,
 - Detalhes - Adicionar registro de alteração de atividade
 
 ```
-Post /api/activity/{id}/record
+Post /api/user/{userID}/activity/{id}/record
 ```
 
 ### Request
@@ -162,7 +162,7 @@ Post /api/activity/{id}/record
 - Detalhes - Listar todas as atividades do aluno
 
 ```
-Post /api/activity
+Get /api/user/{userId}/activity
 ```
 
 ### Request
@@ -175,14 +175,58 @@ sem corpo de requisição
 
 ```json
 {
-  [
+  "items": [
+    {
+      "name": "pular corda",
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "name": "flexão de braço",
+      "id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+## Listar todos os records de uma atividade do aluno
+
+- Autenticação Apenas o dono do recurso,
+- Detalhes - Listar todas as atividades do aluno
+
+```
+Get /api/user/{userId}/activity/{activityId}/record
+```
+
+### Request
+
+```json
+sem corpo de requisição
+```
+
+### Response 200 Ok
+
+```json
+{
+  "items": [
     {
       "userId": "00000000-0000-0000-0000-000000000000",
       "activityId": "00000000-0000-0000-0000-000000000000",
-      "weight": 20,
-      "repetition": 4
+      "weight": 0,
+      "repetition": 30,
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 0,
+      "repetition": 100,
+      "id": "00000000-0000-0000-0000-000000000000"
     }
-  ]
+  ],
+  "perPage": 2,
+  "pageNumber": 4
 }
 ```
 

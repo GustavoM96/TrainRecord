@@ -16,7 +16,7 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ configurar createdBy createdAt
 - ✔️ handler erros from fluent validation
 - ✔️ Paginação
-- ❌ Repository pattern
+- ✔️ Repository pattern
 
 ## ✔️ Criar conta
 
@@ -75,6 +75,14 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ response
 
 ## ✔️ Listar todas as atividades
+
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação campos
+- ✔️ autenticação
+- ✔️ response
+
+## ✔️ Listar todos os records do aluno
 
 - ✔️ controller/rota
 - ✔️ mediator (comando, handler)
