@@ -9,7 +9,7 @@ namespace TrainRecord.Core.Extentions
 {
     public static class QueryableExtention
     {
-        public static Page<T> GetPage<T>(this IQueryable<T> queryable, Pagination pagination)
+        public static Page<T> AsPage<T>(this IQueryable<T> queryable, Pagination pagination)
         {
             var items = queryable.GetItemsByPagination(pagination);
             var page = pagination.Adapt<Page<T>>();
@@ -18,7 +18,7 @@ namespace TrainRecord.Core.Extentions
             return page;
         }
 
-        public static Page<TAdapt> GetPage<T, TAdapt>(
+        public static Page<TAdapt> AsPage<T, TAdapt>(
             this IQueryable<T> queryable,
             Pagination pagination
         )

@@ -21,6 +21,7 @@ public static class ConfigureServices
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();
+        services.AddScoped<IUserActivityRepository, UserActivityRepository>();
 
         var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;
         services.AddDbContext<AppDbContext>(options =>

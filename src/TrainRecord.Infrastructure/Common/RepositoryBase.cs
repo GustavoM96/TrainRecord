@@ -18,57 +18,64 @@ namespace TrainRecord.Core.Repositories
         where TEntity : BaseAuditableEntity
     {
         private readonly AppDbContext _context;
-        protected readonly DbSet<TEntity> DbSet;
+        private readonly DbSet<TEntity> _dbSet;
 
         public RepositoryBase(AppDbContext context)
         {
-            DbSet = context.Set<TEntity>();
+            _dbSet = context.Set<TEntity>();
             _context = context;
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await DbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public void Update(TEntity entity)
         {
-            DbSet.Update(entity);
+            _dbSet.Update(entity);
         }
 
-        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
+        protected async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await DbSet.AnyAsync(expression);
+            return await _dbSet.AnyAsync(expression);
+        }
+
+        protected async Task<TEntity> SingleOrDefaultAsync(
+            Expression<Func<TEntity, bool>> expression
+        )
+        {
+            return await _dbSet.SingleOrDefaultAsync(expression);
+        }
+
+        protected IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
+        {
+            return _dbSet.Where(expression);
         }
 
         public async Task<bool> AnyByIdAsync(Guid id)
         {
-            return await DbSet.AnyAsync(e => e.Id == id);
+            return await _dbSet.AnyAsync(e => e.Id == id);
         }
 
         public async Task<TEntity> FindByIdAsync(Guid id)
         {
-            return await DbSet.FindAsync(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
+        public IQueryable<TEntity> AsQueryable()
         {
-            return await DbSet.SingleOrDefaultAsync(expression);
+            return _dbSet.AsQueryable();
         }
 
-        public IQueryable<TEntity> GetAsQueryable()
+        public Page<TEntity> AsPage(Pagination pagination)
         {
-            return DbSet.AsQueryable();
+            return AsQueryable().AsPage(pagination);
         }
 
-        public Page<TEntity> GetPage(Pagination pagination)
+        public Page<TAdapt> AsPage<TAdapt>(Pagination pagination)
         {
-            return GetAsQueryable().GetPage(pagination);
-        }
-
-        public Page<TAdapt> GetPage<TAdapt>(Pagination pagination)
-        {
-            return GetAsQueryable().GetPage<TEntity, TAdapt>(pagination);
+            return AsQueryable().AsPage<TEntity, TAdapt>(pagination);
         }
 
         public async Task<int> SaveChangesAsync()

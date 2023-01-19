@@ -10,13 +10,13 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Repositories
 {
-    public class ActivityRepository : RepositoryBase<Activity>, IActivityRepository
+    public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivityRepository
     {
-        public ActivityRepository(AppDbContext context) : base(context) { }
+        public UserActivityRepository(AppDbContext context) : base(context) { }
 
-        public async Task<bool> AnyByNameAsync(string name)
+        public IQueryable<UserActivity> GetAllByUserId(Guid userId)
         {
-            return await AnyAsync(a => a.Name == name);
+            return Where(ua => ua.UserId == userId);
         }
     }
 }

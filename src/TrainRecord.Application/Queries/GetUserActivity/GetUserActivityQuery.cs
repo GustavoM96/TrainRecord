@@ -11,8 +11,9 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Application.GetUserActivity;
 
@@ -25,13 +26,11 @@ public class GetUserActivityQuery : IRequest<ErrorOr<Page<UserActivity>>>
 public class GetUserActivityQueryHandler
     : IRequestHandler<GetUserActivityQuery, ErrorOr<Page<UserActivity>>>
 {
-    private readonly DbSet<UserActivity> _userActivityDbSet;
-    public AppDbContext _context { get; }
+    private readonly IUserActivityRepository _userActivityRepository;
 
-    public GetUserActivityQueryHandler(AppDbContext context)
+    public GetUserActivityQueryHandler(IUserActivityRepository userActivityRepository)
     {
-        _context = context;
-        _userActivityDbSet = context.Set<UserActivity>();
+        _userActivityRepository = userActivityRepository;
     }
 
     public async Task<ErrorOr<Page<UserActivity>>> Handle(
@@ -39,8 +38,6 @@ public class GetUserActivityQueryHandler
         CancellationToken cancellationToken
     )
     {
-        return _userActivityDbSet
-            .Where(ua => ua.UserId == request.UserId)
-            .Pagination(request.Pagination);
+        return _userActivityRepository.GetAllByUserId(request.UserId).AsPage(request.Pagination);
     }
 }

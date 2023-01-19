@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.LoginUser;
 

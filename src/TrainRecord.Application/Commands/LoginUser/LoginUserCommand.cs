@@ -11,7 +11,6 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.LoginUser;
 
@@ -43,7 +42,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         CancellationToken cancellationToken
     )
     {
-        var userFound = await _userRepository.GetByEmail(request.Email);
+        var userFound = await _userRepository.GetByEmailAsync(request.Email);
         if (userFound is null)
         {
             return UserError.LoginInvalid;
