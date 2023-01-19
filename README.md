@@ -64,13 +64,17 @@ Simplismente em seu terminal.
 
 # Documentação API 💼
 
-Mapeamento das rotas
+- Fluxos do usuário
 
-<img src="assets/RouteApi.jpg" alt="drawing" width="500px"/>
+    <img src="assets/Flow.jpg" alt="drawing" width="1000px"/>
 
-Entidades de Banco de dados
+- Mapeamento das rotas
 
-<img src="assets/TrainRecordDB.png" alt="drawing" width="500px"/>
+    <img src="assets/RouteApi.jpg" alt="drawing" width="1000px"/>
+
+- Entidades de Banco de dados
+
+    <img src="assets/TrainRecordDB.png" alt="drawing" width="1000px"/>
 
 ## Criar conta
 
