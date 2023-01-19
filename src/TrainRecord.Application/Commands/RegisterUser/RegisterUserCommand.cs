@@ -41,8 +41,8 @@ public class RegisterUserCommandHandler
     {
         var user = request.Adapt<User>();
 
-        var userFound = await _userRepository.AnyByEmailAsync(user.Email);
-        if (userFound)
+        var anyUser = await _userRepository.AnyByEmailAsync(user.Email);
+        if (anyUser)
         {
             return UserError.EmailExists;
         }
