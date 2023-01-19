@@ -10,7 +10,6 @@ using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.GetAllActivity;
 using TrainRecord.Application.GetAllUserQuery;
-using TrainRecord.Application.GetUserActivity;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
 using TrainRecord.Core.Common;

@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Application.CreateActivity;
 

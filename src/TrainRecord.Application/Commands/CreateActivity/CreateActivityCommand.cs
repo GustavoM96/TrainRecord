@@ -11,7 +11,7 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Application.CreateActivity;
 
@@ -23,13 +23,11 @@ public class CreateActivityCommand : IRequest<ErrorOr<Activity>>
 public class CreateActivityCommandHandler
     : IRequestHandler<CreateActivityCommand, ErrorOr<Activity>>
 {
-    private readonly DbSet<Activity> _activityDbSet;
-    public AppDbContext _context { get; }
+    private readonly IActivityRepository _activityRepository;
 
-    public CreateActivityCommandHandler(AppDbContext context)
+    public CreateActivityCommandHandler(IActivityRepository activityRepository)
     {
-        _context = context;
-        _activityDbSet = context.Set<Activity>();
+        _activityRepository = activityRepository;
     }
 
     public async Task<ErrorOr<Activity>> Handle(
@@ -39,14 +37,14 @@ public class CreateActivityCommandHandler
     {
         var newActivity = request.Adapt<Activity>();
 
-        var userFound = await _activityDbSet.AnyAsync(a => a.Name == request.Name);
-        if (userFound)
+        var anyActivity = await _activityRepository.AnyByNameAsync(request.Name);
+        if (anyActivity)
         {
             return ActivityErrors.NameExists;
         }
 
-        await _activityDbSet.AddAsync(newActivity);
-        await _context.SaveChangesAsync();
+        await _activityRepository.AddAsync(newActivity);
+        await _activityRepository.SaveChangesAsync();
 
         return newActivity;
     }

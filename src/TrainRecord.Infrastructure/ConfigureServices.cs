@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interfaces;
+using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Persistence.Interceptions;
 using TrainRecord.Infrastructure.Repositories;
@@ -21,6 +21,7 @@ public static class ConfigureServices
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();
+        services.AddScoped<IUserActivityRepository, UserActivityRepository>();
 
         var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;
         services.AddDbContext<AppDbContext>(options =>

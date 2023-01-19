@@ -10,7 +10,7 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Application.CreateUserActivity;
 
@@ -25,17 +25,19 @@ public class CreateUserActivityCommand : IRequest<ErrorOr<UserActivity>>
 public class CreateUserActivityCommandHandler
     : IRequestHandler<CreateUserActivityCommand, ErrorOr<UserActivity>>
 {
-    private readonly DbSet<UserActivity> _userActivityDbSet;
-    private readonly DbSet<User> _userDbSet;
-    private readonly DbSet<Activity> _activityDbSet;
-    public AppDbContext _context { get; }
+    private readonly IUserActivityRepository _userActivityRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IActivityRepository _activityRepository;
 
-    public CreateUserActivityCommandHandler(AppDbContext context)
+    public CreateUserActivityCommandHandler(
+        IUserActivityRepository userActivityRepository,
+        IUserRepository userRepository,
+        IActivityRepository activityRepository
+    )
     {
-        _context = context;
-        _userActivityDbSet = context.Set<UserActivity>();
-        _userDbSet = context.Set<User>();
-        _activityDbSet = context.Set<Activity>();
+        _userActivityRepository = userActivityRepository;
+        _userRepository = userRepository;
+        _activityRepository = activityRepository;
     }
 
     public async Task<ErrorOr<UserActivity>> Handle(
@@ -43,32 +45,32 @@ public class CreateUserActivityCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var newActivity = request.Adapt<UserActivity>();
-        var hasUserAndActivityResult = await HasUserAndActivity(newActivity);
+        var newUserActivity = request.Adapt<UserActivity>();
+        var hasUserAndActivityResult = await HasUserAndActivity(newUserActivity);
 
         if (hasUserAndActivityResult.IsError)
         {
             return hasUserAndActivityResult.Errors;
         }
 
-        await _userActivityDbSet.AddAsync(newActivity);
-        await _context.SaveChangesAsync();
+        await _userActivityRepository.AddAsync(newUserActivity);
+        await _userActivityRepository.SaveChangesAsync();
 
-        return newActivity;
+        return newUserActivity;
     }
 
     private async Task<ErrorOr<Success>> HasUserAndActivity(UserActivity userActivity)
     {
         var errors = new List<Error>();
 
-        var userFound = await _userDbSet.AnyAsync(u => u.Id == userActivity.UserId);
-        if (!userFound)
+        var anyUser = await _userRepository.AnyByIdAsync(userActivity.UserId);
+        if (!anyUser)
         {
             errors.Add(UserError.NotFound);
         }
 
-        var activityFound = await _activityDbSet.AnyAsync(a => a.Id == userActivity.ActivityId);
-        if (!activityFound)
+        var anyActivity = await _activityRepository.AnyByIdAsync(userActivity.ActivityId);
+        if (!anyActivity)
         {
             errors.Add(ActivityErrors.NotFound);
         }

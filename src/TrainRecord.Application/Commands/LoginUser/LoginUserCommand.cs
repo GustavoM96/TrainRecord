@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.LoginUser;
 
@@ -22,22 +23,19 @@ public class LoginUserCommand : IRequest<ErrorOr<LoginUserResponse>>
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
-    private readonly DbSet<User> _userDbSet;
     private readonly IGenaratorHash _genaratorHash;
     private readonly IGenaratorToken _genaratorToken;
-
-    public AppDbContext _context { get; }
+    public readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
-        AppDbContext context,
         IGenaratorHash genaratorHash,
-        IGenaratorToken genaratorToken
+        IGenaratorToken genaratorToken,
+        IUserRepository userRepository
     )
     {
-        _context = context;
         _genaratorHash = genaratorHash;
-        _userDbSet = context.Set<User>();
         _genaratorToken = genaratorToken;
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<LoginUserResponse>> Handle(
@@ -45,7 +43,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         CancellationToken cancellationToken
     )
     {
-        var userFound = await _userDbSet.SingleOrDefaultAsync(u => u.Email == request.Email);
+        var userFound = await _userRepository.GetByEmailAsync(request.Email);
         if (userFound is null)
         {
             return UserError.LoginInvalid;
@@ -64,19 +62,11 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 
         if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))
         {
-            UpdateHashedPassword(userFound);
+            var userWithRehashedPassword = _genaratorHash.SetUserWithRehashedPassword(userFound);
+            _userRepository.Update(userWithRehashedPassword);
         }
 
         var token = _genaratorToken.Generate(userFound);
         return new LoginUserResponse() { IdToken = token };
-    }
-
-    private User UpdateHashedPassword(User user)
-    {
-        var reHashedPassword = _genaratorHash.Generate(user);
-        var updatedUser = (user, reHashedPassword).Adapt<User>();
-        _userDbSet.Update(updatedUser);
-
-        return updatedUser;
     }
 }

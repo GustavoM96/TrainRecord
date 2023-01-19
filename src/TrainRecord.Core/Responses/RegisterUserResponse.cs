@@ -6,14 +6,15 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Application.LoginUser;
+namespace TrainRecord.Core.Responses;
 
-public class LoginUserResponse
+public class RegisterUserResponse
 {
-    public string IdToken { get; init; }
+    public Guid Id { get; init; }
+    public string Email { get; init; }
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
 }

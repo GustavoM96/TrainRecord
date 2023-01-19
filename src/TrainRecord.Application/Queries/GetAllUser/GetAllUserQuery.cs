@@ -13,7 +13,8 @@ using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.GetAllUserQuery;
 
@@ -25,13 +26,11 @@ public class GetAllUserQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 public class GetAllUserQueryHandler
     : IRequestHandler<GetAllUserQuery, ErrorOr<Page<RegisterUserResponse>>>
 {
-    private readonly DbSet<User> _UserDbSet;
-    public AppDbContext _context { get; }
+    public readonly IUserRepository _userRepository;
 
-    public GetAllUserQueryHandler(AppDbContext context)
+    public GetAllUserQueryHandler(IUserRepository userRepository)
     {
-        _context = context;
-        _UserDbSet = context.Set<User>();
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<Page<RegisterUserResponse>>> Handle(
@@ -39,6 +38,6 @@ public class GetAllUserQueryHandler
         CancellationToken cancellationToken
     )
     {
-        return _UserDbSet.AsQueryable().Pagination<User, RegisterUserResponse>(request.Pagination);
+        return _userRepository.AsPage<RegisterUserResponse>(request.Pagination);
     }
 }

@@ -10,7 +10,8 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Persistence;
+using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.RegisterUser;
 
@@ -25,16 +26,13 @@ public class RegisterUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
 public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>
 {
-    private readonly DbSet<User> _userDbSet;
     private readonly IGenaratorHash _genaratorHash;
+    private readonly IUserRepository _userRepository;
 
-    public AppDbContext _context { get; }
-
-    public RegisterUserCommandHandler(AppDbContext context, IGenaratorHash genaratorHash)
+    public RegisterUserCommandHandler(IGenaratorHash genaratorHash, IUserRepository userRepository)
     {
-        _context = context;
         _genaratorHash = genaratorHash;
-        _userDbSet = context.Set<User>();
+        _userRepository = userRepository;
     }
 
     public async Task<ErrorOr<RegisterUserResponse>> Handle(
@@ -44,8 +42,8 @@ public class RegisterUserCommandHandler
     {
         var user = request.Adapt<User>();
 
-        var userFound = await _userDbSet.AnyAsync(u => u.Email == user.Email);
-        if (userFound)
+        var anyUser = await _userRepository.AnyByEmailAsync(user.Email);
+        if (anyUser)
         {
             return UserError.EmailExists;
         }
@@ -53,8 +51,8 @@ public class RegisterUserCommandHandler
         var passwordHash = _genaratorHash.Generate(user);
         var newUser = (user, passwordHash).Adapt<User>();
 
-        await _userDbSet.AddAsync(newUser);
-        await _context.SaveChangesAsync();
+        await _userRepository.AddAsync(newUser);
+        await _userRepository.SaveChangesAsync();
 
         return newUser.Adapt<RegisterUserResponse>();
     }

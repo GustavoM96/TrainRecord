@@ -8,12 +8,12 @@ using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.GetActivityByUserQuery;
 using TrainRecord.Application.GetAllUserQuery;
-using TrainRecord.Application.GetUserActivity;
-using TrainRecord.Application.LoginUser;
-using TrainRecord.Application.RegisterUser;
+using TrainRecord.Application.GetRecordQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
+using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Controllers;
 
@@ -48,7 +48,30 @@ public class UserController : ApiController
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> Activity(Guid userId, [FromQuery] Pagination pagination)
     {
-        var query = new GetUserActivityQuery() { UserId = userId, Pagination = pagination };
+        var query = new GetActivityByUserQuery() { UserId = userId, Pagination = pagination };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpGet("{userId}/Activity/{activityId}/[action]")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> Record(
+        Guid userId,
+        Guid activityId,
+        [FromQuery] Pagination pagination
+    )
+    {
+        var query = new GetRecordQuery()
+        {
+            UserId = userId,
+            ActivityId = activityId,
+            Pagination = pagination
+        };
 
         var registerResult = await Mediator.Send(query);
 
