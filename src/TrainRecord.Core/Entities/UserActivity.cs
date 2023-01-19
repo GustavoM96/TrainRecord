@@ -8,4 +8,5 @@ public class UserActivity : BaseAuditableEntity
     public Guid ActivityId { get; init; }
     public int Weight { get; init; }
     public int Repetition { get; init; }
+    public int Serie { get; init; }
 }

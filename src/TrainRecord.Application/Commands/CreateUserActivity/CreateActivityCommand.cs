@@ -20,6 +20,7 @@ public class CreateUserActivityCommand : IRequest<ErrorOr<UserActivity>>
     public Guid ActivityId { get; init; }
     public int Weight { get; init; }
     public int Repetition { get; init; }
+    public int Serie { get; init; }
 }
 
 public class CreateUserActivityCommandHandler

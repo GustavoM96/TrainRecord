@@ -20,10 +20,10 @@ namespace TrainRecord.Controllers;
 [ApiController]
 public class UserController : ApiController
 {
-    [HttpPost("{userId}/Activity/{id}/[action]")]
+    [HttpPost("{userId}/Activity/{activityId}/[action]")]
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> Record(
-        [FromRoute] Guid id,
+        [FromRoute] Guid activityId,
         [FromRoute] Guid userId,
         [FromBody] CreateUserActivityRequest createUserActivityResquest
     )
@@ -32,7 +32,8 @@ public class UserController : ApiController
         {
             Weight = createUserActivityResquest.Weight,
             Repetition = createUserActivityResquest.Repetition,
-            ActivityId = id,
+            Serie = createUserActivityResquest.Serie,
+            ActivityId = activityId,
             UserId = userId
         };
 

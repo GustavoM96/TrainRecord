@@ -9,14 +9,16 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Application.CreateUserActivity;
 
-public class CreateUserActivityCommandValidator : AbstractValidator<CreateUserActivityCommand>
+public class CreateUserActivityCommandValidator : AbstractValidator<CreateUserActivityRequest>
 {
     public CreateUserActivityCommandValidator()
     {
         RuleFor(ua => ua.Repetition).GreaterThan(0);
         RuleFor(ua => ua.Weight).GreaterThanOrEqualTo(0);
+        RuleFor(ua => ua.Serie).GreaterThan(0);
     }
 }
