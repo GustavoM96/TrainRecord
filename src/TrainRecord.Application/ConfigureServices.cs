@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -27,7 +28,10 @@ namespace TrainRecord.Application
 
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
-            services.AddFluentValidation();
+
+            services.AddFluentValidation(
+                config => config.ValidatorOptions.LanguageManager.Culture = new CultureInfo("pt-BR")
+            );
 
             return services;
         }
