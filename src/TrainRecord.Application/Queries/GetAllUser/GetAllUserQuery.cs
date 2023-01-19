@@ -14,6 +14,7 @@ using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.GetAllUserQuery;
 

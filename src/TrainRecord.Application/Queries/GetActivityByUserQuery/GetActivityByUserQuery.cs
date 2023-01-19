@@ -14,17 +14,18 @@ using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Core.Responses;
 
-namespace TrainRecord.Application.GetUserActivity;
+namespace TrainRecord.Application.GetActivityByUserQuery;
 
-public class GetUserActivityQuery : IRequest<ErrorOr<Page<UserActivity>>>
+public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
 {
     public Guid UserId { get; init; }
     public Pagination Pagination { get; init; }
 }
 
 public class GetUserActivityQueryHandler
-    : IRequestHandler<GetUserActivityQuery, ErrorOr<Page<UserActivity>>>
+    : IRequestHandler<GetActivityByUserQuery, ErrorOr<Page<Activity>>>
 {
     private readonly IUserActivityRepository _userActivityRepository;
 
@@ -33,11 +34,13 @@ public class GetUserActivityQueryHandler
         _userActivityRepository = userActivityRepository;
     }
 
-    public async Task<ErrorOr<Page<UserActivity>>> Handle(
-        GetUserActivityQuery request,
+    public async Task<ErrorOr<Page<Activity>>> Handle(
+        GetActivityByUserQuery request,
         CancellationToken cancellationToken
     )
     {
-        return _userActivityRepository.GetAllByUserId(request.UserId).AsPage(request.Pagination);
+        return _userActivityRepository
+            .GetActivitiesByUserId(request.UserId)
+            .AsPage(request.Pagination);
     }
 }

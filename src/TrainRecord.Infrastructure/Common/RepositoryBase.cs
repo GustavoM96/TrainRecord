@@ -17,8 +17,8 @@ namespace TrainRecord.Core.Repositories
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : BaseAuditableEntity
     {
-        private readonly AppDbContext _context;
-        private readonly DbSet<TEntity> _dbSet;
+        protected readonly AppDbContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
 
         public RepositoryBase(AppDbContext context)
         {
