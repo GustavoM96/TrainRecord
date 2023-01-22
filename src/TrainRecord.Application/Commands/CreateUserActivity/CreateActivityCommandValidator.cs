@@ -13,7 +13,7 @@ using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Application.CreateUserActivity;
 
-public class CreateUserActivityCommandValidator : AbstractValidator<CreateUserActivityRequest>
+public class CreateUserActivityCommandValidator : AbstractValidator<CreateUserActivityCommand>
 {
     public CreateUserActivityCommandValidator()
     {

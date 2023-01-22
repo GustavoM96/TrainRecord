@@ -20,6 +20,7 @@ namespace TrainRecord.Application
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
@@ -29,9 +30,11 @@ namespace TrainRecord.Application
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
 
-            services.AddFluentValidation(
-                config => config.ValidatorOptions.LanguageManager.Culture = new CultureInfo("pt-BR")
-            );
+            services.AddFluentValidation(config =>
+            {
+                config.AutomaticValidationEnabled = false;
+                config.ValidatorOptions.LanguageManager.Culture = new CultureInfo("pt-BR");
+            });
 
             return services;
         }
