@@ -8,30 +8,29 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Exceptions;
 using TrainRecord.Core.Interfaces;
 
-namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
+namespace TrainRecord.Api.Common.Policies.AdmRequirment
 {
-    public class OwnerResourceRequirment : IAuthorizationRequirement { }
+    public class AdmRequirment : IAuthorizationRequirement { }
 
-    public class OwnerResourceHandler : AuthorizationHandler<OwnerResourceRequirment>
+    public class AdmHandler : AuthorizationHandler<AdmRequirment>
     {
         private readonly ICurrentUserService _currentUserService;
 
-        public OwnerResourceHandler(ICurrentUserService currentUserService)
+        public AdmHandler(ICurrentUserService currentUserService)
         {
             _currentUserService = currentUserService;
         }
 
         protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
-            OwnerResourceRequirment requirement
+            AdmRequirment requirement
         )
         {
             var isAdmin = _currentUserService.IsAdmin;
-            var isOwnerResource = _currentUserService.IsOwnerResource;
 
-            if (!isOwnerResource && !isAdmin)
+            if (!isAdmin)
             {
-                throw new AuthorizationException(UserError.IsNotOwnerResourceAndAdm);
+                throw new AuthorizationException(UserError.IsNotAdm);
             }
 
             context.Succeed(requirement);

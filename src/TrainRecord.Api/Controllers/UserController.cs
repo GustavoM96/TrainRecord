@@ -83,7 +83,7 @@ public class UserController : ApiController
     }
 
     [HttpGet]
-    [Authorize(Roles = "Adm")]
+    [Authorize(Policy = "IsAdm")]
     public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
         var query = new GetAllUserQuery() { Pagination = pagination };

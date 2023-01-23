@@ -21,13 +21,13 @@ namespace TrainRecord.Controllers;
 public class ActivityController : ApiController
 {
     [HttpPost]
-    [Authorize(Roles = "Adm")]
+    [Authorize(Policy = "IsAdm")]
     public async Task<IActionResult> Create(CreateActivityCommand createActivityCommand)
     {
         var registerResult = await Mediator.Send(createActivityCommand);
 
         return registerResult.Match<IActionResult>(
-            result => CreatedAtAction("GetActivitiesByUser", result),
+            result => CreatedAtAction("GetAll", result),
             errors => ProblemErrors(errors)
         );
     }

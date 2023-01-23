@@ -14,12 +14,11 @@ public class CurrentUserService : ICurrentUserService
     }
 
     public string? UserIdFromRoute =>
-        _httpContextAccessor.HttpContext?.Request.RouteValues
-            .GetValueOrDefault("userId")
-            ?.ToString();
-    public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Sid);
-    public string? Role => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Role);
+        _httpContext?.Request.RouteValues.GetValueOrDefault("userId")?.ToString();
+    public string? UserId => _httpContext?.User?.FindFirstValue(ClaimTypes.Sid);
+    public string? Role => _httpContext?.User?.FindFirstValue(ClaimTypes.Role);
 
     public bool IsAdmin => Role == "Adm";
     public bool IsOwnerResource => UserId == UserIdFromRoute && UserId is not null;
+    private HttpContext? _httpContext => _httpContextAccessor.HttpContext;
 }
