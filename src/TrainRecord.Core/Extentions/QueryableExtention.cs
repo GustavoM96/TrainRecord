@@ -35,8 +35,16 @@ namespace TrainRecord.Core.Extentions
             Pagination pagination
         )
         {
-            var pageToSkip = (pagination.PageNumber - 1) * pagination.PerPage;
-            return queryable.Skip(pageToSkip).Take(pagination.PerPage);
+            if (pagination.NotRequestedPage)
+            {
+                return queryable;
+            }
+
+            var perPage = pagination.PerPage.Value;
+            var pageNumber = pagination.PageNumber.Value;
+
+            var pageToSkip = (pageNumber - 1) * perPage;
+            return queryable.Skip(pageToSkip).Take(perPage);
         }
     }
 }
