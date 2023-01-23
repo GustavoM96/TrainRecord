@@ -6,7 +6,6 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using TrainRecord.Application.Common.Extentions;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
