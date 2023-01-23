@@ -6,6 +6,7 @@ using ErrorOr;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
+using TrainRecord.Core.Commum;
 using TrainRecord.Core.Exceptions;
 
 namespace TrainRecord.Controllers
@@ -17,15 +18,13 @@ namespace TrainRecord.Controllers
         public IActionResult ErrorHandle()
         {
             var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-            var erros = new List<Error>();
 
-            if (exception is ValidationException validationException)
+            if (exception is HandlerException handlerException)
             {
-                return ProblemErrors(validationException.Errors);
+                return ProblemErrors(handlerException.Errors);
             }
 
-            erros.Add(Error.Unexpected("ErrorHandle.Unexpected", exception?.Message));
-            return ProblemErrors(erros);
+            return ProblemUniqueError(Error.Unexpected(exception?.Message));
         }
     }
 }

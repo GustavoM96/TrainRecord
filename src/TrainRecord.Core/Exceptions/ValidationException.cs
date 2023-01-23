@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ErrorOr;
 using FluentValidation.Results;
+using TrainRecord.Core.Commum;
 
 namespace TrainRecord.Core.Exceptions
 {
-    public class ValidationException : Exception
+    public class ValidationException : HandlerException
     {
-        public List<Error> Errors { get; init; }
-
         public ValidationException(IEnumerable<ValidationFailure> failures)
         {
             Errors = failures
