@@ -24,7 +24,8 @@ namespace TrainRecord.Controllers
                 return ProblemErrors(handlerException.Errors);
             }
 
-            return ProblemUniqueError(Error.Unexpected(exception?.Message));
+            var unexpectedError = Error.Unexpected(exception?.Message);
+            return ProblemUniqueError(unexpectedError);
         }
     }
 }
