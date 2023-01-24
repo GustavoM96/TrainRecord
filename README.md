@@ -3,6 +3,7 @@
 TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade de gerenciar atividades de academia para alunos e professores.
 
 - [Tecnologias 💻](#tecnologias-💻)
+  - [Tools](#tools)
   - [Pacotes](#pacotes)
   - [Prettier](#prettier)
   - [Husky](#husky)
@@ -30,13 +31,25 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 
 ## Pacotes
 
-- Mediatr: para gerenciar comandos e queries no padrão CQRS.
-- FluentValidation: para validação dos campos de request.
-- Mapster: para mapeamento dos objetos com Adapt<>().
-- ErrorOr: para retorno de api com erro ou o response.
-- Jwt: para autenticação do usuário.
-- PasswordHasher: hasher de senha do usuário.
-- Sqlite: apenas como banco de dados de desenvolvimento.
+- [Mediatr](https://github.com/jbogard/MediatR): para gerenciar comandos e queries no padrão CQRS.
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/): para validação dos campos de request.
+- [Mapster](https://github.com/MapsterMapper/Mapster): para mapeamento dos objetos com Adapt<>().
+- [ErrorOr](https://github.com/amantinband/error-or): para retorno de api com erro ou o response.
+- [Jwt](https://jwt.io/): para autenticação do usuário.
+- [PasswordHasher](<https://learn.microsoft.com/en-us/previous-versions/aspnet/dn468192(v%3dvs.108)>): hasher de senha do usuário.
+- [Sqlite](https://www.sqlite.org/docs.html): apenas como banco de dados de desenvolvimento.
+
+## Tools
+
+para a instalação dos tools deste projeto
+
+```
+dotnet tool install csharpier
+```
+
+```
+dotnet tool install husky
+```
 
 ## Prettier
 
