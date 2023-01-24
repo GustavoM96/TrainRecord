@@ -4,8 +4,22 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 
 - [Tecnologias 💻](#tecnologias-💻)
 - [Rodando a aplicação ⚙️](#rodando-a-aplicação-⚙️)
+  - [Pacotes](#pacotes)
+  - [Prettier](#prettier)
+  - [Husky](#husky)
 - [Arquitetura 🏛️](#arquitetura-🏛️)
+  - [Pastas](#pastas)
 - [Documentação API 💼](#documentação-api-💼)
+  - [Diagramas](#diagramas)
+  - [Listagem de Rotas](#listagem-de-rotas)
+  - [Criar conta](#criar-conta)
+  - [Login conta](#login-conta)
+  - [Listar todas os usuários](#listar-todas-os-usuários)
+  - [Adicionar record de atividade](#adicionar-record-de-atividade)
+  - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
+  - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+  - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
+  - [Listar todas as atividade](#listar-todas-as-atividade)
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -72,6 +86,8 @@ Simplismente em seu terminal.
 
 # Documentação API 💼
 
+## Diagramas
+
 - Fluxos do usuário
 
     <img src="assets/Flow.jpg" alt="drawing" width="1000px"/>
@@ -84,26 +100,26 @@ Simplismente em seu terminal.
 
     <img src="assets/TrainRecordDB.png" alt="drawing" width="1000px"/>
 
-## Rotas
+<hr/>
 
-### Autenticação
+## Listagem de Rotas
+
+Autenticação:
 
 - Criar conta
 - Login
 
-### Usuário
+Usuário:
 
 - Listar todos os usuários
 
-### Atividade
+Atividade:
 
 - Adicionar record de atividade
 - Listar todas as atividades do aluno
 - Listar todos os records de uma atividade do aluno
 - Adicionar uma nova atividade
 - Listar todas as atividade
-
-<hr/>
 
 ## Criar conta
 
