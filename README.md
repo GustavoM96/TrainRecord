@@ -2,6 +2,14 @@
 
 TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade de gerenciar atividades de academia para alunos e professores.
 
+- [Tecnologias 💻](#tecnologias-💻)
+- [Rodando a aplicação ⚙️](#rodando-a-aplicação-⚙️)
+- [Arquitetura 🏛️](#arquitetura-🏛️)
+- [Documentação API 💼](#documentação-api-💼)
+- [Release 📦](#release-📦)
+- [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
+- [License 🪪](#license-🪪)
+
 # Tecnologias 💻
 
 - AspNet.Core SDK 7.0.100-rc.2.22477.23
