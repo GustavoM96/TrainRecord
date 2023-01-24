@@ -76,10 +76,31 @@ Simplismente em seu terminal.
 
     <img src="assets/TrainRecordDB.png" alt="drawing" width="1000px"/>
 
+## Rotas
+
+### Autenticação
+
+- Criar conta
+- Login
+
+### Usuário
+
+- Listar todos os usuários
+
+### Atividade
+
+- Adicionar record de atividade
+- Listar todas as atividades do aluno
+- Listar todos os records de uma atividade do aluno
+- Adicionar uma nova atividade
+- Listar todas as atividade
+
+<hr/>
+
 ## Criar conta
 
-- Autenticação Anônimo
-- Detalhes - registrar usuário dentro da plataforma
+- Autenticação: Anônimo.
+- Detalhes: registrar usuário dentro da plataforma.
 
 ### Request
 
@@ -109,8 +130,8 @@ Post /api/auth/register
 
 ## Login conta
 
-- Autenticação Anônimo,
-- Detalhes - autenticação do usuário
+- Autenticação: Anônimo.
+- Detalhes: autenticação do usuário.
 
 ### Request
 
@@ -131,10 +152,48 @@ Post /api/auth/login
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
+## Listar todas os Usuários
+
+- Autenticação: Apenas Adm.
+- Detalhes: Obter todos os usuários cadastrados na plataforma.
+
+```
+Get /api/user
+```
+
+### Request
+
+```json
+sem corpo de requisição
+```
+
+### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
 ## Adicionar record de atividade
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Adicionar registro de alteração de atividade
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Adicionar registro de alteração de atividade do aluno.
 
 ```
 Post /api/user/{userID}/activity/{id}/record
@@ -164,8 +223,8 @@ Post /api/user/{userID}/activity/{id}/record
 
 ## Listar todas as atividades do aluno
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Listar todas as atividades do aluno
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas as atividades que o aluno participa.
 
 ```
 Get /api/user/{userId}/activity
@@ -198,8 +257,8 @@ sem corpo de requisição
 
 ## Listar todos os records de uma atividade do aluno
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Listar todas as atividades do aluno
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os records de um aluno em uma atividade.
 
 ```
 Get /api/user/{userId}/activity/{activityId}/record
@@ -240,8 +299,8 @@ sem corpo de requisição
 
 ## Adicionar uma nova atividade
 
-- Autenticação - Apenas Adm,
-- Detalhes - Adicionar uma nova atividade
+- Autenticação: Apenas Adm.
+- Detalhes: Adicionar uma nova atividade dentro da plataforma.
 
 ```
 Post /api/activity
@@ -266,8 +325,8 @@ Post /api/activity
 
 ## Listar todas as atividade
 
-- Autenticação - usuários autenticados,
-- Detalhes - Listar todas as atividade
+- Autenticação: usuários autenticados,
+- Detalhes: Listar todas as atividade
 
 ```
 Get /api/activity
@@ -291,44 +350,6 @@ sem corpo de requisição
     {
       "id": "00000000-0000-0000-0000-000000000001",
       "name": "pular corda"
-    }
-  ],
-  "perPage": 2,
-  "pageNumber": 4
-}
-```
-
-## Listar todas os Usuários
-
-- Autenticação - Apenas Adm,
-- Detalhes - Listar todas os Usuários
-
-```
-Get /api/user
-```
-
-### Request
-
-```json
-sem corpo de requisição
-```
-
-### Response 200 Ok
-
-```json
-{
-  "items": [
-    {
-      "id": "00000000-0000-0000-0000-000000000000",
-      "email": "josé.silva@gmail.com",
-      "firstName": "José",
-      "lastName": "Silva"
-    },
-    {
-      "id": "00000000-0000-0000-0000-000000000001",
-      "email": "caio.costa@gmail.com",
-      "firstName": "Caio",
-      "lastName": "Costa"
     }
   ],
   "perPage": 2,
