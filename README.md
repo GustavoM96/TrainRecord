@@ -20,7 +20,7 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
     - [Adicionar record de atividade](#adicionar-record-de-atividade)
     - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
     - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
-    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+    - [Obter dados de usuário por id](#obter-dados-de-usuário-por-id)
   - [Rotas de Atividade](#rotas-atividade)
     - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
     - [Listar todas as atividade](#listar-todas-as-atividade)
