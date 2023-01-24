@@ -11,6 +11,7 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Application.GetActivityByUserQuery;
 using TrainRecord.Application.GetAllUserQuery;
 using TrainRecord.Application.GetRecordQuery;
+using TrainRecord.Application.GetUserByIdQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Requests;
@@ -87,6 +88,20 @@ public class UserController : ApiController
     public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
         var query = new GetAllUserQuery() { Pagination = pagination };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpGet("{userId}")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> GetById(Guid userId)
+    {
+        var query = new GetUserByIdQuery() { UserId = userId };
 
         var registerResult = await Mediator.Send(query);
 
