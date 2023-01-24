@@ -2,19 +2,54 @@
 
 TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade de gerenciar atividades de academia para alunos e professores.
 
+- [Tecnologias 💻](#tecnologias-💻)
+  - [Tools](#tools)
+  - [Pacotes](#pacotes)
+  - [Prettier](#prettier)
+  - [Husky](#husky)
+- [Rodando a aplicação ⚙️](#rodando-a-aplicação-⚙️)
+- [Arquitetura 🏛️](#arquitetura-🏛️)
+  - [Pastas](#pastas)
+- [Documentação API 💼](#documentação-api-💼)
+  - [Diagramas](#diagramas)
+  - [Listagem de Rotas](#listagem-de-rotas)
+  - [Criar conta](#criar-conta)
+  - [Login conta](#login-conta)
+  - [Listar todas os usuários](#listar-todas-os-usuários)
+  - [Adicionar record de atividade](#adicionar-record-de-atividade)
+  - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
+  - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+  - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
+  - [Listar todas as atividade](#listar-todas-as-atividade)
+- [Release 📦](#release-📦)
+- [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
+- [License 🪪](#license-🪪)
+
 # Tecnologias 💻
 
 - AspNet.Core SDK 7.0.100-rc.2.22477.23
 
 ## Pacotes
 
-- Mediatr: para gerenciar comandos e queries no padrão CQRS.
-- FluentValidation: para validação dos campos de request.
-- Mapster: para mapeamento dos objetos com Adapt<>().
-- ErrorOr: para retorno de api com erro ou o response.
-- Jwt: para autenticação do usuário.
-- PasswordHasher: hasher de senha do usuário.
-- Sqlite: apenas como banco de dados de desenvolvimento.
+- [Mediatr](https://github.com/jbogard/MediatR): para gerenciar comandos e queries no padrão CQRS.
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/): para validação dos campos de request.
+- [Mapster](https://github.com/MapsterMapper/Mapster): para mapeamento dos objetos com Adapt<>().
+- [ErrorOr](https://github.com/amantinband/error-or): para retorno de api com erro ou o response.
+- [Jwt](https://jwt.io/): para autenticação do usuário.
+- [PasswordHasher](<https://learn.microsoft.com/en-us/previous-versions/aspnet/dn468192(v%3dvs.108)>): hasher de senha do usuário.
+- [Sqlite](https://www.sqlite.org/docs.html): apenas como banco de dados de desenvolvimento.
+
+## Tools
+
+para a instalação dos tools deste projeto
+
+```
+dotnet tool install csharpier
+```
+
+```
+dotnet tool install husky
+```
 
 ## Prettier
 
@@ -64,6 +99,8 @@ Simplismente em seu terminal.
 
 # Documentação API 💼
 
+## Diagramas
+
 - Fluxos do usuário
 
     <img src="assets/Flow.jpg" alt="drawing" width="1000px"/>
@@ -76,10 +113,31 @@ Simplismente em seu terminal.
 
     <img src="assets/TrainRecordDB.png" alt="drawing" width="1000px"/>
 
+<hr/>
+
+## Listagem de Rotas
+
+Autenticação:
+
+- Criar conta
+- Login
+
+Usuário:
+
+- Listar todos os usuários
+
+Atividade:
+
+- Adicionar record de atividade
+- Listar todas as atividades do aluno
+- Listar todos os records de uma atividade do aluno
+- Adicionar uma nova atividade
+- Listar todas as atividade
+
 ## Criar conta
 
-- Autenticação Anônimo
-- Detalhes - registrar usuário dentro da plataforma
+- Autenticação: Anônimo.
+- Detalhes: registrar usuário dentro da plataforma.
 
 ### Request
 
@@ -109,8 +167,8 @@ Post /api/auth/register
 
 ## Login conta
 
-- Autenticação Anônimo,
-- Detalhes - autenticação do usuário
+- Autenticação: Anônimo.
+- Detalhes: autenticação do usuário.
 
 ### Request
 
@@ -131,10 +189,48 @@ Post /api/auth/login
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
+## Listar todas os Usuários
+
+- Autenticação: Apenas Adm.
+- Detalhes: Obter todos os usuários cadastrados na plataforma.
+
+```
+Get /api/user
+```
+
+### Request
+
+```json
+sem corpo de requisição
+```
+
+### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
 ## Adicionar record de atividade
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Adicionar registro de alteração de atividade
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Adicionar registro de alteração de atividade do aluno.
 
 ```
 Post /api/user/{userID}/activity/{id}/record
@@ -164,8 +260,8 @@ Post /api/user/{userID}/activity/{id}/record
 
 ## Listar todas as atividades do aluno
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Listar todas as atividades do aluno
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas as atividades que o aluno participa.
 
 ```
 Get /api/user/{userId}/activity
@@ -198,8 +294,8 @@ sem corpo de requisição
 
 ## Listar todos os records de uma atividade do aluno
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Listar todas as atividades do aluno
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os records de um aluno em uma atividade.
 
 ```
 Get /api/user/{userId}/activity/{activityId}/record
@@ -240,8 +336,8 @@ sem corpo de requisição
 
 ## Adicionar uma nova atividade
 
-- Autenticação - Apenas Adm,
-- Detalhes - Adicionar uma nova atividade
+- Autenticação: Apenas Adm.
+- Detalhes: Adicionar uma nova atividade dentro da plataforma.
 
 ```
 Post /api/activity
@@ -266,8 +362,8 @@ Post /api/activity
 
 ## Listar todas as atividade
 
-- Autenticação - usuários autenticados,
-- Detalhes - Listar todas as atividade
+- Autenticação: usuários autenticados,
+- Detalhes: Listar todas as atividade
 
 ```
 Get /api/activity
@@ -291,44 +387,6 @@ sem corpo de requisição
     {
       "id": "00000000-0000-0000-0000-000000000001",
       "name": "pular corda"
-    }
-  ],
-  "perPage": 2,
-  "pageNumber": 4
-}
-```
-
-## Listar todas os Usuários
-
-- Autenticação - Apenas Adm,
-- Detalhes - Listar todas os Usuários
-
-```
-Get /api/user
-```
-
-### Request
-
-```json
-sem corpo de requisição
-```
-
-### Response 200 Ok
-
-```json
-{
-  "items": [
-    {
-      "id": "00000000-0000-0000-0000-000000000000",
-      "email": "josé.silva@gmail.com",
-      "firstName": "José",
-      "lastName": "Silva"
-    },
-    {
-      "id": "00000000-0000-0000-0000-000000000001",
-      "email": "caio.costa@gmail.com",
-      "firstName": "Caio",
-      "lastName": "Costa"
     }
   ],
   "perPage": 2,
