@@ -12,15 +12,18 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
   - [Pastas](#pastas)
 - [Documentação API 💼](#documentação-api-💼)
   - [Diagramas](#diagramas)
-  - [Listagem de Rotas](#listagem-de-rotas)
-  - [Criar conta](#criar-conta)
-  - [Login conta](#login-conta)
-  - [Listar todas os usuários](#listar-todas-os-usuários)
-  - [Adicionar record de atividade](#adicionar-record-de-atividade)
-  - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
-  - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
-  - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
-  - [Listar todas as atividade](#listar-todas-as-atividade)
+  - [Rotas de Autenticação](#rotas-autenticação)
+    - [Criar conta](#criar-conta)
+    - [Login conta](#login-conta)
+  - [Rotas de Usuário](#rotas-usuário)
+    - [Listar todas os usuários](#listar-todas-os-usuários)
+    - [Adicionar record de atividade](#adicionar-record-de-atividade)
+    - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
+    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+  - [Rotas de Atividade](#rotas-atividade)
+    - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
+    - [Listar todas as atividade](#listar-todas-as-atividade)
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -115,31 +118,14 @@ Simplismente em seu terminal.
 
 <hr/>
 
-## Listagem de Rotas
+## Rotas Autenticação
 
-Autenticação:
-
-- Criar conta
-- Login
-
-Usuário:
-
-- Listar todos os usuários
-
-Atividade:
-
-- Adicionar record de atividade
-- Listar todas as atividades do aluno
-- Listar todos os records de uma atividade do aluno
-- Adicionar uma nova atividade
-- Listar todas as atividade
-
-## Criar conta
+### Criar conta
 
 - Autenticação: Anônimo.
 - Detalhes: registrar usuário dentro da plataforma.
 
-### Request
+#### Request
 
 ```
 Post /api/auth/register
@@ -154,7 +140,7 @@ Post /api/auth/register
 }
 ```
 
-### Response 201 Created
+#### Response 201 Created
 
 ```json
 {
@@ -165,12 +151,12 @@ Post /api/auth/register
 }
 ```
 
-## Login conta
+### Login conta
 
 - Autenticação: Anônimo.
 - Detalhes: autenticação do usuário.
 
-### Request
+#### Request
 
 ```
 Post /api/auth/login
@@ -183,13 +169,15 @@ Post /api/auth/login
 }
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
-## Listar todas os Usuários
+## Rotas Usuário
+
+### Listar todas os Usuários
 
 - Autenticação: Apenas Adm.
 - Detalhes: Obter todos os usuários cadastrados na plataforma.
@@ -198,13 +186,13 @@ Post /api/auth/login
 Get /api/user
 ```
 
-### Request
+#### Request
 
 ```json
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 {
@@ -227,7 +215,7 @@ sem corpo de requisição
 }
 ```
 
-## Adicionar record de atividade
+### Adicionar record de atividade
 
 - Autenticação: Apenas o dono do recurso.
 - Detalhes: Adicionar registro de alteração de atividade do aluno.
@@ -236,7 +224,7 @@ sem corpo de requisição
 Post /api/user/{userID}/activity/{id}/record
 ```
 
-### Request
+#### Request
 
 ```json
 {
@@ -246,7 +234,7 @@ Post /api/user/{userID}/activity/{id}/record
 }
 ```
 
-### Response 201 Created
+#### Response 201 Created
 
 ```json
 {
@@ -258,7 +246,7 @@ Post /api/user/{userID}/activity/{id}/record
 }
 ```
 
-## Listar todas as atividades do aluno
+### Listar todas as atividades do aluno
 
 - Autenticação: Apenas o dono do recurso.
 - Detalhes: Listar todas as atividades que o aluno participa.
@@ -267,13 +255,13 @@ Post /api/user/{userID}/activity/{id}/record
 Get /api/user/{userId}/activity
 ```
 
-### Request
+#### Request
 
 ```json
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 {
@@ -292,7 +280,7 @@ sem corpo de requisição
 }
 ```
 
-## Listar todos os records de uma atividade do aluno
+### Listar todos os records de uma atividade do aluno
 
 - Autenticação: Apenas o dono do recurso.
 - Detalhes: Listar todas os records de um aluno em uma atividade.
@@ -301,13 +289,13 @@ sem corpo de requisição
 Get /api/user/{userId}/activity/{activityId}/record
 ```
 
-### Request
+#### Request
 
 ```json
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 {
@@ -334,7 +322,37 @@ sem corpo de requisição
 }
 ```
 
-## Adicionar uma nova atividade
+### Obter dados de usuário por id
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Obter dados de usuário por id.
+
+```
+Get /api/user/{idUser}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    }
+}
+```
+
+## Rotas Atividade
+
+### Adicionar uma nova atividade
 
 - Autenticação: Apenas Adm.
 - Detalhes: Adicionar uma nova atividade dentro da plataforma.
@@ -343,7 +361,7 @@ sem corpo de requisição
 Post /api/activity
 ```
 
-### Request
+#### Request
 
 ```json
 {
@@ -351,7 +369,7 @@ Post /api/activity
 }
 ```
 
-### Response 201 Created
+#### Response 201 Created
 
 ```json
 {
@@ -360,7 +378,7 @@ Post /api/activity
 }
 ```
 
-## Listar todas as atividade
+### Listar todas as atividade
 
 - Autenticação: usuários autenticados,
 - Detalhes: Listar todas as atividade
@@ -369,13 +387,13 @@ Post /api/activity
 Get /api/activity
 ```
 
-### Request
+#### Request
 
 ```json
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 {
