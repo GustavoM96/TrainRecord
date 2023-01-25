@@ -92,10 +92,10 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 
 ## ✔️ Obter dados de usuário por id
 
-- controller/rota
-- mediator (comando, handler)
-- validação campos
-- autenticação
-- response
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação campos
+- ✔️ autenticação
+- ✔️ response
 
 # Pendências
