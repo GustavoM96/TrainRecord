@@ -3,7 +3,7 @@
 Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 ✔️❌
 
-## ❌ Comum
+## ✔️ Comum
 
 - ✔️ template projeto (Api, Infra,Core, Application)
 - ✔️ config Db e conn
