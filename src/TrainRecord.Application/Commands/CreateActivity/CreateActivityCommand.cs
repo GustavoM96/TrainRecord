@@ -44,8 +44,6 @@ public class CreateActivityCommandHandler
         }
 
         await _activityRepository.AddAsync(newActivity);
-        await _activityRepository.SaveChangesAsync();
-
         return newActivity;
     }
 }

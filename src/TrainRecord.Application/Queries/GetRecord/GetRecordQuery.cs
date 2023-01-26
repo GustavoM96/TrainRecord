@@ -39,7 +39,7 @@ public class GetRecordQueryHandler : IRequestHandler<GetRecordQuery, ErrorOr<Pag
     )
     {
         return _userActivityRepository
-            .GetRecordByUserAndActivityId(request.UserId, request.ActivityId)
+            .GetAllRecordByUserAndActivityId(request.UserId, request.ActivityId)
             .AsPage(request.Pagination);
     }
 }

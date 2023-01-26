@@ -62,8 +62,8 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 
         if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))
         {
-            var userWithRehashedPassword = _genaratorHash.SetUserWithRehashedPassword(userFound);
-            _userRepository.Update(userWithRehashedPassword);
+            var rehashedPassword = _genaratorHash.Generate(userFound);
+            _userRepository.UpdatePasswordById(rehashedPassword, userFound.Id);
         }
 
         var token = _genaratorToken.Generate(userFound);

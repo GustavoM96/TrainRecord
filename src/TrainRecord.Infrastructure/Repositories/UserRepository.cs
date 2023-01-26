@@ -23,5 +23,10 @@ namespace TrainRecord.Infrastructure.Repositories
         {
             return await AnyAsync(u => u.Email == email);
         }
+
+        public async Task<bool> UpdatePasswordById(string password, Guid userId)
+        {
+            return await UpdateById(u => u.SetProperty(u => u.Password, u => password), userId);
+        }
     }
 }

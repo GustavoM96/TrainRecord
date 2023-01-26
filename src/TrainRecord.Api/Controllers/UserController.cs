@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
+using TrainRecord.Application.DeleteAllRecordByUserActivity;
+using TrainRecord.Application.DeleteRecord;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.GetActivityByUserQuery;
 using TrainRecord.Application.GetAllUserQuery;
@@ -60,9 +62,9 @@ public class UserController : ApiController
         );
     }
 
-    [HttpGet("{userId}/Activity/{activityId}/[action]")]
+    [HttpGet("{userId}/Activity/{activityId}/Record")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Record(
+    public async Task<IActionResult> GetAllRecord(
         Guid userId,
         Guid activityId,
         [FromQuery] Pagination pagination
@@ -107,6 +109,24 @@ public class UserController : ApiController
 
         return registerResult.Match<IActionResult>(
             result => Ok(result),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpDelete("{userId}/Activity/{activityId}/Record")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> DeleteAllRecord(Guid userId, Guid activityId)
+    {
+        var query = new DeleteAllRecordByUserActivityCommand()
+        {
+            UserId = userId,
+            ActivityId = activityId,
+        };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match<IActionResult>(
+            result => NoContent(),
             errors => ProblemErrors(errors)
         );
     }

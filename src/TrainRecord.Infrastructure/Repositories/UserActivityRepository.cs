@@ -25,9 +25,24 @@ namespace TrainRecord.Infrastructure.Repositories
                 .Distinct();
         }
 
-        public IQueryable<UserActivity> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public IQueryable<UserActivity> GetAllRecordByUserAndActivityId(
+            Guid userId,
+            Guid activityId
+        )
         {
             return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
+        }
+
+        public async Task<UserActivity> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
+        {
+            return await SingleOrDefaultAsync(
+                ua => ua.UserId == userId && ua.ActivityId == activityId
+            );
+        }
+
+        public async Task<bool> DeleteRecordByUserAndActivityId(Guid userId, Guid activityId)
+        {
+            return await Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
     }
 }

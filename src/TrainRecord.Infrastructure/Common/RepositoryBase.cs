@@ -4,6 +4,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
@@ -36,14 +38,40 @@ namespace TrainRecord.Infrastructure.Common
             return _context.Set<TEntity>();
         }
 
+        protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
+        {
+            var afectedRows = await Where(expression).ExecuteDeleteAsync();
+            return afectedRows > 0;
+        }
+
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
         }
 
+        public EntityEntry<TEntity> Delete(TEntity entity)
+        {
+            return _dbSet.Remove(entity);
+        }
+
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
+            return affectedRows > 0;
+        }
+
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
+        }
+
+        protected async Task<bool> UpdateById(
+            Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
+            Guid id
+        )
+        {
+            var affectedRows = await Where(e => e.Id == id).ExecuteUpdateAsync(setPropertyCalls);
+            return affectedRows > 0;
         }
 
         protected async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
@@ -86,11 +114,6 @@ namespace TrainRecord.Infrastructure.Common
         public Page<TAdapt> AsPage<TAdapt>(Pagination pagination)
         {
             return AsQueryable().AsPage<TEntity, TAdapt>(pagination);
-        }
-
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
         }
     }
 }

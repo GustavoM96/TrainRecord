@@ -52,8 +52,6 @@ public class RegisterUserCommandHandler
         var newUser = (user, passwordHash).Adapt<User>();
 
         await _userRepository.AddAsync(newUser);
-        await _userRepository.SaveChangesAsync();
-
         return newUser.Adapt<RegisterUserResponse>();
     }
 }
