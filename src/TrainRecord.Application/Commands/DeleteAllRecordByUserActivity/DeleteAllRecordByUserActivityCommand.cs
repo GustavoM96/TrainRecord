@@ -38,17 +38,11 @@ public class DeleteAllRecordByUserActivityCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var records = _userActivityRepository.GetAllRecordByUserAndActivityId(
+        var deleted = await _userActivityRepository.DeleteRecordByUserAndActivityId(
             request.UserId,
             request.ActivityId
         );
 
-        if (!records.Any())
-        {
-            return UserActivityErrors.NotFound;
-        }
-
-        _userActivityRepository.DeleteAll(records);
-        return Result.Deleted;
+        return deleted ? Result.Deleted : UserActivityErrors.NotFound;
     }
 }

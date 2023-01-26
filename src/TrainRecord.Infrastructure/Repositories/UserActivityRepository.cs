@@ -37,5 +37,10 @@ namespace TrainRecord.Infrastructure.Repositories
         {
             return SingleOrDefaultAsync(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
+
+        public Task<bool> DeleteRecordByUserAndActivityId(Guid userId, Guid activityId)
+        {
+            return Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
+        }
     }
 }

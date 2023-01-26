@@ -34,12 +34,7 @@ public class DeleteRecordCommandHandler : IRequestHandler<DeleteRecordCommand, E
         CancellationToken cancellationToken
     )
     {
-        var deleted = await _userActivityRepository.DeleteIfExistsById(request.RecordId);
-        if (!deleted)
-        {
-            return UserActivityErrors.NotFound;
-        }
-
-        return Result.Deleted;
+        var deleted = await _userActivityRepository.DeleteById(request.RecordId);
+        return deleted ? Result.Deleted : UserActivityErrors.NotFound;
     }
 }

@@ -37,6 +37,12 @@ namespace TrainRecord.Infrastructure.Common
             return _context.Set<TEntity>();
         }
 
+        protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
+        {
+            var afectedRows = await Where(expression).ExecuteDeleteAsync();
+            return afectedRows > 0;
+        }
+
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
@@ -45,6 +51,12 @@ namespace TrainRecord.Infrastructure.Common
         public EntityEntry<TEntity> Delete(TEntity entity)
         {
             return _dbSet.Remove(entity);
+        }
+
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var afectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
+            return afectedRows > 0;
         }
 
         public async Task<bool> DeleteIfExistsById(Guid id)
