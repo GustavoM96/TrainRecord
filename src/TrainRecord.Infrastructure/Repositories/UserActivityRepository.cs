@@ -33,14 +33,16 @@ namespace TrainRecord.Infrastructure.Repositories
             return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
 
-        public Task<UserActivity> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public async Task<UserActivity> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
         {
-            return SingleOrDefaultAsync(ua => ua.UserId == userId && ua.ActivityId == activityId);
+            return await SingleOrDefaultAsync(
+                ua => ua.UserId == userId && ua.ActivityId == activityId
+            );
         }
 
-        public Task<bool> DeleteRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public async Task<bool> DeleteRecordByUserAndActivityId(Guid userId, Guid activityId)
         {
-            return Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
+            return await Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
     }
 }
