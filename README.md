@@ -17,13 +17,16 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
     - [Login conta](#login-conta)
   - [Rotas de Usuário](#rotas-usuário)
     - [Listar todas os usuários](#listar-todas-os-usuários)
-    - [Adicionar record de atividade](#adicionar-record-de-atividade)
     - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
-    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
     - [Obter dados de usuário por id](#obter-dados-de-usuário-por-id)
   - [Rotas de Atividade](#rotas-atividade)
     - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
     - [Listar todas as atividade](#listar-todas-as-atividade)
+  - [Rotas de Record](#rotas-record)
+    - [Adicionar record de atividade](#adicionar-record-de-atividade)
+    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+    - [Deletar Record por id](#deletar-record-por-id)
+    - [Deletar Record por atividade do aluno](#deletar-record-por-atividade-do-aluno)
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -215,37 +218,6 @@ sem corpo de requisição
 }
 ```
 
-### Adicionar record de atividade
-
-- Autenticação: Apenas o dono do recurso.
-- Detalhes: Adicionar registro de alteração de atividade do aluno.
-
-```
-Post /api/user/{userID}/activity/{id}/record
-```
-
-#### Request
-
-```json
-{
-  "weight": 20,
-  "repetition": 4,
-  "serie": 2
-}
-```
-
-#### Response 201 Created
-
-```json
-{
-  "userId": "00000000-0000-0000-0000-000000000000",
-  "activityId": "00000000-0000-0000-0000-000000000000",
-  "weight": 20,
-  "repetition": 4,
-  "serie": 2
-}
-```
-
 ### Listar todas as atividades do aluno
 
 - Autenticação: Apenas o dono do recurso.
@@ -272,48 +244,6 @@ sem corpo de requisição
     },
     {
       "name": "flexão de braço",
-      "id": "00000000-0000-0000-0000-000000000000"
-    }
-  ],
-  "perPage": 2,
-  "pageNumber": 4
-}
-```
-
-### Listar todos os records de uma atividade do aluno
-
-- Autenticação: Apenas o dono do recurso.
-- Detalhes: Listar todas os records de um aluno em uma atividade.
-
-```
-Get /api/user/{userId}/activity/{activityId}/record
-```
-
-#### Request
-
-```json
-sem corpo de requisição
-```
-
-#### Response 200 Ok
-
-```json
-{
-  "items": [
-    {
-      "userId": "00000000-0000-0000-0000-000000000000",
-      "activityId": "00000000-0000-0000-0000-000000000000",
-      "weight": 0,
-      "repetition": 30,
-      "serie": 2,
-      "id": "00000000-0000-0000-0000-000000000000"
-    },
-    {
-      "userId": "00000000-0000-0000-0000-000000000000",
-      "activityId": "00000000-0000-0000-0000-000000000000",
-      "weight": 0,
-      "repetition": 100,
-      "serie": 5,
       "id": "00000000-0000-0000-0000-000000000000"
     }
   ],
@@ -410,6 +340,123 @@ sem corpo de requisição
   "perPage": 2,
   "pageNumber": 4
 }
+```
+
+## Rotas Record
+
+### Adicionar record de atividade
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Adicionar registro de alteração de atividade do aluno.
+
+```
+Post /api/user/{userID}/activity/{id}/record
+```
+
+#### Request
+
+```json
+{
+  "weight": 20,
+  "repetition": 4,
+  "serie": 2
+}
+```
+
+#### Response 201 Created
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "activityId": "00000000-0000-0000-0000-000000000000",
+  "weight": 20,
+  "repetition": 4,
+  "serie": 2
+}
+```
+
+### Listar todos os records de uma atividade do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os records de um aluno em uma atividade.
+
+```
+Get /api/user/{userId}/activity/{activityId}/record
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 0,
+      "repetition": 30,
+      "serie": 2,
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 0,
+      "repetition": 100,
+      "serie": 5,
+      "id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Deletar Record por id
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Deletar Record por id.
+
+```
+Delete /api/record/{recordId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
+```
+
+### Deletar Record por atividade do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Deletar Record por atividade do aluno.
+
+```
+Delete /api/user/{userId}/activity/{activityId}/record
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
 ```
 
 # Release 📦
