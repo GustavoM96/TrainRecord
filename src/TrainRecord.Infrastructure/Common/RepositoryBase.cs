@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
@@ -55,30 +56,22 @@ namespace TrainRecord.Infrastructure.Common
 
         public async Task<bool> DeleteById(Guid id)
         {
-            var afectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
-            return afectedRows > 0;
-        }
-
-        public async Task<bool> DeleteIfExistsById(Guid id)
-        {
-            var entity = await FindByIdAsync(id);
-            if (entity is null)
-            {
-                return false;
-            }
-
-            Delete(entity);
-            return true;
-        }
-
-        public void DeleteAll(IEnumerable<TEntity> entities)
-        {
-            _dbSet.RemoveRange(entities);
+            var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
+            return affectedRows > 0;
         }
 
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
+        }
+
+        protected async Task<bool> UpdateById(
+            Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
+            Guid id
+        )
+        {
+            var affectedRows = await Where(e => e.Id == id).ExecuteUpdateAsync(setPropertyCalls);
+            return affectedRows > 0;
         }
 
         protected async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)

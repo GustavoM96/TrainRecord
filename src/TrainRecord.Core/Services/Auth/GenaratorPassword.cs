@@ -17,12 +17,6 @@ namespace TrainRecord.Core.Services.Auth
             return hasher.HashPassword(user, user.Password);
         }
 
-        public User SetUserWithRehashedPassword(User user)
-        {
-            var reHashedPassword = Generate(user);
-            return (user, reHashedPassword).Adapt<User>();
-        }
-
         public PasswordVerificationResult VerifyHashedPassword(
             User user,
             string password,
