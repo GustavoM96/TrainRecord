@@ -55,8 +55,6 @@ public class CreateUserActivityCommandHandler
         }
 
         await _userActivityRepository.AddAsync(newUserActivity);
-        await _userActivityRepository.SaveChangesAsync();
-
         return newUserActivity;
     }
 

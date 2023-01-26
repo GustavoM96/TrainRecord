@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
@@ -39,6 +40,28 @@ namespace TrainRecord.Infrastructure.Common
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
+        }
+
+        public EntityEntry<TEntity> Delete(TEntity entity)
+        {
+            return _dbSet.Remove(entity);
+        }
+
+        public async Task<bool> DeleteIfExistsById(Guid id)
+        {
+            var entity = await FindByIdAsync(id);
+            if (entity is null)
+            {
+                return false;
+            }
+
+            Delete(entity);
+            return true;
+        }
+
+        public void DeleteAll(IEnumerable<TEntity> entities)
+        {
+            _dbSet.RemoveRange(entities);
         }
 
         public void Update(TEntity entity)
@@ -86,11 +109,6 @@ namespace TrainRecord.Infrastructure.Common
         public Page<TAdapt> AsPage<TAdapt>(Pagination pagination)
         {
             return AsQueryable().AsPage<TEntity, TAdapt>(pagination);
-        }
-
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
         }
     }
 }

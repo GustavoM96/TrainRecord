@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using TrainRecord.Application.Errors;
+using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Api.Common.Controller;
 
@@ -11,8 +12,12 @@ namespace TrainRecord.Api.Common.Controller;
 public abstract class ApiController : ControllerBase
 {
     private ISender _mediator = null!;
+    private IContextRepository _context = null!;
     protected ISender Mediator =>
         _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
+
+    private IContextRepository _contextRepository =>
+        _context ??= HttpContext.RequestServices.GetRequiredService<IContextRepository>();
 
     protected IActionResult ProblemErrors(List<Error> errors)
     {
@@ -55,5 +60,28 @@ public abstract class ApiController : ControllerBase
         };
 
         return Problem(statusCode: statusCode, title: error.Description);
+    }
+
+    protected IActionResult Ok(object? obj)
+    {
+        return base.Ok(obj);
+    }
+
+    protected IActionResult CreatedAtAction(string actionName, object? obj)
+    {
+        _contextRepository.SaveChangesAsync();
+        return base.CreatedAtAction(actionName, obj);
+    }
+
+    protected IActionResult CreatedAtAction(string actionName, object? routeValues, object? obj)
+    {
+        _contextRepository.SaveChangesAsync();
+        return base.CreatedAtAction(actionName, routeValues, obj);
+    }
+
+    protected IActionResult NoContent()
+    {
+        _contextRepository.SaveChangesAsync();
+        return base.NoContent();
     }
 }
