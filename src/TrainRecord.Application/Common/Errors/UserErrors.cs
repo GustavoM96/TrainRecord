@@ -10,7 +10,11 @@ namespace TrainRecord.Application.Errors
     {
         public static Error EmailExists =>
             Error.Conflict("User.EmailExists", "email de usuário já cadastrado");
-
+        public static Error UpdateInvalid =>
+            Error.Conflict(
+                "User.UpdateInvalid",
+                "não permitido atualizar usuário com os seguintes campos(email, senha, id)"
+            );
         public static Error NotFound =>
             Error.NotFound("User.EmailExists", "usuário não encontrado");
 

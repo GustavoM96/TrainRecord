@@ -12,12 +12,12 @@ namespace TrainRecord.Api.Common.Controller;
 public abstract class ApiController : ControllerBase
 {
     private ISender _mediator = null!;
-    private IContextRepository _context = null!;
+    private IRepositoryContext _context = null!;
     protected ISender Mediator =>
         _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-    private IContextRepository _contextRepository =>
-        _context ??= HttpContext.RequestServices.GetRequiredService<IContextRepository>();
+    private IRepositoryContext _contextRepository =>
+        _context ??= HttpContext.RequestServices.GetRequiredService<IRepositoryContext>();
 
     protected IActionResult ProblemErrors(List<Error> errors)
     {
@@ -64,6 +64,7 @@ public abstract class ApiController : ControllerBase
 
     protected IActionResult Ok(object? obj)
     {
+        _contextRepository.SaveChangesAsync();
         return base.Ok(obj);
     }
 
