@@ -16,26 +16,14 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common
 {
-    public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
+    public abstract class RepositoryBase<TEntity> : RepositoryContext, IRepositoryBase<TEntity>
         where TEntity : BaseAuditableEntity
     {
-        private readonly AppDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public RepositoryBase(AppDbContext context)
+        public RepositoryBase(AppDbContext context) : base(context)
         {
             _dbSet = context.Set<TEntity>();
-            _context = context;
-        }
-
-        protected DbSet<TDbSet> GetDbSet<TDbSet>() where TDbSet : BaseAuditableEntity
-        {
-            return _context.Set<TDbSet>();
-        }
-
-        protected DbSet<TEntity> GetDbSet()
-        {
-            return _context.Set<TEntity>();
         }
 
         protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
@@ -49,20 +37,15 @@ namespace TrainRecord.Infrastructure.Common
             await _dbSet.AddAsync(entity);
         }
 
-        public EntityEntry<TEntity> Delete(TEntity entity)
-        {
-            return _dbSet.Remove(entity);
-        }
-
         public async Task<bool> DeleteById(Guid id)
         {
             var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
             return affectedRows > 0;
         }
 
-        public void Update(TEntity entity)
+        public EntityEntry<TEntity> Update(TEntity entity)
         {
-            _dbSet.Update(entity);
+            return _dbSet.Update(entity);
         }
 
         protected async Task<bool> UpdateById(

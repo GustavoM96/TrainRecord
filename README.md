@@ -15,7 +15,9 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
   - [Rotas de Autenticação](#rotas-autenticação)
     - [Criar conta](#criar-conta)
     - [Login conta](#login-conta)
+    - [Trocar Senha](#trocar-senha)
   - [Rotas de Usuário](#rotas-usuário)
+    - [Atualizar dados do usuário](#atualizar-dados-do-usuário)
     - [Listar todas os usuários](#listar-todas-os-usuários)
     - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
     - [Obter dados de usuário por id](#obter-dados-de-usuário-por-id)
@@ -178,6 +180,31 @@ Post /api/auth/login
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
+### Trocar Senha
+
+- Autenticação: Dono do Recurso.
+- Detalhes: Trocar Senha.
+
+#### Request
+
+```
+Post /api/auth/changePassword
+```
+
+```json
+{
+  "email": "josé.silva@gmail.com",
+  "password": "sd#fd$904&3jkdf",
+  "newPassword": "sd#fd$904&3jkdf#NovaSenha"
+}
+```
+
+#### Response 204 NoContent
+
+```json
+Sem corpo de resposta
+```
+
 ## Rotas Usuário
 
 ### Listar todas os Usuários
@@ -215,6 +242,32 @@ sem corpo de requisição
   ],
   "perPage": 2,
   "pageNumber": 4
+}
+```
+
+### Atualizar dados do usuário
+
+- Autenticação: Dono do recurso.
+- Detalhes: Atualizar dados dos usuário.
+
+```
+Patch /api/user/{userId}
+```
+
+#### Request
+
+```json
+{ "firstName": "José#NomeTrocado" }
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "email": "josé.silva@gmail.com",
+  "firstName": "José#NomeTrocado",
+  "lastName": "Silva"
 }
 ```
 

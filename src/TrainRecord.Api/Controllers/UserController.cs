@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Security.Claims;
 using ErrorOr;
+using LaDeak.JsonMergePatch.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,9 @@ using TrainRecord.Application.GetActivityByUserQuery;
 using TrainRecord.Application.GetAllUserQuery;
 using TrainRecord.Application.GetRecordQuery;
 using TrainRecord.Application.GetUserByIdQuery;
+using TrainRecord.Application.UpdateUser;
 using TrainRecord.Core.Common;
+using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Requests;
 
@@ -127,6 +130,20 @@ public class UserController : ApiController
 
         return registerResult.Match<IActionResult>(
             result => NoContent(),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpPatch("{userId}")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> Update(Guid userId, Patch<User> patch)
+    {
+        var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
+
+        var registerResult = await Mediator.Send(command);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
             errors => ProblemErrors(errors)
         );
     }

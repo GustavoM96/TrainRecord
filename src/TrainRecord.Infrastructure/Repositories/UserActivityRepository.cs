@@ -18,7 +18,7 @@ namespace TrainRecord.Infrastructure.Repositories
 
         public IQueryable<Activity> GetActivitiesByUserId(Guid userId)
         {
-            var dbSetActivity = GetDbSet<Activity>();
+            var dbSetActivity = GetOtherDbSet<Activity>();
 
             return Where(ua => ua.UserId == userId)
                 .Join(dbSetActivity, ua => ua.ActivityId, a => a.Id, (_, a) => a)
