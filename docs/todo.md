@@ -98,4 +98,20 @@ Esse arquivo contém os passos a passos de desenvolvimento deste projeto
 - ✔️ autenticação
 - ✔️ response
 
+## ✔️ Atualizar dados do usuário
+
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação campos
+- ✔️ autenticação
+- ✔️ response
+
+## ✔️ Trocar Senha
+
+- ✔️ controller/rota
+- ✔️ mediator (comando, handler)
+- ✔️ validação campos
+- ✔️ autenticação
+- ✔️ response
+
 # Pendências
