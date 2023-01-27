@@ -26,28 +26,6 @@ namespace TrainRecord.Infrastructure.Common
             _dbSet = context.Set<TEntity>();
         }
 
-        protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
-        {
-            var afectedRows = await Where(expression).ExecuteDeleteAsync();
-            return afectedRows > 0;
-        }
-
-        public async Task AddAsync(TEntity entity)
-        {
-            await _dbSet.AddAsync(entity);
-        }
-
-        public async Task<bool> DeleteById(Guid id)
-        {
-            var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
-            return affectedRows > 0;
-        }
-
-        public EntityEntry<TEntity> Update(TEntity entity)
-        {
-            return _dbSet.Update(entity);
-        }
-
         protected async Task<bool> UpdateById(
             Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
             Guid id
@@ -77,6 +55,28 @@ namespace TrainRecord.Infrastructure.Common
         public async Task<bool> AnyByIdAsync(Guid id)
         {
             return await _dbSet.AnyAsync(e => e.Id == id);
+        }
+
+        protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
+        {
+            var afectedRows = await Where(expression).ExecuteDeleteAsync();
+            return afectedRows > 0;
+        }
+
+        public async Task AddAsync(TEntity entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
+        public async Task<bool> DeleteById(Guid id)
+        {
+            var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
+            return affectedRows > 0;
+        }
+
+        public EntityEntry<TEntity> Update(TEntity entity)
+        {
+            return _dbSet.Update(entity);
         }
 
         public async Task<TEntity> FindByIdAsync(Guid id)
