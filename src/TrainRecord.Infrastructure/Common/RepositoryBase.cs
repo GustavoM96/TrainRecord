@@ -52,15 +52,15 @@ namespace TrainRecord.Infrastructure.Common
             return _dbSet.Where(expression);
         }
 
-        public async Task<bool> AnyByIdAsync(Guid id)
-        {
-            return await _dbSet.AnyAsync(e => e.Id == id);
-        }
-
         protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
         {
             var afectedRows = await Where(expression).ExecuteDeleteAsync();
             return afectedRows > 0;
+        }
+
+        public async Task<bool> AnyByIdAsync(Guid id)
+        {
+            return await _dbSet.AnyAsync(e => e.Id == id);
         }
 
         public async Task AddAsync(TEntity entity)
