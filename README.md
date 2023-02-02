@@ -140,7 +140,8 @@ Post /api/auth/register
   "email": "josé.silva@gmail.com",
   "password": "sd#fd$904&3jkdf",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
@@ -151,7 +152,8 @@ Post /api/auth/register
   "id": "00000000-0000-0000-0000-000000000000",
   "email": "josé.silva@gmail.com",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
