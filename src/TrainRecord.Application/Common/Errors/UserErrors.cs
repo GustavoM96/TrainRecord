@@ -26,6 +26,11 @@ namespace TrainRecord.Application.Errors
                 "User.IsNotOwnerResource",
                 "usuário não é dono do recurso e não tem acesso de administrador"
             );
+        public static Error RegisterAdmInvalid =>
+            Error.Failure(
+                "User.RegisterAdmInvalid",
+                "usuário não pode registrar um adm, pois este não tem permissão de administrador"
+            );
         public static Error IsNotAdm =>
             Error.Failure("User.IsNotAdm", "usuário não tem acesso de administrador");
     }

@@ -11,6 +11,8 @@ using TrainRecord.Application.RegisterUser;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Enum;
+using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Core.Responses;
@@ -20,6 +22,7 @@ namespace TrainRecord.Application.GetAllUserQuery;
 public class GetAllUserQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 {
     public Pagination Pagination { get; init; }
+    public Role? Role { get; init; }
 }
 
 public class GetAllUserQueryHandler
@@ -37,6 +40,8 @@ public class GetAllUserQueryHandler
         CancellationToken cancellationToken
     )
     {
-        return _userRepository.AsPage<RegisterUserResponse>(request.Pagination);
+        return _userRepository
+            .GetAllByRole(request.Role)
+            .AsPageAdapted<User, RegisterUserResponse>(request.Pagination);
     }
 }

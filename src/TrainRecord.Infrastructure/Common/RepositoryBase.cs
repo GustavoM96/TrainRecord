@@ -96,7 +96,7 @@ namespace TrainRecord.Infrastructure.Common
 
         public Page<TAdapt> AsPage<TAdapt>(Pagination pagination)
         {
-            return AsQueryable().AsPage<TEntity, TAdapt>(pagination);
+            return AsQueryable().AsPageAdapted<TEntity, TAdapt>(pagination);
         }
     }
 }

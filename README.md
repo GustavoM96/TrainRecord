@@ -49,14 +49,13 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 
 ## Tools
 
-para a instalação dos tools deste projeto
+- csharpier.
+- husky.
+
+para a instalação dos tools deste projeto, basta executar o build do projeto TrainRecord.Api.csproj com o seguinte comando em seu terminal
 
 ```
-dotnet tool install csharpier
-```
-
-```
-dotnet tool install husky
+dotnet build
 ```
 
 ## Prettier
@@ -141,7 +140,8 @@ Post /api/auth/register
   "email": "josé.silva@gmail.com",
   "password": "sd#fd$904&3jkdf",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
@@ -152,7 +152,8 @@ Post /api/auth/register
   "id": "00000000-0000-0000-0000-000000000000",
   "email": "josé.silva@gmail.com",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
@@ -510,6 +511,48 @@ sem corpo de requisição
 
 ```json
 sem corpo de resposta
+```
+
+## Rotas Professores
+
+### Listar todas os Professores
+
+- Autenticação: Autenticado.
+- Detalhes: Listar todas os Professores.
+
+```
+Get /api/teacher
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "prof.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "prof.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 2
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
 ```
 
 # Release 📦

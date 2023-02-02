@@ -18,7 +18,7 @@ namespace TrainRecord.Core.Extentions
             return page;
         }
 
-        public static Page<TAdapt> AsPage<T, TAdapt>(
+        public static Page<TAdapt> AsPageAdapted<T, TAdapt>(
             this IQueryable<T> queryable,
             Pagination pagination
         )
@@ -35,7 +35,7 @@ namespace TrainRecord.Core.Extentions
             Pagination pagination
         )
         {
-            if (pagination.NotRequestedPage)
+            if (pagination.IsNotRequestedPage())
             {
                 return queryable;
             }
