@@ -651,7 +651,7 @@ sem corpo de requisição
       "email": "prof.josé.silva@gmail.com",
       "firstName": "José",
       "lastName": "Silva",
-      "Role": 22
+      "Role": 2
     },
     {
       "id": "00000000-0000-0000-0000-000000000001",
@@ -678,17 +678,14 @@ Post /api/student/{userId}/teacher/{teacherId}
 #### Request
 
 ```json
-{
-  "userId": "00000000-0000-0000-0000-000000000000",
-  "teacherId": "00000000-0000-0000-0000-000000000001"
-}
+Sem corpo de requisição
 ```
 
 #### Response 200 Ok
 
 ```json
 {
-  "userId": "00000000-0000-0000-0000-000000000000",
+  "studentId": "00000000-0000-0000-0000-000000000000",
   "teacherId": "00000000-0000-0000-0000-000000000001"
 }
 ```
