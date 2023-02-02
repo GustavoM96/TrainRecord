@@ -49,14 +49,13 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 
 ## Tools
 
-para a instalação dos tools deste projeto
+- csharpier.
+- husky.
+
+para a instalação dos tools deste projeto, basta executar o build do projeto TrainRecord.Api.csproj com o seguinte comando em seu terminal
 
 ```
-dotnet tool install csharpier
-```
-
-```
-dotnet tool install husky
+dotnet build
 ```
 
 ## Prettier

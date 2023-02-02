@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Core.Responses;
@@ -21,6 +22,7 @@ public class RegisterUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
     public string Password { get; init; }
     public string FirstName { get; init; }
     public string LastName { get; init; }
+    public Role Role { get; init; }
 }
 
 public class RegisterUserCommandHandler
@@ -28,11 +30,17 @@ public class RegisterUserCommandHandler
 {
     private readonly IGenaratorHash _genaratorHash;
     private readonly IUserRepository _userRepository;
+    private readonly ICurrentUserService _currentUserService;
 
-    public RegisterUserCommandHandler(IGenaratorHash genaratorHash, IUserRepository userRepository)
+    public RegisterUserCommandHandler(
+        IGenaratorHash genaratorHash,
+        IUserRepository userRepository,
+        ICurrentUserService currentUserService
+    )
     {
         _genaratorHash = genaratorHash;
         _userRepository = userRepository;
+        _currentUserService = currentUserService;
     }
 
     public async Task<ErrorOr<RegisterUserResponse>> Handle(
@@ -40,6 +48,11 @@ public class RegisterUserCommandHandler
         CancellationToken cancellationToken
     )
     {
+        if (request.Role == Role.Adm && !_currentUserService.IsAdmin)
+        {
+            return UserError.RegisterAdmInvalid;
+        }
+
         var user = request.Adapt<User>();
 
         var anyUser = await _userRepository.AnyByEmailAsync(user.Email);
