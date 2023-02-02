@@ -27,6 +27,8 @@ namespace TrainRecord.Core.Common
     {
         public int? PageNumber { get; init; }
         public int? PerPage { get; init; }
-        public bool NotRequestedPage => PageNumber is null || PerPage is null;
+        private bool NotRequestedPage => PageNumber is null || PerPage is null;
+
+        public bool IsNotRequestedPage() => NotRequestedPage;
     }
 }
