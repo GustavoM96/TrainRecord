@@ -24,7 +24,7 @@ namespace TrainRecord.Application.Errors
         public static Error IsNotOwnerResourceAndAdm =>
             Error.Failure(
                 "User.IsNotOwnerResource",
-                "usuário não é dono do recurso e não tem acesso de administrador"
+                "usuário não é dono do recurso ou não tem acesso de administrador"
             );
         public static Error RegisterAdmInvalid =>
             Error.Failure(
@@ -33,5 +33,15 @@ namespace TrainRecord.Application.Errors
             );
         public static Error IsNotAdm =>
             Error.Failure("User.IsNotAdm", "usuário não tem acesso de administrador");
+
+        public static Error TeacherNotFound =>
+            Error.NotFound("User.TeacherNotFound", "professor não encontrado");
+        public static Error IsNotTeacher =>
+            Error.Conflict(
+                "User.IsNotTeacher",
+                "professor a quem usuário deseja ser aluno, não tem regra de professor"
+            );
+        public static Error TeacherStudentExists =>
+            Error.Conflict("User.TeacherStudentExists", "usuário já é aluno desse professor");
     }
 }

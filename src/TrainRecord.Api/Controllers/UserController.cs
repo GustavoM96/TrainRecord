@@ -1,16 +1,9 @@
-﻿using System.Net;
-using System.Security.Claims;
-using ErrorOr;
-using LaDeak.JsonMergePatch.Abstractions;
-using MediatR;
+﻿using LaDeak.JsonMergePatch.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
-using TrainRecord.Application.CreateActivity;
 using TrainRecord.Application.CreateUserActivity;
 using TrainRecord.Application.DeleteAllRecordByUserActivity;
-using TrainRecord.Application.DeleteRecord;
-using TrainRecord.Application.Errors;
 using TrainRecord.Application.GetActivityByUserQuery;
 using TrainRecord.Application.GetAllUserQuery;
 using TrainRecord.Application.GetRecordQuery;
@@ -18,7 +11,6 @@ using TrainRecord.Application.GetUserByIdQuery;
 using TrainRecord.Application.UpdateUser;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Enum;
 using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Controllers;

@@ -1,7 +1,4 @@
-﻿using ErrorOr;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.LoginUser;
 using TrainRecord.Application.RegisterUser;
