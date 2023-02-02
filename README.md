@@ -122,11 +122,11 @@ Simplismente em seu terminal.
 
 - Mapeamento das rotas
 
-    <img src="assets/RouteApi.jpg" alt="drawing" width="1000px"/>
+    <img src="assets/Route.jpg" alt="drawing" width="1000px"/>
 
 - Entidades de Banco de dados
 
-    <img src="assets/TrainRecordDB.png" alt="drawing" width="1000px"/>
+    <img src="assets/TrainRecord.png" alt="drawing" width="1000px"/>
 
 <hr/>
 
