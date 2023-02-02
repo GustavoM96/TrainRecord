@@ -4,6 +4,7 @@ using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.CreateTeacherStudent;
 using TrainRecord.Application.DeleteTeacherStudent;
 using TrainRecord.Application.GetAllStudentByTeacherQuery;
+using TrainRecord.Application.GetAllTeacherByStudentQuery;
 using TrainRecord.Application.GetAllUserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
@@ -11,30 +12,16 @@ using TrainRecord.Core.Enum;
 namespace TrainRecord.Controllers;
 
 [ApiController]
-public class TeacherController : ApiController
+public class StudentController : ApiController
 {
-    [HttpGet]
-    [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
-    {
-        var query = new GetAllUserQuery() { Pagination = pagination, Role = Role.Teacher };
-
-        var registerResult = await Mediator.Send(query);
-
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
-    }
-
     [HttpGet("{userId}/[action]")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Student([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> Teacher([FromQuery] Pagination pagination, Guid userId)
     {
-        var query = new GetAllStudentByTeacherQuery()
+        var query = new GetAllTeacherByStudentQuery()
         {
             Pagination = pagination,
-            TeacherId = userId
+            StudentId = userId
         };
 
         var registerResult = await Mediator.Send(query);
@@ -45,20 +32,38 @@ public class TeacherController : ApiController
         );
     }
 
-    [HttpDelete("{userId}/Student/{studentId}")]
+    [HttpDelete("{userId}/Teacher/{teacherId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> RemoveStudentFromTeacher(Guid userId, Guid studentId)
+    public async Task<IActionResult> RemoveTeacherFromStudent(Guid userId, Guid teacherId)
     {
         var query = new DeleteTeacherStudentCommand()
         {
-            StudentId = studentId,
-            TeacherId = userId,
+            StudentId = userId,
+            TeacherId = teacherId,
         };
 
         var registerResult = await Mediator.Send(query);
 
         return registerResult.Match<IActionResult>(
             result => NoContent(),
+            errors => ProblemErrors(errors)
+        );
+    }
+
+    [HttpPost("{userId}/Teacher/{teacherId}")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId)
+    {
+        var query = new CreateTeacherStudentCommand()
+        {
+            StudentId = userId,
+            TeacherId = teacherId,
+        };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match<IActionResult>(
+            result => Ok(result),
             errors => ProblemErrors(errors)
         );
     }

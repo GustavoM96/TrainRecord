@@ -43,5 +43,11 @@ namespace TrainRecord.Application.Errors
             );
         public static Error TeacherStudentExists =>
             Error.Conflict("User.TeacherStudentExists", "usuário já é aluno desse professor");
+
+        public static Error TeacherStudentNotFound =>
+            Error.NotFound(
+                "User.TeacherStudentNotFound",
+                "não encontrado vinculação entre usuário e professor"
+            );
     }
 }

@@ -20,5 +20,26 @@ namespace TrainRecord.Infrastructure.Repositories
         {
             return await AnyAsync(t => t.TeacherId == teacherId && t.StudentId == studentId);
         }
+
+        public IQueryable<User> GetAllStudentByTeacherId(Guid teacherId)
+        {
+            var dbSetUser = GetOtherDbSet<User>();
+
+            return Where(ts => ts.TeacherId == teacherId)
+                .Join(dbSetUser, ts => ts.StudentId, u => u.Id, (_, u) => u);
+        }
+
+        public IQueryable<User> GetAllTeachersByStudentId(Guid studentId)
+        {
+            var dbSetUser = GetOtherDbSet<User>();
+
+            return Where(ts => ts.StudentId == studentId)
+                .Join(dbSetUser, ts => ts.TeacherId, u => u.Id, (_, u) => u);
+        }
+
+        public async Task<bool> DeleteTeacherStudentId(Guid studentId, Guid teacherId)
+        {
+            return await Delete(t => t.TeacherId == teacherId && t.StudentId == studentId);
+        }
     }
 }
