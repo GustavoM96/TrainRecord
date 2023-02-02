@@ -29,6 +29,8 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
     - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
     - [Deletar Record por id](#deletar-record-por-id)
     - [Deletar Record por atividade do aluno](#deletar-record-por-atividade-do-aluno)
+  - [Rotas de Professor](#rotas-de-professor)
+    - [Listar todas os Professores](#listar-todas-os-professores)
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -513,7 +515,7 @@ sem corpo de requisição
 sem corpo de resposta
 ```
 
-## Rotas Professores
+## Rotas de Professor
 
 ### Listar todas os Professores
 
