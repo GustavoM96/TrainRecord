@@ -7,7 +7,6 @@ using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
-using TrainRecord.Application.RegisterUser;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
 using TrainRecord.Core.Entities;

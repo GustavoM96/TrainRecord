@@ -20,6 +20,7 @@ public static class ConfigureServices
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();
         services.AddScoped<IUserActivityRepository, UserActivityRepository>();
+        services.AddScoped<ITeacherStudentRepository, TeacherStudentRepository>();
         services.AddScoped<IRepositoryContext, RepositoryContext>();
 
         var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;

@@ -29,6 +29,14 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
     - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
     - [Deletar Record por id](#deletar-record-por-id)
     - [Deletar Record por atividade do aluno](#deletar-record-por-atividade-do-aluno)
+  - [Rotas de Professor](#rotas-de-professor)
+    - [Listar todas os Professores](#listar-todas-os-professores)
+    - [Listar todas os Alunos por professor](#listar-todas-os-alunos-por-professor)
+    - [Remover aluno por professor](#remover-aluno-por-professor)
+  - [Rotas de Aluno](#rotas-de-professor)
+    - [Listar todas os professores do aluno](#listar-todas-os-professores-do-aluno)
+    - [Vincular aluno no professor](#vincular-aluno-no-professor)
+    - [Remover professor por aluno](#remover-professor-por-aluno)
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -513,7 +521,7 @@ sem corpo de requisição
 sem corpo de resposta
 ```
 
-## Rotas Professores
+## Rotas de Professor
 
 ### Listar todas os Professores
 
@@ -553,6 +561,154 @@ sem corpo de requisição
   "perPage": 2,
   "pageNumber": 4
 }
+```
+
+### Listar todas os Alunos por professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os Alunos por professor.
+
+```
+Get /api/teacher/{userId}/student
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "aluno.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "aluno.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 1
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Remover aluno por professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Remover aluno por professor.
+
+```
+Delete /api/teacher/{userId}/student/{studentId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
+```
+
+## Rotas de Aluno
+
+### Listar todas os professores do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os professores do aluno.
+
+```
+Get /api/student/{userId}/teacher
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "prof.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "prof.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 2
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Vincular aluno no professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Vincular aluno no professor.
+
+```
+Post /api/student/{userId}/teacher/{teacherId}
+```
+
+#### Request
+
+```json
+Sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "studentId": "00000000-0000-0000-0000-000000000000",
+  "teacherId": "00000000-0000-0000-0000-000000000001"
+}
+```
+
+### Remover professor por aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Remover professor por aluno.
+
+```
+Delete /api/student/{userId}/teacher/{teacherId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
 ```
 
 # Release 📦
