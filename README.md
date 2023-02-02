@@ -513,6 +513,48 @@ sem corpo de requisição
 sem corpo de resposta
 ```
 
+## Rotas Professores
+
+### Listar todas os Professores
+
+- Autenticação: Autenticado.
+- Detalhes: Listar todas os Professores.
+
+```
+Get /api/teacher
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "prof.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "prof.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 2
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
 # Release 📦
 
 - 0.1.0
