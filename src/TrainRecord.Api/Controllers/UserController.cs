@@ -2,13 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
-using TrainRecord.Application.CreateUserActivity;
-using TrainRecord.Application.DeleteAllRecordByUserActivity;
-using TrainRecord.Application.GetActivityByUserQuery;
-using TrainRecord.Application.GetAllUserQuery;
-using TrainRecord.Application.GetRecordQuery;
-using TrainRecord.Application.GetUserByIdQuery;
-using TrainRecord.Application.UpdateUser;
+using TrainRecord.Application.ActivityCommand;
+using TrainRecord.Application.ActivityQuery;
+using TrainRecord.Application.UserCommand;
+using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Requests;

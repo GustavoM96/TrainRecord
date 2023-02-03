@@ -1,9 +1,7 @@
 ﻿using ErrorOr;
 using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using TrainRecord.Application.Errors;
 using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Api.Common.Controller;

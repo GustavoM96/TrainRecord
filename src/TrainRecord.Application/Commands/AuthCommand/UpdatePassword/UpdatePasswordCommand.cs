@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ErrorOr;
 using Mapster;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Core.Responses;
 
-namespace TrainRecord.Application.UpdatePassword;
+namespace TrainRecord.Application.AuthCommand;
 
 public class UpdatePasswordCommand : IRequest<ErrorOr<Updated>>
 {

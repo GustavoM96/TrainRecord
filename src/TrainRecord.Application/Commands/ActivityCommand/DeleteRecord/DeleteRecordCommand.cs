@@ -3,7 +3,7 @@ using MediatR;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Interfaces.Repositories;
 
-namespace TrainRecord.Application.DeleteRecord;
+namespace TrainRecord.Application.ActivityCommand;
 
 public class DeleteRecordCommand : IRequest<ErrorOr<Deleted>>
 {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TrainRecord.Core.Exceptions;
+﻿using TrainRecord.Core.Exceptions;
 
 namespace TrainRecord.Core.Common
 {
