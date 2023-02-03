@@ -25,9 +25,9 @@ public class TeacherController : ApiController
         );
     }
 
-    [HttpGet("{userId}/[action]")]
+    [HttpGet("{userId}/Student")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Student([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> GetStudent([FromQuery] Pagination pagination, Guid userId)
     {
         var query = new GetAllStudentByTeacherQuery()
         {
