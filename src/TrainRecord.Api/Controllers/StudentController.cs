@@ -10,9 +10,9 @@ namespace TrainRecord.Controllers;
 [ApiController]
 public class StudentController : ApiController
 {
-    [HttpGet("{userId}/[action]")]
+    [HttpGet("{userId}/Teacher")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Teacher([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> GetAllTeacher([FromQuery] Pagination pagination, Guid userId)
     {
         var query = new GetAllTeacherByStudentQuery()
         {

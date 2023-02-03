@@ -15,9 +15,9 @@ namespace TrainRecord.Controllers;
 [ApiController]
 public class UserController : ApiController
 {
-    [HttpPost("{userId}/Activity/{activityId}/[action]")]
+    [HttpPost("{userId}/Activity/{activityId}/Record")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Record(
+    public async Task<IActionResult> CreateRecord(
         [FromRoute] Guid activityId,
         [FromRoute] Guid userId,
         [FromBody] CreateUserActivityRequest createUserActivityResquest
@@ -40,9 +40,9 @@ public class UserController : ApiController
         );
     }
 
-    [HttpGet("{userId}/[action]")]
+    [HttpGet("{userId}/Activity")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Activity(Guid userId, [FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetAllActivity(Guid userId, [FromQuery] Pagination pagination)
     {
         var query = new GetActivityByUserQuery() { UserId = userId, Pagination = pagination };
 
