@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
-using TrainRecord.Application.DeleteRecord;
+using TrainRecord.Application.ActivityCommand;
 
 namespace TrainRecord.Controllers;
 

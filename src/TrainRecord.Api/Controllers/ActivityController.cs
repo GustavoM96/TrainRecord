@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
-using TrainRecord.Application.CreateActivity;
-using TrainRecord.Application.GetAllActivity;
+using TrainRecord.Application.ActivityCommand;
+using TrainRecord.Application.ActivityQuery;
 using TrainRecord.Core.Common;
 
 namespace TrainRecord.Controllers;

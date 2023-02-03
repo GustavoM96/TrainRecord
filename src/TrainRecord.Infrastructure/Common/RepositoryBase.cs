@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Infrastructure;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common

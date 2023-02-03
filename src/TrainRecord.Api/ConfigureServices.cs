@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using TrainRecord.Api.Common.Policies.AdmRequirment;
 using TrainRecord.Api.Common.Policies.OwnerResourceRequirment;

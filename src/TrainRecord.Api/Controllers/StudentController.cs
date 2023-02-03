@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
-using TrainRecord.Application.CreateTeacherStudent;
-using TrainRecord.Application.DeleteTeacherStudent;
-using TrainRecord.Application.GetAllStudentByTeacherQuery;
-using TrainRecord.Application.GetAllTeacherByStudentQuery;
-using TrainRecord.Application.GetAllUserQuery;
+using TrainRecord.Application.UserCommand;
+using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
-using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Controllers;
 

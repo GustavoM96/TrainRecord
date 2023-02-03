@@ -1,5 +1,4 @@
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Core.Interfaces.Repositories;
 
