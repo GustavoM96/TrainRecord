@@ -7,7 +7,6 @@ using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityQuery;
 
-
 public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
 {
     public Guid UserId { get; init; }

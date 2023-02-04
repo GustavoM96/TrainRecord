@@ -4,6 +4,7 @@ using LaDeak.JsonMergePatch.Generated;
 using LaDeak.JsonMergePatch.Generated.SafeApi;
 using TrainRecord.Api;
 using TrainRecord.Api.Common.Policies.OwnerResourceRequirment;
+using TrainRecord.Api.Middlewares;
 using TrainRecord.Application;
 using TrainRecord.Core;
 using TrainRecord.Infrastructure;
@@ -40,6 +41,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.Use(
+    async (context, next) =>
+    {
+        context.Request.EnableBuffering();
+        await next();
+    }
+);
+
+app.UseMiddleware<LogMiddleware>();
+
 app.UseRouting();
 app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();

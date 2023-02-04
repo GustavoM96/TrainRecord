@@ -7,7 +7,6 @@ using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 
-
 public class GetUserByIdQuery : IRequest<ErrorOr<RegisterUserResponse>>
 {
     public Guid UserId { get; init; }

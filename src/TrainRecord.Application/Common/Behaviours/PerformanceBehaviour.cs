@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Common.Behaviours;
@@ -29,15 +30,15 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         var response = await next();
         _timer.Stop();
 
-        var elapsedMilliseconds = _timer.ElapsedMilliseconds;
+        var elapsed = await _timer.GetTimeAsync(() => next());
 
         var requestName = typeof(TRequest).Name;
         var userId = _currentUserService.UserId ?? string.Empty;
 
-        _logger.LogWarning(
-            "CleanArchitecture Long Running: {Name} Time: ({ElapsedMilliseconds} milliseconds) UserID: {@UserId} {@Request}",
+        _logger.LogInformation(
+            "TrainRecord Long Running: {Name} TimeSpan: {Elapsed} UserID: {@UserId} {@Request}",
             requestName,
-            elapsedMilliseconds,
+            elapsed,
             userId,
             request
         );
