@@ -11,7 +11,7 @@ namespace TrainRecord.Core.Extentions
     {
         public static TimeSpan GetTime(this Stopwatch stopwatch, Action action)
         {
-            stopwatch.Start();
+            stopwatch.Restart();
             action();
 
             var elapsed = stopwatch.Elapsed;
@@ -22,7 +22,7 @@ namespace TrainRecord.Core.Extentions
 
         public static async Task<TimeSpan> GetTimeAsync(this Stopwatch stopwatch, Func<Task> func)
         {
-            stopwatch.Start();
+            stopwatch.Restart();
             await func();
 
             var elapsed = stopwatch.Elapsed;
