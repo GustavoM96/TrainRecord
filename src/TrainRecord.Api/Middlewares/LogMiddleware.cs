@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using Microsoft.AspNetCore.Diagnostics;
 using TrainRecord.Core.Extentions;
 
 namespace TrainRecord.Api.Middlewares
@@ -29,14 +30,23 @@ namespace TrainRecord.Api.Middlewares
 
             request.Body.Position = 0;
             var bodyContent = await new StreamReader(request.Body).ReadToEndAsync();
+            var traceId = Activity.Current?.Id;
 
             _logger.LogInformation(
-                "TrainRecord Long Running: {path} BodyContent: {bodyContent} Elapsed: {elapsed} StatusCode: {statusCode}",
+                "TrainRecord Long Running: {path} BodyContent: {bodyContent} Elapsed: {elapsed} StatusCode: {statusCode} TraceId: {traceId}",
                 path,
                 bodyContent,
                 elapsed,
-                statusCode
+                statusCode,
+                traceId
             );
+
+            var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+            if (exception is not null)
+            {
+                _logger.LogError(exception, exception?.Message + "On TraceId: {traceId}", traceId);
+            }
         }
     }
 }
