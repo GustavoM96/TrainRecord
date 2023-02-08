@@ -11,14 +11,21 @@ using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common
 {
-    public abstract class RepositoryBase<TEntity> : RepositoryContext, IRepositoryBase<TEntity>
+    public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         where TEntity : AuditableEntityBase
     {
         private readonly DbSet<TEntity> _dbSet;
+        protected readonly AppDbContext _context;
 
-        public RepositoryBase(AppDbContext context) : base(context)
+        public RepositoryBase(AppDbContext context)
         {
             _dbSet = context.Set<TEntity>();
+            _context = context;
+        }
+
+        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase
+        {
+            return _context.Set<TDbSet>();
         }
 
         protected async Task<bool> UpdateById(
@@ -32,19 +39,19 @@ namespace TrainRecord.Infrastructure.Common
 
         protected async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbSet.AnyAsync(expression);
+            return await AsNoTracking().AnyAsync(expression);
         }
 
         protected async Task<TEntity> SingleOrDefaultAsync(
             Expression<Func<TEntity, bool>> expression
         )
         {
-            return await _dbSet.SingleOrDefaultAsync(expression);
+            return await AsNoTracking().SingleOrDefaultAsync(expression);
         }
 
         protected IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> expression)
         {
-            return _dbSet.Where(expression);
+            return AsNoTracking().Where(expression);
         }
 
         protected async Task<bool> Delete(Expression<Func<TEntity, bool>> expression)
@@ -55,7 +62,7 @@ namespace TrainRecord.Infrastructure.Common
 
         public async Task<bool> AnyByIdAsync(Guid id)
         {
-            return await _dbSet.AnyAsync(e => e.Id == id);
+            return await AsNoTracking().AnyAsync(e => e.Id == id);
         }
 
         public async Task AddAsync(TEntity entity)
@@ -76,22 +83,22 @@ namespace TrainRecord.Infrastructure.Common
 
         public async Task<TEntity> FindByIdAsync(Guid id)
         {
-            return await _dbSet.FindAsync(id);
+            return await SingleOrDefaultAsync(t => t.Id == id);
         }
 
-        public IQueryable<TEntity> AsQueryable()
+        public IQueryable<TEntity> AsNoTracking()
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.AsNoTracking();
         }
 
         public Page<TEntity> AsPage(Pagination pagination)
         {
-            return AsQueryable().AsPage(pagination);
+            return AsNoTracking().AsPage(pagination);
         }
 
         public Page<TAdapt> AsPage<TAdapt>(Pagination pagination)
         {
-            return AsQueryable().AsPageAdapted<TEntity, TAdapt>(pagination);
+            return AsNoTracking().AsPageAdapted<TEntity, TAdapt>(pagination);
         }
     }
 }

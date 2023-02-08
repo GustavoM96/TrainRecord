@@ -10,12 +10,12 @@ namespace TrainRecord.Api.Common.Controller;
 public abstract class ApiController : ControllerBase
 {
     private ISender _mediator = null!;
-    private IRepositoryContext _context = null!;
+    private IUnitOfWork _unitOfWork = null!;
     protected ISender Mediator =>
         _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-    private IRepositoryContext _contextRepository =>
-        _context ??= HttpContext.RequestServices.GetRequiredService<IRepositoryContext>();
+    private IUnitOfWork UnitOfWork =>
+        _unitOfWork ??= HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
 
     protected IActionResult ProblemErrors(List<Error> errors)
     {
@@ -62,25 +62,25 @@ public abstract class ApiController : ControllerBase
 
     protected IActionResult Ok(object? obj)
     {
-        _contextRepository.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync();
         return base.Ok(obj);
     }
 
     protected IActionResult CreatedAtAction(string actionName, object? obj)
     {
-        _contextRepository.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync();
         return base.CreatedAtAction(actionName, obj);
     }
 
     protected IActionResult CreatedAtAction(string actionName, object? routeValues, object? obj)
     {
-        _contextRepository.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync();
         return base.CreatedAtAction(actionName, routeValues, obj);
     }
 
     protected IActionResult NoContent()
     {
-        _contextRepository.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync();
         return base.NoContent();
     }
 }
