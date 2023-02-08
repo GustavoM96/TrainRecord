@@ -1,5 +1,6 @@
 using ErrorOr;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Exceptions
 {

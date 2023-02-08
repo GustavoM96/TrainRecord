@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Throw;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Exceptions;
 using TrainRecord.Core.Interfaces;
@@ -21,12 +22,9 @@ namespace TrainRecord.Api.Common.Policies.AdmRequirment
             AdmRequirment requirement
         )
         {
-            var isAdmin = _currentUserService.IsAdmin;
-
-            if (!isAdmin)
-            {
-                throw new AuthorizationException(UserError.IsNotAdm);
-            }
+            _currentUserService
+                .Throw(() => new AuthorizationException(UserError.IsNotAdm))
+                .IfFalse(u => u.IsAdmin);
 
             context.Succeed(requirement);
             return Task.CompletedTask;

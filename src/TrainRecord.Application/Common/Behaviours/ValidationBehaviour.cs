@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Throw;
 using ValidationException = TrainRecord.Core.Exceptions.ValidationException;
 
 namespace TrainRecord.Application.Common.Behaviours;
@@ -28,12 +29,8 @@ public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TReque
                 _validators.Select(v => v.ValidateAsync(context, cancellationToken))
             );
 
-            var failures = validationResults.Where(r => r.Errors.Any()).SelectMany(r => r.Errors);
-
-            if (failures.Any())
-            {
-                throw new ValidationException(failures);
-            }
+            var failures = validationResults.SelectMany(r => r.Errors);
+            failures.Throw(() => new ValidationException(failures)).IfNotEmpty();
         }
         return await next();
     }

@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace TrainRecord.Core.Commum
+namespace TrainRecord.Core.Commum.Bases
 {
     public abstract class HandlerException : Exception
     {

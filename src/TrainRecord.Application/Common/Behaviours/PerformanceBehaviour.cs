@@ -26,11 +26,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         CancellationToken cancellationToken
     )
     {
-        _timer.Start();
-        var response = await next();
-        _timer.Stop();
-
-        var elapsed = await _timer.GetTimeAsync(() => next());
+        var result = await _timer.GetTimeAsync(() => next());
 
         var requestName = typeof(TRequest).Name;
         var userId = _currentUserService.UserId ?? string.Empty;
@@ -38,11 +34,11 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         _logger.LogInformation(
             "TrainRecord Long Running: {Name} TimeSpan: {Elapsed} UserID: {@UserId} {@Request}",
             requestName,
-            elapsed,
+            result.Elapsed,
             userId,
             request
         );
 
-        return response;
+        return result.Value;
     }
 }

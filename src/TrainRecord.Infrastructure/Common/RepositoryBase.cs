@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
@@ -11,7 +12,7 @@ using TrainRecord.Infrastructure.Persistence;
 namespace TrainRecord.Infrastructure.Common
 {
     public abstract class RepositoryBase<TEntity> : RepositoryContext, IRepositoryBase<TEntity>
-        where TEntity : BaseAuditableEntity
+        where TEntity : AuditableEntityBase
     {
         private readonly DbSet<TEntity> _dbSet;
 

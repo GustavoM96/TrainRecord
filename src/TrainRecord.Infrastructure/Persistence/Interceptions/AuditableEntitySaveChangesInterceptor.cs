@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Extentions;
 
@@ -41,7 +42,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             if (context == null)
                 return;
 
-            foreach (var entry in context.ChangeTracker.Entries<BaseAuditableEntity>())
+            foreach (var entry in context.ChangeTracker.Entries<AuditableEntityBase>())
             {
                 if (entry.State == EntityState.Added)
                 {

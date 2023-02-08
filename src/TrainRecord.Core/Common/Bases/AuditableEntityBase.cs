@@ -1,6 +1,6 @@
-namespace TrainRecord.Core.Commum;
+namespace TrainRecord.Core.Commum.Bases;
 
-public class BaseAuditableEntity
+public class AuditableEntityBase
 {
     public Guid Id { get; init; } = Guid.NewGuid();
 

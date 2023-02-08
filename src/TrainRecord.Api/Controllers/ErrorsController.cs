@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Controllers
 {

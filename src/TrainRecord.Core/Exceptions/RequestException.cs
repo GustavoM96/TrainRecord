@@ -4,9 +4,9 @@ using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Exceptions
 {
-    public class PageException : HandlerException
+    public class RequestException : HandlerException
     {
-        public PageException(Error error)
+        public RequestException(Error error)
         {
             Errors = new List<Error>() { error };
         }

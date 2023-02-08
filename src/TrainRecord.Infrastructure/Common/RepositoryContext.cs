@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 
@@ -24,7 +25,7 @@ namespace TrainRecord.Infrastructure.Common
             _context.Entry(obj).State = EntityState.Detached;
         }
 
-        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : BaseAuditableEntity
+        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase
         {
             return _context.Set<TDbSet>();
         }
