@@ -1,4 +1,5 @@
-﻿using LaDeak.JsonMergePatch.Abstractions;
+﻿using System.Net.Mime;
+using LaDeak.JsonMergePatch.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
@@ -125,7 +126,8 @@ public class UserController : ApiController
 
     [HttpPatch("{userId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> Update(Guid userId, Patch<User> patch)
+    [Consumes("application/merge-patch+json")]
+    public async Task<IActionResult> Update(Guid userId, [FromBody] Patch<User> patch)
     {
         var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
 

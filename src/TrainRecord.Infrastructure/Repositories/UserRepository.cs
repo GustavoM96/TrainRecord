@@ -29,7 +29,7 @@ namespace TrainRecord.Infrastructure.Repositories
         {
             if (role is null)
             {
-                return AsQueryable();
+                return AsNoTracking();
             }
 
             return Where(u => u.Role == role.Value);

@@ -46,7 +46,6 @@ public class UpdateUserCommandHandler
             return UserError.UpdateInvalid;
         }
 
-        _userRepository.Detached(user);
         _userRepository.Update(updatedUser);
         return updatedUser.Adapt<RegisterUserResponse>();
     }
