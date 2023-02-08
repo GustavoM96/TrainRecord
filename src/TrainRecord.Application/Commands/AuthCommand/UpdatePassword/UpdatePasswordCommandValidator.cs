@@ -9,6 +9,7 @@ public class UpdatePasswordCommandValidator : AbstractValidator<UpdatePasswordCo
 
     public UpdatePasswordCommandValidator()
     {
+        RuleFor(u => u.Email).EmailAddress().NotEmpty();
         RuleFor(u => u.NewPassword).Matches(_passwordPattern).NotEmpty();
     }
 }
