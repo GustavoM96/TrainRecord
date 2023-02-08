@@ -17,7 +17,7 @@ namespace TrainRecord.Application.Errors
         public static Error LoginInvalid =>
             Error.NotFound("User.NotFound", "conta ou senha inválida");
 
-        public static Error IsNotOwnerResourceAndAdm =>
+        public static Error IsNotOwnerResourceNorAdm =>
             Error.Failure(
                 "User.IsNotOwnerResource",
                 "usuário não é dono do recurso ou não tem acesso de administrador"

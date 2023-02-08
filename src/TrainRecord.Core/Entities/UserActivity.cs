@@ -1,8 +1,9 @@
 using TrainRecord.Core.Commum;
+using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Entities;
 
-public class UserActivity : BaseAuditableEntity
+public class UserActivity : AuditableEntityBase
 {
     public Guid UserId { get; init; }
     public Guid ActivityId { get; init; }
