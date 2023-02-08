@@ -30,7 +30,7 @@ public class AuthController : ApiController
         );
     }
 
-    [HttpPost("[action]")]
+    [HttpPatch("[action]")]
     public async Task<IActionResult> ChangePassword(UpdatePasswordRequest request)
     {
         var loginUserCommand = new LoginUserCommand()
