@@ -32,7 +32,7 @@ public class CreateActivityCommandHandler
         var anyActivity = await _activityRepository.AnyByNameAsync(request.Name);
         if (anyActivity)
         {
-            return ActivityErrors.NameExists;
+            return ActivityErrors.NameAlreadyExists;
         }
 
         await _activityRepository.AddAsync(newActivity);
