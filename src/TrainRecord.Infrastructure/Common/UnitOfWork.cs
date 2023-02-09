@@ -19,7 +19,7 @@ namespace TrainRecord.Infrastructure.Common
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> RollBack()
+        public Task<int> RollBack()
         {
             var changedEntriesCopy = _context.ChangeTracker
                 .Entries()
@@ -35,7 +35,7 @@ namespace TrainRecord.Infrastructure.Common
                 entry.State = EntityState.Detached;
             }
 
-            return changedEntriesCopy.Count();
+            return Task.FromResult(changedEntriesCopy.Count());
         }
 
         public void Detached(object? obj)
