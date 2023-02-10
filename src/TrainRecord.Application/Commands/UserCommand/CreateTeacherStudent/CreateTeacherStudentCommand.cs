@@ -9,8 +9,8 @@ namespace TrainRecord.Application.UserCommand;
 
 public class CreateTeacherStudentCommand : IRequest<ErrorOr<TeacherStudent>>
 {
-    public Guid TeacherId { get; init; }
-    public Guid StudentId { get; init; }
+    public required Guid TeacherId { get; init; }
+    public required Guid StudentId { get; init; }
 }
 
 public class CreateTeacherStudentCommandHandler

@@ -40,7 +40,9 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
         public void UpdateEntities(DbContext? context)
         {
             if (context == null)
+            {
                 return;
+            }
 
             foreach (var entry in context.ChangeTracker.Entries<AuditableEntityBase>())
             {

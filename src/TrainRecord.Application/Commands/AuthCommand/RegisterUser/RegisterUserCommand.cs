@@ -12,11 +12,11 @@ namespace TrainRecord.Application.AuthCommand;
 
 public class RegisterUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
 {
-    public string Email { get; init; }
-    public string Password { get; init; }
-    public string FirstName { get; init; }
-    public string LastName { get; init; }
-    public Role Role { get; init; }
+    public required string Email { get; init; }
+    public required string Password { get; init; }
+    public required string FirstName { get; init; }
+    public required string LastName { get; init; }
+    public required Role Role { get; init; }
 }
 
 public class RegisterUserCommandHandler

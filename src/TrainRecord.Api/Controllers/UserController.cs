@@ -76,7 +76,7 @@ public class UserController : ApiController
     [Authorize(Policy = "IsAdm")]
     public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
-        var query = new GetAllUserQuery() { Pagination = pagination };
+        var query = new GetAllUserQuery() { Pagination = pagination, Role = null };
 
         var registerResult = await Mediator.Send(query);
 

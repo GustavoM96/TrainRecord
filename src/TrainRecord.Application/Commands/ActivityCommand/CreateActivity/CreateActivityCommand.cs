@@ -9,7 +9,7 @@ namespace TrainRecord.Application.ActivityCommand;
 
 public class CreateActivityCommand : IRequest<ErrorOr<Activity>>
 {
-    public string Name { get; init; }
+    public required string Name { get; init; }
 }
 
 public class CreateActivityCommandHandler

@@ -10,8 +10,8 @@ namespace TrainRecord.Application.AuthCommand;
 
 public class UpdatePasswordCommand : IRequest<ErrorOr<Updated>>
 {
-    public string Email { get; init; }
-    public string NewPassword { get; init; }
+    public required string Email { get; init; }
+    public required string NewPassword { get; init; }
 }
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
@@ -42,7 +42,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
         var userWithNewPassword = (user, request.NewPassword).Adapt<User>();
         var hashedNewPassword = _genaratorHash.Generate(userWithNewPassword);
 
-        _userRepository.UpdatePasswordById(hashedNewPassword, user.Id);
+        await _userRepository.UpdatePasswordById(hashedNewPassword, user.Id);
         return Result.Updated;
     }
 }
