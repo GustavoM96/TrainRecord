@@ -13,7 +13,7 @@ public class AuthController : ApiController
     {
         var registerResult = await Mediator.Send(userRegisterCommand);
 
-        return registerResult.Match<IActionResult>(
+        return registerResult.Match(
             result => CreatedAtAction("Login", result),
             errors => ProblemErrors(errors)
         );
@@ -24,10 +24,7 @@ public class AuthController : ApiController
     {
         var registerResult = await Mediator.Send(loginUserCommand);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpPatch("[action]")]
@@ -52,9 +49,6 @@ public class AuthController : ApiController
         };
         var updateResult = await Mediator.Send(updateCommand);
 
-        return updateResult.Match<IActionResult>(
-            result => NoContent(),
-            errors => ProblemErrors(errors)
-        );
+        return updateResult.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 }

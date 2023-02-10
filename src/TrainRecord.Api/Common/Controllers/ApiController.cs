@@ -60,25 +60,29 @@ public abstract class ApiController : ControllerBase
         return Problem(statusCode: statusCode, title: error.Description);
     }
 
-    protected IActionResult Ok(object? obj)
+    public override OkObjectResult Ok(object? obj)
     {
         UnitOfWork.SaveChangesAsync();
         return base.Ok(obj);
     }
 
-    protected IActionResult CreatedAtAction(string actionName, object? obj)
+    public override CreatedAtActionResult CreatedAtAction(string? actionName, object? obj)
     {
         UnitOfWork.SaveChangesAsync();
         return base.CreatedAtAction(actionName, obj);
     }
 
-    protected IActionResult CreatedAtAction(string actionName, object? routeValues, object? obj)
+    public override CreatedAtActionResult CreatedAtAction(
+        string? actionName,
+        object? routeValues,
+        object? obj
+    )
     {
         UnitOfWork.SaveChangesAsync();
         return base.CreatedAtAction(actionName, routeValues, obj);
     }
 
-    protected IActionResult NoContent()
+    public override NoContentResult NoContent()
     {
         UnitOfWork.SaveChangesAsync();
         return base.NoContent();

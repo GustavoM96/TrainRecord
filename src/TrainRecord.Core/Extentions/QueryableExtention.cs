@@ -7,7 +7,7 @@ namespace TrainRecord.Core.Extentions
     {
         public static Page<T> AsPage<T>(this IQueryable<T> queryable, Pagination pagination)
         {
-            var items = queryable.GetItemsByPagination(pagination);
+            var items = queryable.GetItemsByPagination(pagination).ToList();
             var page = pagination.Adapt<Page<T>>();
             page.AddItems(items);
 
@@ -19,7 +19,7 @@ namespace TrainRecord.Core.Extentions
             Pagination pagination
         )
         {
-            var items = queryable.GetItemsByPagination(pagination).Select(i => i.Adapt<TAdapt>());
+            var items = queryable.GetItemsByPagination(pagination).ProjectToType<TAdapt>().ToList();
             var page = pagination.Adapt<Page<TAdapt>>();
             page.AddItems(items);
 
@@ -36,8 +36,8 @@ namespace TrainRecord.Core.Extentions
                 return queryable;
             }
 
-            var perPage = pagination.PerPage.Value;
-            var pageNumber = pagination.PageNumber.Value;
+            var perPage = pagination.PerPage!.Value;
+            var pageNumber = pagination.PageNumber!.Value;
 
             var pageToSkip = (pageNumber - 1) * perPage;
             return queryable.Skip(pageToSkip).Take(perPage);

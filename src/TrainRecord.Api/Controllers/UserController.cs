@@ -35,8 +35,8 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(command);
 
-        return registerResult.Match<IActionResult>(
-            result => CreatedAtAction($"Activity", new { userId }, result),
+        return registerResult.Match(
+            result => CreatedAtAction($"GetAllActivity", new { userId }, result),
             errors => ProblemErrors(errors)
         );
     }
@@ -49,10 +49,7 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
@@ -72,10 +69,7 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet]
@@ -86,10 +80,7 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}")]
@@ -100,10 +91,7 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
@@ -118,10 +106,7 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => NoContent(),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
     [HttpPatch("{userId}")]
@@ -133,9 +118,6 @@ public class UserController : ApiController
 
         var registerResult = await Mediator.Send(command);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 }

@@ -50,11 +50,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
                     entry.Entity.CreatedAt = DateTime.Now;
                 }
 
-                if (
-                    entry.State == EntityState.Added
-                    || entry.State == EntityState.Modified
-                    || entry.HasChangedOwnedEntities()
-                )
+                if (entry.AddedOrModified() || entry.HasChangedOwnedEntities())
                 {
                     entry.Entity.LastModifiedBy = _currentUserService.UserId;
                     entry.Entity.LastModifiedAt = DateTime.Now;
