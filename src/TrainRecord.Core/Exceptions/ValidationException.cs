@@ -8,10 +8,7 @@ namespace TrainRecord.Core.Exceptions
     public class ValidationException : HandlerException
     {
         public ValidationException(IEnumerable<ValidationFailure> failures)
-        {
-            Errors = failures
-                .Select(f => Error.Validation(f.PropertyName, f.ErrorMessage))
-                .ToList();
-        }
+            : base(failures.Select(f => Error.Validation(f.PropertyName, f.ErrorMessage)).ToList())
+        { }
     }
 }
