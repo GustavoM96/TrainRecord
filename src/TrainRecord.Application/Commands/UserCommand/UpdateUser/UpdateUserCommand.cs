@@ -11,8 +11,8 @@ namespace TrainRecord.Application.UserCommand;
 
 public class UpdateUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
 {
-    public Patch<User> Patch { get; init; }
-    public Guid UserId { get; init; }
+    public required Patch<User> Patch { get; init; }
+    public required Guid UserId { get; init; }
 }
 
 public class UpdateUserCommandHandler

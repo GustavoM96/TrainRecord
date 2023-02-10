@@ -1,6 +1,5 @@
 using ErrorOr;
 using FluentValidation.Results;
-using TrainRecord.Core.Commum;
 using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Exceptions

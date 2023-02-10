@@ -9,8 +9,8 @@ namespace TrainRecord.Application.ActivityQuery;
 
 public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
 {
-    public Guid UserId { get; init; }
-    public Pagination Pagination { get; init; }
+    public required Guid UserId { get; init; }
+    public required Pagination Pagination { get; init; }
 }
 
 public class GetUserActivityQueryHandler

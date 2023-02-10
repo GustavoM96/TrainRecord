@@ -24,5 +24,16 @@ namespace TrainRecord.Infrastructure.Extentions
             var states = new EntityState[2] { EntityState.Added, EntityState.Modified };
             return states.Contains(entry.State);
         }
+
+        public static bool AnyChange(this EntityEntry entry)
+        {
+            var states = new EntityState[3]
+            {
+                EntityState.Added,
+                EntityState.Modified,
+                EntityState.Deleted
+            };
+            return states.Contains(entry.State);
+        }
     }
 }

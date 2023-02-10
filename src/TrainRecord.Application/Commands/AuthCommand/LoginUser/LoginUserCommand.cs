@@ -10,8 +10,8 @@ namespace TrainRecord.Application.AuthCommand;
 
 public class LoginUserCommand : IRequest<ErrorOr<LoginUserResponse>>
 {
-    public string Email { get; init; }
-    public string Password { get; init; }
+    public required string Email { get; init; }
+    public required string Password { get; init; }
 }
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
@@ -56,7 +56,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))
         {
             var rehashedPassword = _genaratorHash.Generate(userFound);
-            _userRepository.UpdatePasswordById(rehashedPassword, userFound.Id);
+            await _userRepository.UpdatePasswordById(rehashedPassword, userFound.Id);
         }
 
         var token = _genaratorToken.Generate(userFound);
