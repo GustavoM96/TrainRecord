@@ -36,7 +36,7 @@ public class UserController : ApiController
         var registerResult = await Mediator.Send(command);
 
         return registerResult.Match(
-            result => CreatedAtAction($"Activity", new { userId }, result),
+            result => CreatedAtAction($"GetAllActivity", new { userId }, result),
             errors => ProblemErrors(errors)
         );
     }

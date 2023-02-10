@@ -42,7 +42,7 @@ namespace TrainRecord.Infrastructure.Common
             return await AsNoTracking().AnyAsync(expression);
         }
 
-        protected async Task<TEntity> SingleOrDefaultAsync(
+        protected async Task<TEntity?> SingleOrDefaultAsync(
             Expression<Func<TEntity, bool>> expression
         )
         {
@@ -81,7 +81,7 @@ namespace TrainRecord.Infrastructure.Common
             return _dbSet.Update(entity);
         }
 
-        public async Task<TEntity> FindByIdAsync(Guid id)
+        public async Task<TEntity?> FindByIdAsync(Guid id)
         {
             return await SingleOrDefaultAsync(t => t.Id == id);
         }

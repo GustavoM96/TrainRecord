@@ -7,7 +7,7 @@ namespace TrainRecord.Core.Interfaces.Repositories;
 
 public interface IRepositoryBase<TEntity> where TEntity : class
 {
-    Task<TEntity> FindByIdAsync(Guid id);
+    Task<TEntity?> FindByIdAsync(Guid id);
     Task<bool> DeleteById(Guid id);
     Task AddAsync(TEntity entity);
     EntityEntry<TEntity> Update(TEntity entity);
