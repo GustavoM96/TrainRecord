@@ -16,9 +16,6 @@ public class RecordController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match<IActionResult>(
-            result => NoContent(),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 }
