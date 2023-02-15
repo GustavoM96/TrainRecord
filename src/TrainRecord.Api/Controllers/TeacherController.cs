@@ -5,6 +5,7 @@ using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
+using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Controllers;
 
@@ -13,7 +14,10 @@ public class TeacherController : ApiController
 {
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] Pagination pagination,
+        [FromQuery] UserQueryRequest userQueryRequest
+    )
     {
         var query = new GetAllUserQuery() { Pagination = pagination, Role = Role.Teacher };
 
