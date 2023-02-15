@@ -31,13 +31,13 @@ namespace TrainRecord.Core.Extentions
             Pagination pagination
         )
         {
-            if (pagination.IsNotRequestedPage())
+            if (pagination is null)
             {
                 return queryable;
             }
 
-            var perPage = pagination.PerPage!.Value;
-            var pageNumber = pagination.PageNumber!.Value;
+            var perPage = pagination.PerPage;
+            var pageNumber = pagination.PageNumber;
 
             var pageToSkip = (pageNumber - 1) * perPage;
             return queryable.Skip(pageToSkip).Take(perPage);
