@@ -26,7 +26,7 @@ namespace TrainRecord.Infrastructure.Repositories
             return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
 
-        public async Task<UserActivity> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public async Task<UserActivity?> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
         {
             return await SingleOrDefaultAsync(
                 ua => ua.UserId == userId && ua.ActivityId == activityId

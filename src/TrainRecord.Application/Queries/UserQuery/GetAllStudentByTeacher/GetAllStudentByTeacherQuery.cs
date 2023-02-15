@@ -10,8 +10,8 @@ namespace TrainRecord.Application.UserQuery;
 
 public class GetAllStudentByTeacherQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 {
-    public Pagination Pagination { get; init; }
-    public Guid TeacherId { get; init; }
+    public required Pagination Pagination { get; init; }
+    public required Guid TeacherId { get; init; }
 }
 
 public class GetAllStudentByTeacherQueryHandler

@@ -40,7 +40,9 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
         public void UpdateEntities(DbContext? context)
         {
             if (context == null)
+            {
                 return;
+            }
 
             foreach (var entry in context.ChangeTracker.Entries<AuditableEntityBase>())
             {
@@ -50,11 +52,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
                     entry.Entity.CreatedAt = DateTime.Now;
                 }
 
-                if (
-                    entry.State == EntityState.Added
-                    || entry.State == EntityState.Modified
-                    || entry.HasChangedOwnedEntities()
-                )
+                if (entry.AddedOrModified() || entry.HasChangedOwnedEntities())
                 {
                     entry.Entity.LastModifiedBy = _currentUserService.UserId;
                     entry.Entity.LastModifiedAt = DateTime.Now;

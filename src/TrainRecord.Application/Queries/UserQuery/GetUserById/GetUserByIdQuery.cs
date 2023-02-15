@@ -9,7 +9,7 @@ namespace TrainRecord.Application.UserQuery;
 
 public class GetUserByIdQuery : IRequest<ErrorOr<RegisterUserResponse>>
 {
-    public Guid UserId { get; init; }
+    public required Guid UserId { get; init; }
 }
 
 public class GetByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr<RegisterUserResponse>>

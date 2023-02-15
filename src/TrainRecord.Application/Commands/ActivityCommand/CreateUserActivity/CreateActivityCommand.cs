@@ -9,11 +9,11 @@ namespace TrainRecord.Application.ActivityCommand;
 
 public class CreateUserActivityCommand : IRequest<ErrorOr<UserActivity>>
 {
-    public Guid UserId { get; init; }
-    public Guid ActivityId { get; init; }
-    public int Weight { get; init; }
-    public int Repetition { get; init; }
-    public int Serie { get; init; }
+    public required Guid UserId { get; init; }
+    public required Guid ActivityId { get; init; }
+    public required int Weight { get; init; }
+    public required int Repetition { get; init; }
+    public required int Serie { get; init; }
 }
 
 public class CreateUserActivityCommandHandler

@@ -24,11 +24,11 @@ public class CurrentUserService : ICurrentUserService
     public bool IsAdmin => Role == "Adm";
     public bool IsOwnerResource => GetUserIdByRoute().EqualsIgnoreCase(UserId);
 
-    public string? GetUserIdByRoute()
+    public string GetUserIdByRoute()
     {
         var userId = _httpContext?.Request.RouteValues.GetValueOrDefault("userId");
 
         userId.ThrowIfNull(() => new RequestException(RequestError.UserIdNotFound));
-        return userId.ToString();
+        return userId.ToString()!;
     }
 }

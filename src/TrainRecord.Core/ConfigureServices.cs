@@ -20,7 +20,7 @@ namespace TrainRecord.Core
             services.AddScoped<IGenaratorToken, GenaratorToken>();
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-            var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value;
+            var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value!;
             var key = Encoding.ASCII.GetBytes(secretKey);
 
             services

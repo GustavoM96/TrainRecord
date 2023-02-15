@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Infrastructure.Extentions;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common
@@ -19,26 +20,19 @@ namespace TrainRecord.Infrastructure.Common
             return await _context.SaveChangesAsync();
         }
 
-        public Task<int> RollBack()
+        public int RollBack()
         {
-            var changedEntriesCopy = _context.ChangeTracker
-                .Entries()
-                .Where(
-                    e =>
-                        e.State == EntityState.Added
-                        || e.State == EntityState.Modified
-                        || e.State == EntityState.Deleted
-                );
+            var changedEntriesCopy = _context.ChangeTracker.Entries().Where(e => e.AnyChange());
 
             foreach (var entry in changedEntriesCopy)
             {
                 entry.State = EntityState.Detached;
             }
 
-            return Task.FromResult(changedEntriesCopy.Count());
+            return changedEntriesCopy.Count();
         }
 
-        public void Detached(object? obj)
+        public void Detached(object obj)
         {
             _context.Entry(obj).State = EntityState.Detached;
         }

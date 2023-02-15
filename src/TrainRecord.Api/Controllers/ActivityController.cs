@@ -16,7 +16,7 @@ public class ActivityController : ApiController
     {
         var registerResult = await Mediator.Send(createActivityCommand);
 
-        return registerResult.Match<IActionResult>(
+        return registerResult.Match(
             result => CreatedAtAction("GetAll", result),
             errors => ProblemErrors(errors)
         );
@@ -29,9 +29,6 @@ public class ActivityController : ApiController
         var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
         var registerResult = await Mediator.Send(getAllActivityQuery);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 }

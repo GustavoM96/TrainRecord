@@ -7,8 +7,8 @@ namespace TrainRecord.Application.UserCommand;
 
 public class DeleteTeacherStudentCommand : IRequest<ErrorOr<Deleted>>
 {
-    public Guid TeacherId { get; init; }
-    public Guid StudentId { get; init; }
+    public required Guid TeacherId { get; init; }
+    public required Guid StudentId { get; init; }
 }
 
 public class DeleteTeacherStudentCommandHandler

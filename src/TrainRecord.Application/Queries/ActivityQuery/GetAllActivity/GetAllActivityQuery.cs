@@ -8,7 +8,7 @@ namespace TrainRecord.Application.ActivityQuery;
 
 public class GetAllActivityQuery : IRequest<ErrorOr<Page<Activity>>>
 {
-    public Pagination Pagination { get; init; }
+    public required Pagination Pagination { get; init; }
 }
 
 public class GetAllActivityQueryHandler

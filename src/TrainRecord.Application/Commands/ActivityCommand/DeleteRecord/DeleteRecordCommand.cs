@@ -7,7 +7,7 @@ namespace TrainRecord.Application.ActivityCommand;
 
 public class DeleteRecordCommand : IRequest<ErrorOr<Deleted>>
 {
-    public Guid RecordId { get; init; }
+    public required Guid RecordId { get; init; }
 }
 
 public class DeleteRecordCommandHandler : IRequestHandler<DeleteRecordCommand, ErrorOr<Deleted>>
