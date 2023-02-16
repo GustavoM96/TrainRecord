@@ -15,7 +15,6 @@ namespace TrainRecord.Application.UserQuery;
 public class GetAllUserQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 {
     public required Pagination Pagination { get; init; }
-    public Role? Role { get; init; }
     public UserQueryRequest? UserQueryRequest { get; init; }
 }
 
@@ -35,7 +34,7 @@ public class GetAllUserQueryHandler
     )
     {
         return _userRepository
-            .GetAllByRole(request.Role)
+            .AsNoTracking()
             .Apply(request.UserQueryRequest)
             .AsPageAdapted<User, RegisterUserResponse>(request.Pagination);
     }

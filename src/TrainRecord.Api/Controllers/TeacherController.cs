@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.UserCommand;
@@ -16,13 +17,15 @@ public class TeacherController : ApiController
     [Authorize]
     public async Task<IActionResult> GetAll(
         [FromQuery] Pagination pagination,
-        [FromQuery] UserQueryRequest userQueryRequest
+        [FromQuery] TeacherQueryRequest teacherQueryRequest
     )
     {
+        var userQueryRequest = teacherQueryRequest.Adapt<UserQueryRequest>();
+        userQueryRequest.Role = Role.Teacher;
+
         var query = new GetAllUserQuery()
         {
             Pagination = pagination,
-            Role = Role.Teacher,
             UserQueryRequest = userQueryRequest
         };
 

@@ -24,15 +24,5 @@ namespace TrainRecord.Infrastructure.Repositories
         {
             return await UpdateById(u => u.SetProperty(u => u.Password, u => password), userId);
         }
-
-        public IQueryable<User> GetAllByRole(Role? role)
-        {
-            if (role is null)
-            {
-                return AsNoTracking();
-            }
-
-            return Where(u => u.Role == role.Value);
-        }
     }
 }
