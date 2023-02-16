@@ -19,7 +19,12 @@ public class TeacherController : ApiController
         [FromQuery] UserQueryRequest userQueryRequest
     )
     {
-        var query = new GetAllUserQuery() { Pagination = pagination, Role = Role.Teacher };
+        var query = new GetAllUserQuery()
+        {
+            Pagination = pagination,
+            Role = Role.Teacher,
+            UserQueryRequest = userQueryRequest
+        };
 
         var registerResult = await Mediator.Send(query);
 
