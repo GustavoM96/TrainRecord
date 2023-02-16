@@ -127,4 +127,15 @@ public class UserController : ApiController
 
         return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
+
+    [HttpDelete("{userId}/Record/{recordId}")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> DeleteRecord(Guid recordId)
+    {
+        var query = new DeleteRecordCommand() { RecordId = recordId, };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+    }
 }

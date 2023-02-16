@@ -36,7 +36,7 @@ public class TeacherController : ApiController
 
     [HttpGet("{userId}/Student")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> GetStudent([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> GetAllStudent([FromQuery] Pagination pagination, Guid userId)
     {
         var query = new GetAllStudentByTeacherQuery()
         {
@@ -62,5 +62,23 @@ public class TeacherController : ApiController
         var registerResult = await Mediator.Send(query);
 
         return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+    }
+
+    [HttpPost("{userId}/Student/{studentId}")]
+    [Authorize(Policy = "OwnerResource")]
+    public async Task<IActionResult> AddStudent(Guid userId, Guid studentId)
+    {
+        var query = new CreateTeacherStudentCommand()
+        {
+            StudentId = studentId,
+            TeacherId = userId,
+        };
+
+        var registerResult = await Mediator.Send(query);
+
+        return registerResult.Match(
+            result => CreatedAtAction("GetAllStudent", new { userId }, result),
+            errors => ProblemErrors(errors)
+        );
     }
 }
