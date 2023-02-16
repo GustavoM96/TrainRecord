@@ -74,9 +74,17 @@ public class UserController : ApiController
 
     [HttpGet]
     [Authorize(Policy = "IsAdm")]
-    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetAll(
+        [FromQuery] Pagination pagination,
+        [FromQuery] UserQueryRequest userQueryRequest
+    )
     {
-        var query = new GetAllUserQuery() { Pagination = pagination, Role = null };
+        var query = new GetAllUserQuery()
+        {
+            Pagination = pagination,
+            Role = null,
+            UserQueryRequest = userQueryRequest
+        };
 
         var registerResult = await Mediator.Send(query);
 

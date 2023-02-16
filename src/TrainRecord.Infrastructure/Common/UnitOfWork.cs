@@ -31,15 +31,5 @@ namespace TrainRecord.Infrastructure.Common
 
             return changedEntriesCopy.Count();
         }
-
-        public void Detached(object obj)
-        {
-            _context.Entry(obj).State = EntityState.Detached;
-        }
-
-        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase
-        {
-            return _context.Set<TDbSet>();
-        }
     }
 }

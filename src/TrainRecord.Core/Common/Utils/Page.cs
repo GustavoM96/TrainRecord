@@ -17,7 +17,9 @@ namespace TrainRecord.Core.Common
 
     public class Pagination
     {
-        public int PageNumber { get; init; }
-        public int PerPage { get; init; }
+        public int? PageNumber { get; init; }
+        public int? PerPage { get; init; }
+
+        public bool IsNotRequestedPage() => PageNumber is null || PerPage is null;
     }
 }
