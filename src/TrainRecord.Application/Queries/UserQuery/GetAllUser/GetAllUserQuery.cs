@@ -14,9 +14,9 @@ namespace TrainRecord.Application.UserQuery;
 
 public class GetAllUserQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 {
-    public Pagination Pagination { get; init; }
+    public required Pagination Pagination { get; init; }
     public Role? Role { get; init; }
-    public UserQueryRequest UserQueryRequest { get; init; }
+    public UserQueryRequest? UserQueryRequest { get; init; }
 }
 
 public class GetAllUserQueryHandler

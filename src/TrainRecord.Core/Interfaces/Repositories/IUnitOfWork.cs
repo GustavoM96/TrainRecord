@@ -4,5 +4,4 @@ public interface IUnitOfWork
 {
     Task<int> SaveChangesAsync();
     int RollBack();
-    void Detached(object obj);
 }
