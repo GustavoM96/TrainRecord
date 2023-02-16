@@ -52,6 +52,9 @@ public class StudentController : ApiController
 
         var registerResult = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return registerResult.Match(
+            result => CreatedAtAction("GetAllTeacher", new { userId }, result),
+            errors => ProblemErrors(errors)
+        );
     }
 }
