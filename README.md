@@ -30,6 +30,7 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
     - [Deletar Record por id](#deletar-record-por-id)
     - [Deletar Record por atividade do aluno](#deletar-record-por-atividade-do-aluno)
   - [Rotas de Professor](#rotas-de-professor)
+    - [Vincular professor no aluno](#vincular-professor-no-aluno)
     - [Listar todas os Professores](#listar-todas-os-professores)
     - [Listar todas os Alunos por professor](#listar-todas-os-alunos-por-professor)
     - [Remover aluno por professor](#remover-aluno-por-professor)
@@ -485,7 +486,7 @@ sem corpo de requisição
 - Detalhes: Deletar Record por id.
 
 ```
-Delete /api/record/{recordId}
+Delete /api/user/{userId}/record/{recordId}
 ```
 
 #### Request
@@ -522,6 +523,30 @@ sem corpo de resposta
 ```
 
 ## Rotas de Professor
+
+### Vincular professor no aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Vincular aluno no professor.
+
+```
+Post /api/teacher/{userId}/student/{studentId}
+```
+
+#### Request
+
+```json
+Sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "studentId": "00000000-0000-0000-0000-000000000000",
+  "teacherId": "00000000-0000-0000-0000-000000000001"
+}
+```
 
 ### Listar todas os Professores
 
