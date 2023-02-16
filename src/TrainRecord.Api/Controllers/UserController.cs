@@ -82,7 +82,6 @@ public class UserController : ApiController
         var query = new GetAllUserQuery()
         {
             Pagination = pagination,
-            Role = null,
             UserQueryRequest = userQueryRequest
         };
 
