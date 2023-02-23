@@ -80,12 +80,23 @@ No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do 
 
 # Rodando a aplicação ⚙️
 
+## Via Localmente
+
 Simplismente em seu terminal.
 
 ```sh
- git clone https://github.com/GustavoM96/TrainRecord.git
- dotnet build
- dotnet run --project src/TrainRecord.Api
+git clone https://github.com/GustavoM96/TrainRecord.git
+dotnet build
+dotnet run --project src/TrainRecord.Api
+```
+
+## Via Docker
+
+Simplismente em seu terminal.
+
+```sh
+git clone https://github.com/GustavoM96/TrainRecord.git
+docker compose up
 ```
 
 # Arquitetura 🏛️
