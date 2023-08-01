@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Application.Errors;
-using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityCommand;
 

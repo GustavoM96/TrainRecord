@@ -4,7 +4,7 @@ using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Core.Responses;
 
 namespace TrainRecord.Application.UserCommand;
