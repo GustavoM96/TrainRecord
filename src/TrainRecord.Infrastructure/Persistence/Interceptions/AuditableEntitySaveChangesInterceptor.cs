@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using TrainRecord.Core.Commum;
-using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Extentions;
 
 namespace TrainRecord.Infrastructure.Persistence.Interceptions

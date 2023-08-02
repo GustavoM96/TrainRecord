@@ -1,6 +1,3 @@
-using TrainRecord.Core.Commum.Bases;
-using TrainRecord.Core.Entities;
-
 namespace TrainRecord.Core.Interfaces;
 
 public interface IAuditableEntityBase

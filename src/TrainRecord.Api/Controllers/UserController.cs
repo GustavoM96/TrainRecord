@@ -7,6 +7,7 @@ using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Application.Requests;
+using TrainRecord.Application.UserCommand;
 
 namespace TrainRecord.Controllers;
 
@@ -30,9 +31,9 @@ public class UserController : ApiController
             UserId = new(userId)
         };
 
-        var registerResult = await Mediator.Send(command);
+        var result = await Mediator.Send(command);
 
-        return registerResult.Match(
+        return result.Match(
             result => CreatedAtAction($"GetAllActivity", new { userId }, result),
             errors => ProblemErrors(errors)
         );
@@ -44,9 +45,9 @@ public class UserController : ApiController
     {
         var query = new GetActivityByUserQuery() { UserId = new(userId), Pagination = pagination };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
@@ -64,9 +65,9 @@ public class UserController : ApiController
             Pagination = pagination
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet]
@@ -82,9 +83,9 @@ public class UserController : ApiController
             UserQueryRequest = userQueryRequest
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}")]
@@ -93,9 +94,9 @@ public class UserController : ApiController
     {
         var query = new GetUserByIdQuery() { UserId = new(userId) };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
@@ -108,20 +109,26 @@ public class UserController : ApiController
             ActivityId = new(activityId)
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
-    // removido updated
-    // [HttpPatch("{userId}")]
-    // [Authorize(Policy = "OwnerResource")]
-    // [Consumes("application/merge-patch+json")]
-    // public async Task<IActionResult> Update(Guid userId)
-    // {
-    //     var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
-    //     return Ok();
-    // }
+    [HttpPatch("{userId}")]
+    [Authorize(Policy = "OwnerResource")]
+    [Consumes("application/merge-patch+json")]
+    public async Task<IActionResult> Update(Guid userId, [FromBody] UpdateUserRequest request)
+    {
+        var command = new UpdateUserCommand()
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            UserId = new(userId)
+        };
+
+        var result = await Mediator.Send(command);
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
+    }
 
     [HttpDelete("{userId}/Record/{recordId}")]
     [Authorize(Policy = "OwnerResource")]
@@ -129,8 +136,8 @@ public class UserController : ApiController
     {
         var query = new DeleteRecordCommand() { RecordId = new(recordId), };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 }

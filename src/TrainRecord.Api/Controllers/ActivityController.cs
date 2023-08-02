@@ -14,9 +14,9 @@ public class ActivityController : ApiController
     [Authorize(Policy = "IsAdm")]
     public async Task<IActionResult> Create(CreateActivityCommand createActivityCommand)
     {
-        var registerResult = await Mediator.Send(createActivityCommand);
+        var result = await Mediator.Send(createActivityCommand);
 
-        return registerResult.Match(
+        return result.Match(
             result => CreatedAtAction("GetAll", result),
             errors => ProblemErrors(errors)
         );
@@ -27,8 +27,8 @@ public class ActivityController : ApiController
     public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
         var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
-        var registerResult = await Mediator.Send(getAllActivityQuery);
+        var result = await Mediator.Send(getAllActivityQuery);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 }

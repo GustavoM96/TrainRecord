@@ -5,8 +5,6 @@ using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
-using TrainRecord.Core.Commum.Bases;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Application.Requests;
 
@@ -31,9 +29,9 @@ public class TeacherController : ApiController
             UserQueryRequest = userQueryRequest
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}/Student")]
@@ -46,9 +44,9 @@ public class TeacherController : ApiController
             TeacherId = new(userId)
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpDelete("{userId}/Student/{studentId}")]
@@ -61,9 +59,9 @@ public class TeacherController : ApiController
             TeacherId = new(userId)
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
     [HttpPost("{userId}/Student/{studentId}")]
@@ -76,9 +74,9 @@ public class TeacherController : ApiController
             TeacherId = new(userId)
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(
+        return result.Match(
             result => CreatedAtAction("GetAllStudent", new { userId }, result),
             errors => ProblemErrors(errors)
         );

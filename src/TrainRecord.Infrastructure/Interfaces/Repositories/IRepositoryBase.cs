@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
