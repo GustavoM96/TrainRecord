@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mapster;
 using Microsoft.AspNetCore.Identity;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;

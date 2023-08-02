@@ -1,8 +1,6 @@
 using ErrorOr;
-using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 

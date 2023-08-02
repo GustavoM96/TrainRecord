@@ -1,6 +1,5 @@
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Infrastructure.Interfaces.Repositories;
 

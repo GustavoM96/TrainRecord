@@ -11,9 +11,9 @@ public class AuthController : ApiController
     [HttpPost("[action]")]
     public async Task<IActionResult> Register(RegisterUserCommand userRegisterCommand)
     {
-        var registerResult = await Mediator.Send(userRegisterCommand);
+        var result = await Mediator.Send(userRegisterCommand);
 
-        return registerResult.Match(
+        return result.Match(
             result => CreatedAtAction("Login", result),
             errors => ProblemErrors(errors)
         );
@@ -22,9 +22,9 @@ public class AuthController : ApiController
     [HttpPost("[action]")]
     public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
     {
-        var registerResult = await Mediator.Send(loginUserCommand);
+        var result = await Mediator.Send(loginUserCommand);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpPatch("[action]")]

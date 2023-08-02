@@ -31,9 +31,9 @@ public class UserController : ApiController
             UserId = new(userId)
         };
 
-        var registerResult = await Mediator.Send(command);
+        var result = await Mediator.Send(command);
 
-        return registerResult.Match(
+        return result.Match(
             result => CreatedAtAction($"GetAllActivity", new { userId }, result),
             errors => ProblemErrors(errors)
         );
@@ -45,9 +45,9 @@ public class UserController : ApiController
     {
         var query = new GetActivityByUserQuery() { UserId = new(userId), Pagination = pagination };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
@@ -65,9 +65,9 @@ public class UserController : ApiController
             Pagination = pagination
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet]
@@ -83,9 +83,9 @@ public class UserController : ApiController
             UserQueryRequest = userQueryRequest
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}")]
@@ -94,9 +94,9 @@ public class UserController : ApiController
     {
         var query = new GetUserByIdQuery() { UserId = new(userId) };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
@@ -109,9 +109,9 @@ public class UserController : ApiController
             ActivityId = new(activityId)
         };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
     [HttpPatch("{userId}")]
@@ -136,8 +136,8 @@ public class UserController : ApiController
     {
         var query = new DeleteRecordCommand() { RecordId = new(recordId), };
 
-        var registerResult = await Mediator.Send(query);
+        var result = await Mediator.Send(query);
 
-        return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 }
