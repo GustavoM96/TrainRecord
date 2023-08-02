@@ -5,8 +5,6 @@ using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.ActivityQuery;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
-using TrainRecord.Core.Commum.Bases;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Requests;
 
 namespace TrainRecord.Controllers;
@@ -43,7 +41,7 @@ public class UserController : ApiController
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> GetAllActivity(Guid userId, [FromQuery] Pagination pagination)
     {
-        var query = new GetActivityByUserQuery() { UserId = userId, Pagination = pagination };
+        var query = new GetActivityByUserQuery() { UserId = new(userId), Pagination = pagination };
 
         var registerResult = await Mediator.Send(query);
 

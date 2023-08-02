@@ -11,7 +11,7 @@ namespace TrainRecord.Application.ActivityQuery;
 public class GetRecordQuery : IRequest<ErrorOr<Page<UserActivity>>>
 {
     public required EntityId<User> UserId { get; init; }
-    public required EntityId<User> ActivityId { get; init; }
+    public required EntityId<Activity> ActivityId { get; init; }
     public required Pagination Pagination { get; init; }
 }
 
