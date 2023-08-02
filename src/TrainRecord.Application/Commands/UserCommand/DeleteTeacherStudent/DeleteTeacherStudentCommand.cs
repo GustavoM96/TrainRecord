@@ -1,14 +1,16 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Core.Commum.Bases;
+using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces.Repositories;
 
 namespace TrainRecord.Application.UserCommand;
 
 public class DeleteTeacherStudentCommand : IRequest<ErrorOr<Deleted>>
 {
-    public required Guid TeacherId { get; init; }
-    public required Guid StudentId { get; init; }
+    public required EntityId<User> TeacherId { get; init; }
+    public required EntityId<User> StudentId { get; init; }
 }
 
 public class DeleteTeacherStudentCommandHandler

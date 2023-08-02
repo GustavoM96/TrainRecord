@@ -3,6 +3,7 @@ using LaDeak.JsonMergePatch.Abstractions;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces.Repositories;
 using TrainRecord.Core.Responses;
@@ -11,8 +12,8 @@ namespace TrainRecord.Application.UserCommand;
 
 public class UpdateUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
 {
-    public required Patch<User> Patch { get; init; }
-    public required Guid UserId { get; init; }
+    // public required Patch<User> Patch { get; init; }
+    public required EntityId<User> UserId { get; init; }
 }
 
 public class UpdateUserCommandHandler
@@ -30,23 +31,28 @@ public class UpdateUserCommandHandler
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository.FindByIdAsync(request.UserId);
-        if (user is null)
-        {
-            return UserError.NotFound;
-        }
+        // var user = await _userRepository.FindByIdAsync(request.UserId);
+        // if (user is null)
+        // {
+        //     return UserError.NotFound;
+        // }
 
-        var updatedUser = request.Patch.ApplyPatch(user);
-        if (
-            user.Password != updatedUser.Password
-            || user.Email != updatedUser.Email
-            || user.Id != updatedUser.Id
-        )
-        {
-            return UserError.UpdateInvalid;
-        }
+        // var updatedUser = request.Patch.ApplyPatch(user);
+        // if (
+        //     user.Password != updatedUser.Password
+        //     || user.Email != updatedUser.Email
+        //     || user.Id != updatedUser.Id
+        // )
+        // {
+        //     return UserError.UpdateInvalid;
+        // }
 
-        _userRepository.Update(updatedUser);
-        return updatedUser.Adapt<RegisterUserResponse>();
+        // _userRepository.Update(updatedUser);
+        return new RegisterUserResponse()
+        {
+            Email = "",
+            FirstName = "",
+            LastName = ""
+        };
     }
 }

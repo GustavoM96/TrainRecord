@@ -4,6 +4,8 @@ using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
+using TrainRecord.Core.Commum.Bases;
+using TrainRecord.Core.Entities;
 
 namespace TrainRecord.Controllers;
 
@@ -17,7 +19,7 @@ public class StudentController : ApiController
         var query = new GetAllTeacherByStudentQuery()
         {
             Pagination = pagination,
-            StudentId = userId
+            StudentId = new(userId)
         };
 
         var registerResult = await Mediator.Send(query);
@@ -31,8 +33,8 @@ public class StudentController : ApiController
     {
         var query = new DeleteTeacherStudentCommand()
         {
-            StudentId = userId,
-            TeacherId = teacherId,
+            StudentId = new(userId),
+            TeacherId = new(teacherId)
         };
 
         var registerResult = await Mediator.Send(query);
@@ -46,8 +48,8 @@ public class StudentController : ApiController
     {
         var query = new CreateTeacherStudentCommand()
         {
-            StudentId = userId,
-            TeacherId = teacherId,
+            StudentId = new(userId),
+            TeacherId = new(teacherId)
         };
 
         var registerResult = await Mediator.Send(query);
