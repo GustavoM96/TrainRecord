@@ -1,6 +1,7 @@
-using System.Collections.Immutable;
+using LaDeak.JsonMergePatch.AspNetCore;
+using LaDeak.JsonMergePatch.Generated.SafeApi;
 using TrainRecord.Api;
-using TrainRecord.Api.Common.Policies.OwnerResourceRequirment;
+using TrainRecord.Api.Middlewares;
 using TrainRecord.Application;
 using TrainRecord.Core;
 using TrainRecord.Infrastructure;
@@ -11,7 +12,14 @@ var services = builder.Services;
 
 // Add services to the container.
 
-services.AddControllers();
+services
+    .AddControllers()
+    .AddMvcOptions(options =>
+    {
+        LaDeak.JsonMergePatch.Abstractions.JsonMergePatchOptions.Repository =
+            TypeRepository.Instance;
+        options.InputFormatters.Insert(0, new JsonMergePatchInputReader());
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
@@ -30,11 +38,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.Use(
+    async (context, next) =>
+    {
+        context.Request.EnableBuffering();
+        await next();
+    }
+);
+
+app.UseMiddleware<LogMiddleware>();
+
 app.UseRouting();
 app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ErrorOr;
+using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Exceptions
 {
-    public class PageException : Exception
+    public class PageException : HandlerException
     {
-        public PageException(string message) : base(message) { }
+        public PageException(Error error) : base(error) { }
     }
 }

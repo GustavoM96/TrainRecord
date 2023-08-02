@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ErrorOr;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TrainRecord.Api.Common.Base;
+using TrainRecord.Api.Common.Controller;
+using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Controllers
 {
@@ -17,10 +14,17 @@ namespace TrainRecord.Controllers
         {
             var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 
-            var errorUnexpected = Error.Unexpected("ErrorHandle.Unexpected", exception?.Message);
-            var erros = new List<Error>() { errorUnexpected };
+            if (exception is HandlerException handlerException)
+            {
+                return ProblemErrors(handlerException.Errors);
+            }
 
-            return ProblemErrors(erros);
+            var errorMessage = exception?.Message;
+            var unexpectedError = errorMessage is null
+                ? Error.Unexpected()
+                : Error.Unexpected(description: errorMessage);
+
+            return ProblemUniqueError(unexpectedError);
         }
     }
 }

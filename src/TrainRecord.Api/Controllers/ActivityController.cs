@@ -1,18 +1,9 @@
-﻿using System.Net;
-using System.Security.Claims;
-using ErrorOr;
-using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TrainRecord.Api.Common.Base;
-using TrainRecord.Application.CreateActivity;
-using TrainRecord.Application.CreateUserActivity;
-using TrainRecord.Application.Errors;
-using TrainRecord.Application.GetAllActivity;
-using TrainRecord.Application.GetUserActivity;
-using TrainRecord.Application.LoginUser;
-using TrainRecord.Application.RegisterUser;
-using TrainRecord.Core.Enum;
+using TrainRecord.Api.Common.Controller;
+using TrainRecord.Application.ActivityCommand;
+using TrainRecord.Application.ActivityQuery;
+using TrainRecord.Core.Common;
 
 namespace TrainRecord.Controllers;
 
@@ -20,26 +11,24 @@ namespace TrainRecord.Controllers;
 public class ActivityController : ApiController
 {
     [HttpPost]
-    [Authorize(Roles = "Adm")]
+    [Authorize(Policy = "IsAdm")]
     public async Task<IActionResult> Create(CreateActivityCommand createActivityCommand)
     {
         var registerResult = await Mediator.Send(createActivityCommand);
 
-        return registerResult.Match<IActionResult>(
-            result => CreatedAtAction("GetActivitiesByUser", result),
+        return registerResult.Match(
+            result => CreatedAtAction("GetAll", result),
             errors => ProblemErrors(errors)
         );
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] GetAllActivityQuery getAllActivityQuery)
+    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
     {
+        var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
         var registerResult = await Mediator.Send(getAllActivityQuery);
 
-        return registerResult.Match<IActionResult>(
-            result => Ok(result),
-            errors => ProblemErrors(errors)
-        );
+        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
     }
 }

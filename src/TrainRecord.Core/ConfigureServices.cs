@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Services.Auth;
+using TrainRecord.Infrastructure.Services.Identity;
 
 namespace TrainRecord.Core
 {
@@ -21,8 +18,9 @@ namespace TrainRecord.Core
         {
             services.AddScoped<IGenaratorHash, GenaratorHash>();
             services.AddScoped<IGenaratorToken, GenaratorToken>();
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-            var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value;
+            var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value!;
             var key = Encoding.ASCII.GetBytes(secretKey);
 
             services

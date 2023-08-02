@@ -46,6 +46,39 @@ namespace Infrastructure.Migrations
                     b.ToTable("Activities");
                 });
 
+            modelBuilder.Entity("TrainRecord.Core.Entities.TeacherStudent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherStudent");
+                });
+
             modelBuilder.Entity("TrainRecord.Core.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -114,6 +147,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Repetition")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Serie")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
@@ -127,6 +163,21 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserActivities");
+                });
+
+            modelBuilder.Entity("TrainRecord.Core.Entities.TeacherStudent", b =>
+                {
+                    b.HasOne("TrainRecord.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrainRecord.Core.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TrainRecord.Core.Entities.UserActivity", b =>

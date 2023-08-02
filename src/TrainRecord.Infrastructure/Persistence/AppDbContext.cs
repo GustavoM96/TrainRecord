@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interceptions;
+using TrainRecord.Infrastructure.Persistence.Interceptions;
 
 namespace TrainRecord.Infrastructure.Persistence;
 
@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<UserActivity> UserActivities => Set<UserActivity>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Activity> Activities => Set<Activity>();
+    public DbSet<TeacherStudent> TeacherStudent => Set<TeacherStudent>();
 
     public AppDbContext(
         DbContextOptions<AppDbContext> dbContextOptions,

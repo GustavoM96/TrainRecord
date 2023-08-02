@@ -2,19 +2,70 @@
 
 TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade de gerenciar atividades de academia para alunos e professores.
 
+- [Tecnologias 💻](#tecnologias-💻)
+  - [Tools](#tools)
+  - [Pacotes](#pacotes)
+  - [Prettier](#prettier)
+  - [Husky](#husky)
+- [Rodando a aplicação ⚙️](#rodando-a-aplicação-⚙️)
+- [Arquitetura 🏛️](#arquitetura-🏛️)
+  - [Pastas](#pastas)
+- [Documentação API 💼](#documentação-api-💼)
+  - [Diagramas](#diagramas)
+  - [Rotas de Autenticação](#rotas-autenticação)
+    - [Criar conta](#criar-conta)
+    - [Login conta](#login-conta)
+    - [Trocar Senha](#trocar-senha)
+  - [Rotas de Usuário](#rotas-usuário)
+    - [Atualizar dados do usuário](#atualizar-dados-do-usuário)
+    - [Listar todas os usuários](#listar-todas-os-usuários)
+    - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
+    - [Obter dados de usuário por id](#obter-dados-de-usuário-por-id)
+  - [Rotas de Atividade](#rotas-atividade)
+    - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
+    - [Listar todas as atividade](#listar-todas-as-atividade)
+  - [Rotas de Record](#rotas-record)
+    - [Adicionar record de atividade](#adicionar-record-de-atividade)
+    - [Listar todos os records de uma atividade do aluno](#listar-todos-os-records-de-uma-atividade-do-aluno)
+    - [Deletar Record por id](#deletar-record-por-id)
+    - [Deletar Record por atividade do aluno](#deletar-record-por-atividade-do-aluno)
+  - [Rotas de Professor](#rotas-de-professor)
+    - [Vincular professor no aluno](#vincular-professor-no-aluno)
+    - [Listar todas os Professores](#listar-todas-os-professores)
+    - [Listar todas os Alunos por professor](#listar-todas-os-alunos-por-professor)
+    - [Remover aluno por professor](#remover-aluno-por-professor)
+  - [Rotas de Aluno](#rotas-de-professor)
+    - [Listar todas os professores do aluno](#listar-todas-os-professores-do-aluno)
+    - [Vincular aluno no professor](#vincular-aluno-no-professor)
+    - [Remover professor por aluno](#remover-professor-por-aluno)
+- [Release 📦](#release-📦)
+- [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
+- [License 🪪](#license-🪪)
+
 # Tecnologias 💻
 
 - AspNet.Core SDK 7.0.100-rc.2.22477.23
 
 ## Pacotes
 
-- Mediatr: para gerenciar comandos e queries no padrão CQRS.
-- FluentValidation: para validação dos campos de request.
-- Mapster: para mapeamento dos objetos com Adapt<>().
-- ErrorOr: para retorno de api com erro ou o response.
-- Jwt: para autenticação do usuário.
-- PasswordHasher: hasher de senha do usuário.
-- Sqlite: apenas como banco de dados de desenvolvimento.
+- [Mediatr](https://github.com/jbogard/MediatR): para gerenciar comandos e queries no padrão CQRS.
+- [FluentValidation](https://docs.fluentvalidation.net/en/latest/): para validação dos campos de request.
+- [Mapster](https://github.com/MapsterMapper/Mapster): para mapeamento dos objetos com Adapt<>().
+- [ErrorOr](https://github.com/amantinband/error-or): para retorno de api com erro ou o response.
+- [Jwt](https://jwt.io/): para autenticação do usuário.
+- [PasswordHasher](<https://learn.microsoft.com/en-us/previous-versions/aspnet/dn468192(v%3dvs.108)>): hasher de senha do usuário.
+- [Sqlite](https://www.sqlite.org/docs.html): apenas como banco de dados de desenvolvimento.
+
+## Tools
+
+- csharpier.
+- husky.
+
+para a instalação dos tools deste projeto, basta executar o build do projeto TrainRecord.Api.csproj com o seguinte comando em seu terminal
+
+```
+dotnet build
+```
 
 ## Prettier
 
@@ -29,12 +80,23 @@ No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do 
 
 # Rodando a aplicação ⚙️
 
+## Via Localmente
+
 Simplismente em seu terminal.
 
 ```sh
- git clone https://github.com/GustavoM96/TrainRecord.git
- dotnet build
- dotnet run --project src/TrainRecord.Api
+git clone https://github.com/GustavoM96/TrainRecord.git
+dotnet build
+dotnet run --project src/TrainRecord.Api
+```
+
+## Via Docker
+
+Simplismente em seu terminal.
+
+```sh
+git clone https://github.com/GustavoM96/TrainRecord.git
+docker compose up
 ```
 
 # Arquitetura 🏛️
@@ -64,20 +126,30 @@ Simplismente em seu terminal.
 
 # Documentação API 💼
 
-Mapeamento das rotas
+## Diagramas
 
-<img src="assets/RouteApi.jpg" alt="drawing" width="500px"/>
+- Fluxos do usuário
 
-Entidades de Banco de dados
+    <img src="assets/Flow.jpg" alt="drawing" width="1000px"/>
 
-<img src="assets/TrainRecordDB.png" alt="drawing" width="500px"/>
+- Mapeamento das rotas
 
-## Criar conta
+    <img src="assets/Route.jpg" alt="drawing" width="1000px"/>
 
-- Autenticação Anônimo
-- Detalhes - registrar usuário dentro da plataforma
+- Entidades de Banco de dados
 
-### Request
+    <img src="assets/TrainRecord.png" alt="drawing" width="1000px"/>
+
+<hr/>
+
+## Rotas Autenticação
+
+### Criar conta
+
+- Autenticação: Anônimo.
+- Detalhes: registrar usuário dentro da plataforma.
+
+#### Request
 
 ```
 Post /api/auth/register
@@ -88,27 +160,29 @@ Post /api/auth/register
   "email": "josé.silva@gmail.com",
   "password": "sd#fd$904&3jkdf",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
-### Response 201 Created
+#### Response 201 Created
 
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000000",
   "email": "josé.silva@gmail.com",
   "firstName": "José",
-  "lastName": "Silva"
+  "lastName": "Silva",
+  "Role": 1
 }
 ```
 
-## Login conta
+### Login conta
 
-- Autenticação Anônimo,
-- Detalhes - autenticação do usuário
+- Autenticação: Anônimo.
+- Detalhes: autenticação do usuário.
 
-### Request
+#### Request
 
 ```
 Post /api/auth/login
@@ -121,81 +195,177 @@ Post /api/auth/login
 }
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 { "idToken": "fs432jnj543hb-lsdsdasdsadasd-df4545" }
 ```
 
-## Adicionar registro de alteração de atividade
+### Trocar Senha
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Adicionar registro de alteração de atividade
+- Autenticação: Dono do Recurso.
+- Detalhes: Trocar Senha.
+
+#### Request
 
 ```
-Post /api/activity/{id}/record
+Post /api/auth/changePassword
 ```
-
-### Request
 
 ```json
 {
-  "weight": 20,
-  "repetition": 4
+  "email": "josé.silva@gmail.com",
+  "password": "sd#fd$904&3jkdf",
+  "newPassword": "sd#fd$904&3jkdf#NovaSenha"
 }
 ```
 
-### Response 201 Created
+#### Response 204 NoContent
 
 ```json
-{
-  "userId": "00000000-0000-0000-0000-000000000000",
-  "activityId": "00000000-0000-0000-0000-000000000000",
-  "weight": 20,
-  "repetition": 4
-}
+Sem corpo de resposta
 ```
 
-## Listar todas as atividades do aluno
+## Rotas Usuário
 
-- Autenticação Apenas o dono do recurso,
-- Detalhes - Listar todas as atividades do aluno
+### Listar todas os Usuários
+
+- Autenticação: Apenas Adm.
+- Detalhes: Obter todos os usuários cadastrados na plataforma.
 
 ```
-Post /api/activity
+Get /api/user
 ```
 
-### Request
+#### Request
 
 ```json
 sem corpo de requisição
 ```
 
-### Response 200 Ok
+#### Response 200 Ok
 
 ```json
 {
-  [
+  "items": [
     {
-      "userId": "00000000-0000-0000-0000-000000000000",
-      "activityId": "00000000-0000-0000-0000-000000000000",
-      "weight": 20,
-      "repetition": 4
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa"
     }
-  ]
+  ],
+  "perPage": 2,
+  "pageNumber": 4
 }
 ```
 
-## Adicionar uma nova atividade
+### Atualizar dados do usuário
 
-- Autenticação - Apenas Adm,
-- Detalhes - Adicionar uma nova atividade
+- Autenticação: Dono do recurso.
+- Detalhes: Atualizar dados dos usuário.
+
+```
+Patch /api/user/{userId}
+```
+
+#### Request
+
+```json
+{ "firstName": "José#NomeTrocado" }
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "email": "josé.silva@gmail.com",
+  "firstName": "José#NomeTrocado",
+  "lastName": "Silva"
+}
+```
+
+### Listar todas as atividades do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas as atividades que o aluno participa.
+
+```
+Get /api/user/{userId}/activity
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "name": "pular corda",
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "name": "flexão de braço",
+      "id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Obter dados de usuário por id
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Obter dados de usuário por id.
+
+```
+Get /api/user/{idUser}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva"
+    }
+}
+```
+
+## Rotas Atividade
+
+### Adicionar uma nova atividade
+
+- Autenticação: Apenas Adm.
+- Detalhes: Adicionar uma nova atividade dentro da plataforma.
 
 ```
 Post /api/activity
 ```
 
-### Request
+#### Request
 
 ```json
 {
@@ -203,13 +373,378 @@ Post /api/activity
 }
 ```
 
-### Response 201 Created
+#### Response 201 Created
 
 ```json
 {
   "id": "00000000-0000-0000-0000-000000000000",
   "name": "flexão de braço"
 }
+```
+
+### Listar todas as atividade
+
+- Autenticação: usuários autenticados,
+- Detalhes: Listar todas as atividade
+
+```
+Get /api/activity
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "name": "flexão de braço"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "name": "pular corda"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+## Rotas Record
+
+### Adicionar record de atividade
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Adicionar registro de alteração de atividade do aluno.
+
+```
+Post /api/user/{userID}/activity/{id}/record
+```
+
+#### Request
+
+```json
+{
+  "weight": 20,
+  "repetition": 4,
+  "serie": 2
+}
+```
+
+#### Response 201 Created
+
+```json
+{
+  "userId": "00000000-0000-0000-0000-000000000000",
+  "activityId": "00000000-0000-0000-0000-000000000000",
+  "weight": 20,
+  "repetition": 4,
+  "serie": 2
+}
+```
+
+### Listar todos os records de uma atividade do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os records de um aluno em uma atividade.
+
+```
+Get /api/user/{userId}/activity/{activityId}/record
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 0,
+      "repetition": 30,
+      "serie": 2,
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "userId": "00000000-0000-0000-0000-000000000000",
+      "activityId": "00000000-0000-0000-0000-000000000000",
+      "weight": 0,
+      "repetition": 100,
+      "serie": 5,
+      "id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Deletar Record por id
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Deletar Record por id.
+
+```
+Delete /api/user/{userId}/record/{recordId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
+```
+
+### Deletar Record por atividade do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Deletar Record por atividade do aluno.
+
+```
+Delete /api/user/{userId}/activity/{activityId}/record
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
+```
+
+## Rotas de Professor
+
+### Vincular professor no aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Vincular aluno no professor.
+
+```
+Post /api/teacher/{userId}/student/{studentId}
+```
+
+#### Request
+
+```json
+Sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "studentId": "00000000-0000-0000-0000-000000000000",
+  "teacherId": "00000000-0000-0000-0000-000000000001"
+}
+```
+
+### Listar todas os Professores
+
+- Autenticação: Autenticado.
+- Detalhes: Listar todas os Professores.
+
+```
+Get /api/teacher
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "prof.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "prof.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 2
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Listar todas os Alunos por professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os Alunos por professor.
+
+```
+Get /api/teacher/{userId}/student
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "aluno.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 1
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "aluno.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 1
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Remover aluno por professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Remover aluno por professor.
+
+```
+Delete /api/teacher/{userId}/student/{studentId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
+```
+
+## Rotas de Aluno
+
+### Listar todas os professores do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas os professores do aluno.
+
+```
+Get /api/student/{userId}/teacher
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "id": "00000000-0000-0000-0000-000000000000",
+      "email": "prof.josé.silva@gmail.com",
+      "firstName": "José",
+      "lastName": "Silva",
+      "Role": 2
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "email": "prof.caio.costa@gmail.com",
+      "firstName": "Caio",
+      "lastName": "Costa",
+      "Role": 2
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
+### Vincular aluno no professor
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Vincular aluno no professor.
+
+```
+Post /api/student/{userId}/teacher/{teacherId}
+```
+
+#### Request
+
+```json
+Sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "studentId": "00000000-0000-0000-0000-000000000000",
+  "teacherId": "00000000-0000-0000-0000-000000000001"
+}
+```
+
+### Remover professor por aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Remover professor por aluno.
+
+```
+Delete /api/student/{userId}/teacher/{teacherId}
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 204 NoContent
+
+```json
+sem corpo de resposta
 ```
 
 # Release 📦

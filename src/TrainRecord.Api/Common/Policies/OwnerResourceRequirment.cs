@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using TrainRecord.Infrastructure.Interfaces;
+using Throw;
+using TrainRecord.Application.Errors;
+using TrainRecord.Core.Exceptions;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
 {
@@ -24,19 +22,11 @@ namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
             OwnerResourceRequirment requirement
         )
         {
-            var isAdmin = _currentUserService.IsAdmin;
-            var isOwnerResource = _currentUserService.IsOwnerResource;
+            _currentUserService
+                .Throw(() => new AuthorizationException(UserError.IsNotOwnerResourceNorAdm))
+                .IfFalse(u => u.IsOwnerResource || u.IsAdmin);
 
-            if (isAdmin)
-            {
-                context.Succeed(requirement);
-            }
-
-            if (isOwnerResource)
-            {
-                context.Succeed(requirement);
-            }
-
+            context.Succeed(requirement);
             return Task.CompletedTask;
         }
     }

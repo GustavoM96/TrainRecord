@@ -18,7 +18,7 @@ namespace TrainRecord.Core.Services.Auth
 
         public GenaratorToken(IConfiguration configuration)
         {
-            _secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value;
+            _secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value!;
         }
 
         public string Generate(User user)
