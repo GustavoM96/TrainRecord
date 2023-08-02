@@ -7,6 +7,7 @@ using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Application.Requests;
+using TrainRecord.Application.UserCommand;
 
 namespace TrainRecord.Controllers;
 
@@ -113,15 +114,21 @@ public class UserController : ApiController
         return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
-    // removido updated
-    // [HttpPatch("{userId}")]
-    // [Authorize(Policy = "OwnerResource")]
-    // [Consumes("application/merge-patch+json")]
-    // public async Task<IActionResult> Update(Guid userId)
-    // {
-    //     var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
-    //     return Ok();
-    // }
+    [HttpPatch("{userId}")]
+    [Authorize(Policy = "OwnerResource")]
+    [Consumes("application/merge-patch+json")]
+    public async Task<IActionResult> Update(Guid userId, [FromBody] UpdateUserRequest request)
+    {
+        var command = new UpdateUserCommand()
+        {
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            UserId = new(userId)
+        };
+
+        var result = await Mediator.Send(command);
+        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
+    }
 
     [HttpDelete("{userId}/Record/{recordId}")]
     [Authorize(Policy = "OwnerResource")]

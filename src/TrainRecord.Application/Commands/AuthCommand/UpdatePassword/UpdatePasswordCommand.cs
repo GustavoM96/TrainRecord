@@ -39,7 +39,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
             return UserError.EmailExists;
         }
 
-        var userWithNewPassword = (user, request.NewPassword).Adapt<User>();
+        var userWithNewPassword = user.UpdateNewUserPassword(request.NewPassword);
         var hashedNewPassword = _genaratorHash.Generate(userWithNewPassword);
 
         await _userRepository.UpdatePasswordById(hashedNewPassword, user.EntityId);
