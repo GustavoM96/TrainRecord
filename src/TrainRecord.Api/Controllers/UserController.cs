@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using LaDeak.JsonMergePatch.Abstractions;
+﻿using LaDeak.JsonMergePatch.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
@@ -9,7 +8,7 @@ using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Requests;
+using TrainRecord.Application.Requests;
 
 namespace TrainRecord.Controllers;
 

@@ -1,4 +1,3 @@
-using TrainRecord.Core.Commum;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Enum;
 

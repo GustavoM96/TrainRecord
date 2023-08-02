@@ -1,6 +1,6 @@
 using TrainRecord.Core.Entities;
 
-namespace TrainRecord.Core.Interfaces.Repositories;
+namespace TrainRecord.Infrastructure.Interfaces.Repositories;
 
 public interface ITeacherStudentRepository : IRepositoryBase<TeacherStudent>
 {

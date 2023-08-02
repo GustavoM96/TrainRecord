@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using TrainRecord.Core.Extentions;
 

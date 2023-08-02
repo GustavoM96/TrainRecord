@@ -3,10 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
-using TrainRecord.Core.Commum;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Extentions;
-using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common

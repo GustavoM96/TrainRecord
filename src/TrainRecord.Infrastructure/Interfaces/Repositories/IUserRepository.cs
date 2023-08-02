@@ -1,7 +1,7 @@
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 
-namespace TrainRecord.Core.Interfaces.Repositories;
+namespace TrainRecord.Infrastructure.Interfaces.Repositories;
 
 public interface IUserRepository : IRepositoryBase<User>
 {

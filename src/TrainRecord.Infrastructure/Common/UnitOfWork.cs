@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using TrainRecord.Core.Commum.Bases;
-using TrainRecord.Core.Interfaces.Repositories;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Extentions;
 using TrainRecord.Infrastructure.Persistence;
 

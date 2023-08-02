@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 
-namespace TrainRecord.Core.Interfaces.Repositories;
+namespace TrainRecord.Infrastructure.Interfaces.Repositories;
 
 public interface IRepositoryBase<TEntity> where TEntity : class
 {

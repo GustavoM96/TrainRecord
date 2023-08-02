@@ -1,6 +1,6 @@
 using TrainRecord.Core.Enum;
 
-namespace TrainRecord.Core.Responses;
+namespace TrainRecord.Application.Responses;
 
 public class RegisterUserResponse
 {

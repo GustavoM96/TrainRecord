@@ -2,8 +2,8 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
-using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Core.Responses;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 

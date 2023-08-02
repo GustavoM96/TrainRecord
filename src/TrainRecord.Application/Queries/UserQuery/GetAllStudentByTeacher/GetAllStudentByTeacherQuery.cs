@@ -3,8 +3,8 @@ using MediatR;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
-using TrainRecord.Core.Interfaces.Repositories;
-using TrainRecord.Core.Responses;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 

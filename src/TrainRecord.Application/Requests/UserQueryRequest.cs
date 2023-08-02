@@ -4,7 +4,7 @@ using AspNetCore.IQueryable.Extensions.Filter;
 using AspNetCore.IQueryable.Extensions.Sort;
 using TrainRecord.Core.Enum;
 
-namespace TrainRecord.Core.Requests;
+namespace TrainRecord.Application.Requests;
 
 public class UserQueryRequest : ICustomQueryable, IQuerySort
 {

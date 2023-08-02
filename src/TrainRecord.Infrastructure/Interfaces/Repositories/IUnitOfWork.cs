@@ -1,4 +1,4 @@
-namespace TrainRecord.Core.Interfaces.Repositories;
+namespace TrainRecord.Infrastructure.Interfaces.Repositories;
 
 public interface IUnitOfWork
 {
