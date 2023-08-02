@@ -1,3 +1,4 @@
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
@@ -11,12 +12,15 @@ namespace TrainRecord.Infrastructure.Repositories
     {
         public TeacherStudentRepository(AppDbContext context) : base(context) { }
 
-        public async Task<bool> GetByTeacherStudentId(Guid studentId, Guid teacherId)
+        public async Task<bool> GetByTeacherStudentId(
+            EntityId<User> studentId,
+            EntityId<User> teacherId
+        )
         {
             return await AnyAsync(t => t.TeacherId == teacherId && t.StudentId == studentId);
         }
 
-        public IQueryable<User> GetAllStudentByTeacherId(Guid teacherId)
+        public IQueryable<User> GetAllStudentByTeacherId(EntityId<User> teacherId)
         {
             var dbSetUser = GetOtherDbSet<User>();
 
@@ -24,7 +28,7 @@ namespace TrainRecord.Infrastructure.Repositories
                 .Join(dbSetUser, ts => ts.StudentId, u => u.Id, (_, u) => u);
         }
 
-        public IQueryable<User> GetAllTeachersByStudentId(Guid studentId)
+        public IQueryable<User> GetAllTeachersByStudentId(EntityId<User> studentId)
         {
             var dbSetUser = GetOtherDbSet<User>();
 
@@ -32,7 +36,10 @@ namespace TrainRecord.Infrastructure.Repositories
                 .Join(dbSetUser, ts => ts.TeacherId, u => u.Id, (_, u) => u);
         }
 
-        public async Task<bool> DeleteTeacherStudentId(Guid studentId, Guid teacherId)
+        public async Task<bool> DeleteTeacherStudentId(
+            EntityId<User> studentId,
+            EntityId<User> teacherId
+        )
         {
             return await Delete(t => t.TeacherId == teacherId && t.StudentId == studentId);
         }

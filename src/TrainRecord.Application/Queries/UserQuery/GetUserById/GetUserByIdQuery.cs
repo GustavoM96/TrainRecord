@@ -2,14 +2,18 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+
+using TrainRecord.Core.Commum.Bases;
+using TrainRecord.Core.Entities;
+
 using TrainRecord.Application.Responses;
+using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.UserQuery;
 
 public class GetUserByIdQuery : IRequest<ErrorOr<RegisterUserResponse>>
 {
-    public required Guid UserId { get; init; }
+    public required EntityId<User> UserId { get; init; }
 }
 
 public class GetByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr<RegisterUserResponse>>

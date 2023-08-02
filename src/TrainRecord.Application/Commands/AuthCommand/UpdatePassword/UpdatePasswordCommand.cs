@@ -42,7 +42,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
         var userWithNewPassword = (user, request.NewPassword).Adapt<User>();
         var hashedNewPassword = _genaratorHash.Generate(userWithNewPassword);
 
-        await _userRepository.UpdatePasswordById(hashedNewPassword, user.Id);
+        await _userRepository.UpdatePasswordById(hashedNewPassword, user.EntityId);
         return Result.Updated;
     }
 }

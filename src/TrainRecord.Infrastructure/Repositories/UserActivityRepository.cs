@@ -1,3 +1,4 @@
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
@@ -9,7 +10,7 @@ namespace TrainRecord.Infrastructure.Repositories
     {
         public UserActivityRepository(AppDbContext context) : base(context) { }
 
-        public IQueryable<Activity> GetActivitiesByUserId(Guid userId)
+        public IQueryable<Activity> GetActivitiesByUserId(EntityId<User> userId)
         {
             var dbSetActivity = GetOtherDbSet<Activity>();
 
@@ -19,21 +20,27 @@ namespace TrainRecord.Infrastructure.Repositories
         }
 
         public IQueryable<UserActivity> GetAllRecordByUserAndActivityId(
-            Guid userId,
-            Guid activityId
+            EntityId<User> userId,
+            EntityId<Activity> activityId
         )
         {
             return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }
 
-        public async Task<UserActivity?> GetRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public async Task<UserActivity?> GetRecordByUserAndActivityId(
+            EntityId<User> userId,
+            EntityId<Activity> activityId
+        )
         {
             return await SingleOrDefaultAsync(
                 ua => ua.UserId == userId && ua.ActivityId == activityId
             );
         }
 
-        public async Task<bool> DeleteRecordByUserAndActivityId(Guid userId, Guid activityId)
+        public async Task<bool> DeleteRecordByUserAndActivityId(
+            EntityId<User> userId,
+            EntityId<Activity> activityId
+        )
         {
             return await Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
         }

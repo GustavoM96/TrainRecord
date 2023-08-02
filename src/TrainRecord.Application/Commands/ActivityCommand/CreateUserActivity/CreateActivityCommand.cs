@@ -2,6 +2,7 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 
@@ -9,8 +10,8 @@ namespace TrainRecord.Application.ActivityCommand;
 
 public class CreateUserActivityCommand : IRequest<ErrorOr<UserActivity>>
 {
-    public required Guid UserId { get; init; }
-    public required Guid ActivityId { get; init; }
+    public required EntityId<User> UserId { get; init; }
+    public required EntityId<Activity> ActivityId { get; init; }
     public required int Weight { get; init; }
     public required int Repetition { get; init; }
     public required int Serie { get; init; }
@@ -40,7 +41,7 @@ public class CreateUserActivityCommandHandler
     )
     {
         var newUserActivity = request.Adapt<UserActivity>();
-        var hasUserAndActivityResult = await HasUserAndActivity(newUserActivity);
+        var hasUserAndActivityResult = await HasUserAndActivity(request);
 
         if (hasUserAndActivityResult.IsError)
         {
@@ -51,17 +52,17 @@ public class CreateUserActivityCommandHandler
         return newUserActivity;
     }
 
-    private async Task<ErrorOr<Success>> HasUserAndActivity(UserActivity userActivity)
+    private async Task<ErrorOr<Success>> HasUserAndActivity(CreateUserActivityCommand request)
     {
         var errors = new List<Error>();
 
-        var anyUser = await _userRepository.AnyByIdAsync(userActivity.UserId);
+        var anyUser = await _userRepository.AnyByIdAsync(request.UserId);
         if (!anyUser)
         {
             errors.Add(UserError.NotFound);
         }
 
-        var anyActivity = await _activityRepository.AnyByIdAsync(userActivity.ActivityId);
+        var anyActivity = await _activityRepository.AnyByIdAsync(request.ActivityId);
         if (!anyActivity)
         {
             errors.Add(ActivityErrors.NotFound);

@@ -1,10 +1,8 @@
-﻿using LaDeak.JsonMergePatch.Abstractions;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.ActivityQuery;
-using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
@@ -28,8 +26,8 @@ public class UserController : ApiController
             Weight = createUserActivityResquest.Weight,
             Repetition = createUserActivityResquest.Repetition,
             Serie = createUserActivityResquest.Serie,
-            ActivityId = activityId,
-            UserId = userId
+            ActivityId = new(activityId),
+            UserId = new(userId)
         };
 
         var registerResult = await Mediator.Send(command);
@@ -44,7 +42,7 @@ public class UserController : ApiController
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> GetAllActivity(Guid userId, [FromQuery] Pagination pagination)
     {
-        var query = new GetActivityByUserQuery() { UserId = userId, Pagination = pagination };
+        var query = new GetActivityByUserQuery() { UserId = new(userId), Pagination = pagination };
 
         var registerResult = await Mediator.Send(query);
 
@@ -61,8 +59,8 @@ public class UserController : ApiController
     {
         var query = new GetRecordQuery()
         {
-            UserId = userId,
-            ActivityId = activityId,
+            UserId = new(userId),
+            ActivityId = new(activityId),
             Pagination = pagination
         };
 
@@ -93,7 +91,7 @@ public class UserController : ApiController
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> GetById(Guid userId)
     {
-        var query = new GetUserByIdQuery() { UserId = userId };
+        var query = new GetUserByIdQuery() { UserId = new(userId) };
 
         var registerResult = await Mediator.Send(query);
 
@@ -106,8 +104,8 @@ public class UserController : ApiController
     {
         var query = new DeleteAllRecordByUserActivityCommand()
         {
-            UserId = userId,
-            ActivityId = activityId,
+            UserId = new(userId),
+            ActivityId = new(activityId)
         };
 
         var registerResult = await Mediator.Send(query);
@@ -115,23 +113,21 @@ public class UserController : ApiController
         return registerResult.Match(result => NoContent(), errors => ProblemErrors(errors));
     }
 
-    [HttpPatch("{userId}")]
-    [Authorize(Policy = "OwnerResource")]
-    [Consumes("application/merge-patch+json")]
-    public async Task<IActionResult> Update(Guid userId, [FromBody] Patch<User> patch)
-    {
-        var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
-
-        var registerResult = await Mediator.Send(command);
-
-        return registerResult.Match(result => Ok(result), errors => ProblemErrors(errors));
-    }
+    // removido updated
+    // [HttpPatch("{userId}")]
+    // [Authorize(Policy = "OwnerResource")]
+    // [Consumes("application/merge-patch+json")]
+    // public async Task<IActionResult> Update(Guid userId)
+    // {
+    //     var command = new UpdateUserCommand() { Patch = patch, UserId = userId };
+    //     return Ok();
+    // }
 
     [HttpDelete("{userId}/Record/{recordId}")]
     [Authorize(Policy = "OwnerResource")]
     public async Task<IActionResult> DeleteRecord(Guid recordId)
     {
-        var query = new DeleteRecordCommand() { RecordId = recordId, };
+        var query = new DeleteRecordCommand() { RecordId = new(recordId), };
 
         var registerResult = await Mediator.Send(query);
 

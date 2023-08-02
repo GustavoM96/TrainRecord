@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
@@ -9,8 +10,8 @@ namespace TrainRecord.Application.UserCommand;
 
 public class CreateTeacherStudentCommand : IRequest<ErrorOr<TeacherStudent>>
 {
-    public required Guid TeacherId { get; init; }
-    public required Guid StudentId { get; init; }
+    public required EntityId<User> TeacherId { get; init; }
+    public required EntityId<User> StudentId { get; init; }
 }
 
 public class CreateTeacherStudentCommandHandler

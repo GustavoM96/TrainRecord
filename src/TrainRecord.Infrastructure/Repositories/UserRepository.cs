@@ -1,3 +1,4 @@
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
@@ -19,7 +20,7 @@ namespace TrainRecord.Infrastructure.Repositories
             return await AnyAsync(u => u.Email == email);
         }
 
-        public async Task<bool> UpdatePasswordById(string password, Guid userId)
+        public async Task<bool> UpdatePasswordById(string password, EntityId<User> userId)
         {
             return await UpdateById(u => u.SetProperty(u => u.Password, u => password), userId);
         }

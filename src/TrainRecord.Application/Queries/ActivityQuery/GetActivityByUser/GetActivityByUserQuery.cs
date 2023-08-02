@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Core.Common;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
@@ -9,7 +10,7 @@ namespace TrainRecord.Application.ActivityQuery;
 
 public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
 {
-    public required Guid UserId { get; init; }
+    public required EntityId<User> UserId { get; init; }
     public required Pagination Pagination { get; init; }
 }
 

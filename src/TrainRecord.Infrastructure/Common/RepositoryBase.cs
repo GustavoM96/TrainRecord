@@ -11,7 +11,7 @@ using TrainRecord.Infrastructure.Persistence;
 namespace TrainRecord.Infrastructure.Common
 {
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
-        where TEntity : AuditableEntityBase
+        where TEntity : AuditableEntityBase<TEntity>
     {
         private readonly DbSet<TEntity> _dbSet;
         protected readonly AppDbContext _context;
@@ -22,14 +22,14 @@ namespace TrainRecord.Infrastructure.Common
             _context = context;
         }
 
-        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase
+        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase<TDbSet>
         {
             return _context.Set<TDbSet>();
         }
 
         protected async Task<bool> UpdateById(
             Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setPropertyCalls,
-            Guid id
+            EntityId<TEntity> id
         )
         {
             var affectedRows = await Where(e => e.Id == id).ExecuteUpdateAsync(setPropertyCalls);
@@ -59,7 +59,7 @@ namespace TrainRecord.Infrastructure.Common
             return afectedRows > 0;
         }
 
-        public async Task<bool> AnyByIdAsync(Guid id)
+        public async Task<bool> AnyByIdAsync(EntityId<TEntity> id)
         {
             return await AsNoTracking().AnyAsync(e => e.Id == id);
         }
@@ -69,7 +69,7 @@ namespace TrainRecord.Infrastructure.Common
             await _dbSet.AddAsync(entity);
         }
 
-        public async Task<bool> DeleteById(Guid id)
+        public async Task<bool> DeleteById(EntityId<TEntity> id)
         {
             var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
             return affectedRows > 0;
@@ -80,7 +80,7 @@ namespace TrainRecord.Infrastructure.Common
             return _dbSet.Update(entity);
         }
 
-        public async Task<TEntity?> FindByIdAsync(Guid id)
+        public async Task<TEntity?> FindByIdAsync(EntityId<TEntity> id)
         {
             return await SingleOrDefaultAsync(t => t.Id == id);
         }
