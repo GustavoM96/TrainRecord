@@ -6,7 +6,7 @@ using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Enum;
-using TrainRecord.Core.Requests;
+using TrainRecord.Application.Requests;
 
 namespace TrainRecord.Controllers;
 

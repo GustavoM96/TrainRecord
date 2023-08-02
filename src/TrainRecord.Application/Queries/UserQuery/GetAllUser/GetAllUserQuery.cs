@@ -1,14 +1,12 @@
 using AspNetCore.IQueryable.Extensions;
-using AspNetCore.IQueryable.Extensions.Filter;
 using ErrorOr;
 using MediatR;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Enum;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
-using TrainRecord.Core.Requests;
-using TrainRecord.Core.Responses;
+using TrainRecord.Application.Requests;
+using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 

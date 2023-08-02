@@ -1,4 +1,4 @@
-namespace TrainRecord.Core.Responses;
+namespace TrainRecord.Application.Responses;
 
 public class LoginUserResponse
 {

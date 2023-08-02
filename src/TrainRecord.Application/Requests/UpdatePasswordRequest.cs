@@ -1,4 +1,4 @@
-namespace TrainRecord.Core.Requests;
+namespace TrainRecord.Application.Requests;
 
 public class UpdatePasswordRequest
 {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
-using TrainRecord.Core.Responses;
+using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.AuthCommand;
 

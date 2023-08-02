@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.AuthCommand;
-using TrainRecord.Core.Requests;
+using TrainRecord.Application.Requests;
 
 namespace TrainRecord.Controllers;
 
