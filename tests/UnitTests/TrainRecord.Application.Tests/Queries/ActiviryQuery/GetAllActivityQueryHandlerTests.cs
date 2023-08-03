@@ -17,7 +17,7 @@ public class GetAllActivityQueryHandlerTests : TesterBase
     public GetAllActivityQueryHandlerTests()
     {
         _testClass = new GetAllActivityQueryHandler(_activityRepository.Object);
-        _query = new GetAllActivityQuery() { Pagination = PaginationMock };
+        _query = new GetAllActivityQuery() { Pagination = PaginationOne };
     }
 
     [Fact]

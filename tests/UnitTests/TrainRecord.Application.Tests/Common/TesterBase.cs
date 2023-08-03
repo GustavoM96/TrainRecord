@@ -23,5 +23,5 @@ public abstract class TesterBase
     }
 
     protected static Guid GuidUnique => Guid.NewGuid();
-    protected static Pagination PaginationMock => new() { PageNumber = 1, PerPage = 1 };
+    protected static Pagination PaginationOne => new() { PageNumber = 1, PerPage = 1 };
 }
