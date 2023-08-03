@@ -19,7 +19,7 @@ public class GetAllUserQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
 public class GetAllUserQueryHandler
     : IRequestHandler<GetAllUserQuery, ErrorOr<Page<RegisterUserResponse>>>
 {
-    public readonly IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
     public GetAllUserQueryHandler(IUserRepository userRepository)
     {

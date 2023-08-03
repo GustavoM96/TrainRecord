@@ -1,6 +1,4 @@
-using FluentValidation;
 using Moq;
-using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserCommand;

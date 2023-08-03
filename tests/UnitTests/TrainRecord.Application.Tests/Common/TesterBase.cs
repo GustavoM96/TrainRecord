@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentValidation;
+using TrainRecord.Core.Common;
 
 namespace TrainRecord.Application.Tests.Common;
 
@@ -26,4 +23,5 @@ public abstract class TesterBase
     }
 
     protected static Guid GuidUnique => Guid.NewGuid();
+    protected static Pagination PaginationMock => new() { PageNumber = 1, PerPage = 1 };
 }

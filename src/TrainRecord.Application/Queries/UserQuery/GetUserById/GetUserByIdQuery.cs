@@ -16,11 +16,12 @@ public class GetUserByIdQuery : IRequest<ErrorOr<RegisterUserResponse>>
     public required EntityId<User> UserId { get; init; }
 }
 
-public class GetByIdQueryHandler : IRequestHandler<GetUserByIdQuery, ErrorOr<RegisterUserResponse>>
+public class GetUserByIdQueryHandler
+    : IRequestHandler<GetUserByIdQuery, ErrorOr<RegisterUserResponse>>
 {
     public readonly IUserRepository _userRepository;
 
-    public GetByIdQueryHandler(IUserRepository userRepository)
+    public GetUserByIdQueryHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }
