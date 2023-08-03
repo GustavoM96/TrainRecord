@@ -1,12 +1,9 @@
 using Moq;
-using TrainRecord.Application.ActivityQuery;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserQuery;
-using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Extentions;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
