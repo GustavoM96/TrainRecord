@@ -47,22 +47,28 @@ public class GetAllUserQueryHandlerTests : TesterBase
         {
             new() { Email = "gustavo.hmessias96@gmail.com" },
             new() { Email = "gustavo.hmessias96@hotmail.com" },
-            new() { Email = "gustavo.hmessias96@outlook.com" },
-        }.AsQueryable();
+            new() { Email = "gustavo@gmail.com" },
+            new() { Email = "gustavo.hmessias96@outlook.com" }
+        };
 
-        var filterbyEmailQuery = new GetAllUserQuery()
+        var query = users.AsQueryable();
+
+        var filterByGmailQuery = new GetAllUserQuery()
         {
-            Pagination = PaginationOne,
+            Pagination = new() { PageNumber = 1, PerPage = 10 },
             UserQueryRequest = new() { Email = "gmail" }
         };
 
-        _userRepository.Setup(m => m.AsNoTracking()).Returns(users);
+        _userRepository.Setup(m => m.AsNoTracking()).Returns(query);
 
         //act
-        var result = await _testClass.Handle(_query, default);
+        var result = await _testClass.Handle(filterByGmailQuery, default);
 
         //assert
-        Assert.Equal(users.First().Email, result.Value.Items.Single().Email);
+        var emailsResult = result.Value.Items.Select(item => item.Email);
+        var gmails = new List<string>() { users[2].Email, users[0].Email };
+
+        Assert.True(SequenceEqual(emailsResult, gmails));
         Assert.IsType<Page<RegisterUserResponse>>(result.Value);
     }
 }

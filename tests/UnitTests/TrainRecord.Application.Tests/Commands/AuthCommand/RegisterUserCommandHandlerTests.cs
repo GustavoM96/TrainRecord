@@ -113,7 +113,7 @@ public class RegisterUserCommandHandlerTests : TesterBase
     [InlineData(null, null)]
     [InlineData("gustavo", "1234")]
     [InlineData("gustavo.com", "abcdeF")]
-    [InlineData("gustavo.com", "S1a")]
+    [InlineData("@gustavo.com", "S1a")]
     public async Task Test_RegisterUserCommandValidator(string email, string password)
     {
         //arrange

@@ -5,21 +5,24 @@ namespace TrainRecord.Application.Tests.Common;
 
 public abstract class TesterBase
 {
-    protected async Task<bool> IsInvalidPropertiesAsync<TValidate>(
+    protected static async Task<bool> IsInvalidPropertiesAsync<TValidate>(
         AbstractValidator<TValidate> validator,
         TValidate validateItem,
         params string[] propertyNames
     )
     {
-        var propertyNamesOrdered = propertyNames.OrderBy(x => x);
-
         var validationResults = await validator.ValidateAsync(validateItem);
-        var errorsOrdered = validationResults.Errors
-            .Select(e => e.PropertyName)
-            .Distinct()
-            .OrderBy(e => e);
+        var errorsDistinct = validationResults.Errors.Select(e => e.PropertyName).Distinct();
 
-        return propertyNamesOrdered.SequenceEqual(errorsOrdered);
+        return SequenceEqual(propertyNames, errorsDistinct);
+    }
+
+    protected static bool SequenceEqual<T>(IEnumerable<T> listOne, IEnumerable<T> listTwo)
+    {
+        var listOneOrderBy = listOne.OrderBy(item => item);
+        var listTwoOrderBy = listTwo.OrderBy(item => item);
+
+        return listOneOrderBy.SequenceEqual(listTwoOrderBy);
     }
 
     protected static Guid GuidUnique => Guid.NewGuid();
