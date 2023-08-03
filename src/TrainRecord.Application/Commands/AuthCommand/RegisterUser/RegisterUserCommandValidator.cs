@@ -10,6 +10,11 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
     public RegisterUserCommandValidator()
     {
         RuleFor(u => u.Email).EmailAddress().NotEmpty();
-        RuleFor(u => u.Password).Matches(_passwordPattern).NotEmpty();
+        RuleFor(u => u.Password)
+            .Matches(_passwordPattern)
+            .WithMessage(
+                "senha deve possuir mais de 6 caracteres com letras minúsculas,maiúsculas, números e símbolos"
+            )
+            .NotEmpty();
     }
 }

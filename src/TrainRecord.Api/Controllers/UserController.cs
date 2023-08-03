@@ -5,7 +5,6 @@ using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.ActivityQuery;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
-using TrainRecord.Core.Entities;
 using TrainRecord.Application.Requests;
 using TrainRecord.Application.UserCommand;
 
