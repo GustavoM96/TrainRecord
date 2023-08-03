@@ -19,7 +19,7 @@ public class GetActivityByUserQueryHandlerTests : TesterBase
         _query = new GetActivityByUserQuery()
         {
             UserId = new(GuidUnique),
-            Pagination = PaginationMock
+            Pagination = PaginationOne
         };
     }
 

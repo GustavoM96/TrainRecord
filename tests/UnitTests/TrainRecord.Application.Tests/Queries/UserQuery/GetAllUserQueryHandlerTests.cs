@@ -20,7 +20,7 @@ public class GetAllUserQueryHandlerTests : TesterBase
     public GetAllUserQueryHandlerTests()
     {
         _testClass = new GetAllUserQueryHandler(_userRepository.Object);
-        _query = new GetAllUserQuery() { Pagination = PaginationMock };
+        _query = new GetAllUserQuery() { Pagination = PaginationOne };
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class GetAllUserQueryHandlerTests : TesterBase
 
         var filterbyEmailQuery = new GetAllUserQuery()
         {
-            Pagination = PaginationMock,
+            Pagination = PaginationOne,
             UserQueryRequest = new() { Email = "gmail" }
         };
 
