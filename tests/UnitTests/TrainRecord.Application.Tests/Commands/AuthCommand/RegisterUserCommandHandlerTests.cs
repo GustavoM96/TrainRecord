@@ -1,11 +1,8 @@
-using FluentValidation;
 using Moq;
-using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.AuthCommand;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
-using TrainRecord.Application.UserCommand;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;

@@ -14,12 +14,12 @@ public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
     public required Pagination Pagination { get; init; }
 }
 
-public class GetUserActivityQueryHandler
+public class GetActivityByUserQueryHandler
     : IRequestHandler<GetActivityByUserQuery, ErrorOr<Page<Activity>>>
 {
     private readonly IUserActivityRepository _userActivityRepository;
 
-    public GetUserActivityQueryHandler(IUserActivityRepository userActivityRepository)
+    public GetActivityByUserQueryHandler(IUserActivityRepository userActivityRepository)
     {
         _userActivityRepository = userActivityRepository;
     }
