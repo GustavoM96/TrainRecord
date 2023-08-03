@@ -32,6 +32,10 @@ namespace TrainRecord.Application.Errors
 
         public static Error TeacherNotFound =>
             Error.NotFound("User.TeacherNotFound", "professor não encontrado");
+
+        public static Error StudentNotFound =>
+            Error.NotFound("User.StudentNotFound", "aluno não encontrado");
+
         public static Error IsNotTeacher =>
             Error.Conflict(
                 "User.IsNotTeacher",

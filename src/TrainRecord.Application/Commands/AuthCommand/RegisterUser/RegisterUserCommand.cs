@@ -56,7 +56,7 @@ public class RegisterUserCommandHandler
         }
 
         var passwordHash = _genaratorHash.Generate(user);
-        var newUser = (user, passwordHash).Adapt<User>();
+        var newUser = user.UpdateNewUserPassword(passwordHash);
 
         await _userRepository.AddAsync(newUser);
         return newUser.Adapt<RegisterUserResponse>();

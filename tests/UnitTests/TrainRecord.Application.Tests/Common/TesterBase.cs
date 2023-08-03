@@ -14,9 +14,13 @@ public abstract class TesterBase
         params string[] propertyNames
     )
     {
-        var validationResults = await validator.ValidateAsync(validateItem);
         var propertyNamesOrdered = propertyNames.OrderBy(x => x);
-        var errorsOrdered = validationResults.Errors.Select(e => e.PropertyName).OrderBy(e => e);
+
+        var validationResults = await validator.ValidateAsync(validateItem);
+        var errorsOrdered = validationResults.Errors
+            .Select(e => e.PropertyName)
+            .Distinct()
+            .OrderBy(e => e);
 
         return propertyNamesOrdered.SequenceEqual(errorsOrdered);
     }
