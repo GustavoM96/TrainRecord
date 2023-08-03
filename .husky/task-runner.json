@@ -1,9 +1,9 @@
 {
   "tasks": [
     {
-      "name": "Run Build",
+      "name": "Run Test",
       "command": "dotnet",
-      "args": ["build"],
+      "args": ["test"],
       "include": ["**/*.cs"]
     },
     {
