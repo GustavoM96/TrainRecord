@@ -55,6 +55,8 @@ TrainRecord é uma aplicação desenvolvida em ASP.NET CORE C# com a finalidade 
 - [Jwt](https://jwt.io/): para autenticação do usuário.
 - [PasswordHasher](<https://learn.microsoft.com/en-us/previous-versions/aspnet/dn468192(v%3dvs.108)>): hasher de senha do usuário.
 - [Sqlite](https://www.sqlite.org/docs.html): apenas como banco de dados de desenvolvimento.
+- [Xunit](https://xunit.net): projeto de testes de unidade.
+- [Moq](https://github.com/moq): mocar dependencias para testes.
 
 ## Tools
 
