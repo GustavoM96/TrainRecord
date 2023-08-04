@@ -3,6 +3,7 @@ using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Events.ActivityEvents;
+using TrainRecord.Application.Events.AuthEvents;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 

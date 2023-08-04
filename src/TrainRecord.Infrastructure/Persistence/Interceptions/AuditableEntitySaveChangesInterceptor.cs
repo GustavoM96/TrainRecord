@@ -26,7 +26,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             InterceptionResult<int> result
         )
         {
-            var entitiesEntry = GetEntities(eventData.Context);
+            var entitiesEntry = GetEntitiesBase(eventData.Context);
             UpdateEntities(entitiesEntry);
             PublishEvents(entitiesEntry);
 
@@ -39,23 +39,23 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             CancellationToken cancellationToken = default
         )
         {
-            var entitiesEntry = GetEntities(eventData.Context);
-            UpdateEntities(entitiesEntry);
-            PublishEvents(entitiesEntry);
+            var entitiesBaseEntry = GetEntitiesBase(eventData.Context);
+            PublishEvents(entitiesBaseEntry);
+            UpdateEntities(entitiesBaseEntry);
 
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        private static IEnumerable<EntityEntry<IAuditableEntityBase>> GetEntities(
+        private static IEnumerable<EntityEntry<IEntityBase<IEntity>>> GetEntitiesBase(
             DbContext? context
         )
         {
             return context == null
-                ? Enumerable.Empty<EntityEntry<IAuditableEntityBase>>()
-                : context.ChangeTracker.Entries<IAuditableEntityBase>();
+                ? Enumerable.Empty<EntityEntry<IEntityBase<IEntity>>>()
+                : context.ChangeTracker.Entries<IEntityBase<IEntity>>();
         }
 
-        private void PublishEvents(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        private void PublishEvents(IEnumerable<EntityEntry<IEntityBase<IEntity>>> entitiesEntry)
         {
             var entities = entitiesEntry.Select(e => e.Entity).ToList();
 
@@ -68,7 +68,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             }
         }
 
-        private void UpdateEntities(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        private void UpdateEntities(IEnumerable<EntityEntry<IEntityBase<IEntity>>> entitiesEntry)
         {
             foreach (var entry in entitiesEntry)
             {

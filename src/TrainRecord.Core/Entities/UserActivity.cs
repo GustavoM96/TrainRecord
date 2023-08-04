@@ -3,7 +3,7 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Entities;
 
-public class UserActivity : AuditableEntityBase<UserActivity>, IEntity
+public class UserActivity : EntityBase<UserActivity>, IEntity
 {
     public Guid UserId { get; init; }
     public Guid ActivityId { get; init; }
