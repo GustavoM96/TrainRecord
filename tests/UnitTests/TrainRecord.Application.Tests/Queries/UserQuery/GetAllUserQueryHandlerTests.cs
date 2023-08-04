@@ -68,7 +68,7 @@ public class GetAllUserQueryHandlerTests : TesterBase
         var emailsResult = result.Value.Items.Select(item => item.Email);
         var gmails = new List<string>() { users[2].Email, users[0].Email };
 
-        Assert.True(SequenceEqual(emailsResult, gmails));
+        Assert.True(EqualItems(emailsResult, gmails));
         Assert.IsType<Page<RegisterUserResponse>>(result.Value);
     }
 }
