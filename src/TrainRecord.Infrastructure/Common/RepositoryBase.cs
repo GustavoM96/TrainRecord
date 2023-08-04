@@ -71,7 +71,7 @@ namespace TrainRecord.Infrastructure.Common
 
         public async Task<bool> DeleteById(EntityId<TEntity> id)
         {
-            var affectedRows = await Where(e => e.Id == id).ExecuteDeleteAsync();
+            var affectedRows = await Where(e => e.Id == id.Value).ExecuteDeleteAsync();
             return affectedRows > 0;
         }
 

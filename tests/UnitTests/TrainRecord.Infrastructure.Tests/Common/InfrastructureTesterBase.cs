@@ -33,11 +33,12 @@ public abstract class InfrastructureTesterBase
     protected static AppDbContext CreateAppDbContext()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseInMemoryDatabase("TestDB")
+            .UseSqlite("Data Source=TrainRecordDB.db;")
             .Options;
 
         AuditableEntitySaveChangesInterceptor? interceptor = null!;
         var appDbContext = new AppDbContext(options, interceptor);
+        appDbContext.Database.EnsureCreated();
 
         return appDbContext;
     }

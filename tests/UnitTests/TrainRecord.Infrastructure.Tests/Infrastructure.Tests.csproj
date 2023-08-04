@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\TrainRecord.Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\src\TrainRecord.Core\Core.csproj" />
+    <ProjectReference Include="..\..\..\src\TrainRecord.Application\Application.csproj" />
   </ItemGroup>
 
 </Project>
