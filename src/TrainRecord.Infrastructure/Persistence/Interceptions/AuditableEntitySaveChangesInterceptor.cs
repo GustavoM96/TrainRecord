@@ -73,15 +73,16 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             foreach (var entry in entitiesEntry)
             {
                 var user = _currentUserService;
+                var now = DateTime.Now;
 
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.SetCreatedInfo(user.UserId!, DateTime.Now);
+                    entry.Entity.SetCreatedInfo(user.UserId!, now);
                 }
 
                 if (entry.AddedOrModified() || entry.HasChangedOwnedEntities())
                 {
-                    entry.Entity.SetUpdatedInfo(user.UserId!, DateTime.Now);
+                    entry.Entity.SetUpdatedInfo(user.UserId!, now);
                 }
             }
         }
