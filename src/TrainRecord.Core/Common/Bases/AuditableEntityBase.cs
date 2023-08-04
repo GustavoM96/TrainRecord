@@ -1,6 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using MediatR;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Commum.Bases;
@@ -15,7 +12,7 @@ public class AuditableEntityBase<TEntity> : IAuditableEntityBase where TEntity :
         _domainEvents.Add(domainEvent);
     }
 
-    public void SetCreatedInfo(string createdBy, string createdByEmail, DateTime createdAt)
+    public void SetCreatedInfo(string createdBy, DateTime createdAt)
     {
         CreatedBy = createdBy;
         CreatedAt = createdAt;

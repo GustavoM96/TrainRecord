@@ -6,7 +6,7 @@ public interface IAuditableEntityBase
     void ClearDomainEvent();
     public IReadOnlyList<IDomainEvent> DomainEvents { get; }
     void SetUpdatedInfo(string lastModifiedBy, DateTime lastModifiedAt);
-    void SetCreatedInfo(string createdBy, string createdByEmail, DateTime createdAt);
+    void SetCreatedInfo(string createdBy, DateTime createdAt);
     DateTime CreatedAt { get; }
 
     string? CreatedBy { get; }

@@ -76,7 +76,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
 
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.SetCreatedInfo(user.UserId!, user.UserEmail!, DateTime.Now);
+                    entry.Entity.SetCreatedInfo(user.UserId!, DateTime.Now);
                 }
 
                 if (entry.AddedOrModified() || entry.HasChangedOwnedEntities())
