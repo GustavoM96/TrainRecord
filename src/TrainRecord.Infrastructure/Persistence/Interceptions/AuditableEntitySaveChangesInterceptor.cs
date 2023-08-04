@@ -1,4 +1,6 @@
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Extentions;
@@ -8,10 +10,15 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
     public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     {
         private readonly ICurrentUserService _currentUserService;
+        private readonly IPublisher _publisher;
 
-        public AuditableEntitySaveChangesInterceptor(ICurrentUserService currentUserService)
+        public AuditableEntitySaveChangesInterceptor(
+            ICurrentUserService currentUserService,
+            IPublisher publisher
+        )
         {
             _currentUserService = currentUserService;
+            _publisher = publisher;
         }
 
         public override InterceptionResult<int> SavingChanges(
@@ -19,7 +26,9 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             InterceptionResult<int> result
         )
         {
-            UpdateEntities(eventData.Context);
+            var entitiesEntry = GetEntities(eventData.Context);
+            UpdateEntities(entitiesEntry);
+            PublishEvents(entitiesEntry);
 
             return base.SavingChanges(eventData, result);
         }
@@ -30,30 +39,49 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             CancellationToken cancellationToken = default
         )
         {
-            UpdateEntities(eventData.Context);
+            var entitiesEntry = GetEntities(eventData.Context);
+            UpdateEntities(entitiesEntry);
+            PublishEvents(entitiesEntry);
 
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        public void UpdateEntities(DbContext? context)
+        private static IEnumerable<EntityEntry<IAuditableEntityBase>> GetEntities(
+            DbContext? context
+        )
         {
-            if (context == null)
-            {
-                return;
-            }
+            return context == null
+                ? Enumerable.Empty<EntityEntry<IAuditableEntityBase>>()
+                : context.ChangeTracker.Entries<IAuditableEntityBase>();
+        }
 
-            foreach (var entry in context.ChangeTracker.Entries<IAuditableEntityBase>())
+        private void PublishEvents(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        {
+            var entities = entitiesEntry.Select(e => e.Entity).ToList();
+
+            var notifications = entities.SelectMany(entity => entity.DomainEvents).ToList();
+            entities.ForEach(entity => entity.ClearDomainEvent());
+
+            foreach (var notification in notifications)
             {
+                _publisher.Publish(notification);
+            }
+        }
+
+        private void UpdateEntities(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        {
+            foreach (var entry in entitiesEntry)
+            {
+                var user = _currentUserService;
+
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Entity.CreatedBy = _currentUserService.UserId;
-                    entry.Entity.CreatedAt = DateTime.Now;
+                    entry.Entity.SetCreatedInfo(user.UserId!, user.UserEmail!, DateTime.Now);
                 }
 
                 if (entry.AddedOrModified() || entry.HasChangedOwnedEntities())
                 {
-                    entry.Entity.LastModifiedBy = _currentUserService.UserId;
-                    entry.Entity.LastModifiedAt = DateTime.Now;
+                    entry.Entity.SetUpdatedInfo(user.UserId!, DateTime.Now);
                 }
             }
         }

@@ -2,6 +2,7 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.Events.ActivityEvents;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 
@@ -35,6 +36,7 @@ public class CreateActivityCommandHandler
             return ActivityErrors.NameAlreadyExists;
         }
 
+        newActivity.AddDomainEevnt(new CreateActivityEvent() { ActivityName = newActivity.Name });
         await _activityRepository.AddAsync(newActivity);
         return newActivity;
     }

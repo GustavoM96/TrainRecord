@@ -7,6 +7,7 @@ using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
+using TrainRecord.Application.Events.AuthEvents;
 
 namespace TrainRecord.Application.AuthCommand;
 
@@ -57,6 +58,8 @@ public class RegisterUserCommandHandler
 
         var passwordHash = _genaratorHash.Generate(user);
         var newUser = user.UpdateNewUserPassword(passwordHash);
+
+        newUser.AddDomainEevnt(new RegisterUserEvent() { Email = newUser.Email });
 
         await _userRepository.AddAsync(newUser);
         return newUser.Adapt<RegisterUserResponse>();

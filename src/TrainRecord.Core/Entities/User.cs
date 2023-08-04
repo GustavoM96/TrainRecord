@@ -1,9 +1,10 @@
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Enum;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Entities;
 
-public class User : AuditableEntityBase<User>
+public class User : AuditableEntityBase<User>, IEntity
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;

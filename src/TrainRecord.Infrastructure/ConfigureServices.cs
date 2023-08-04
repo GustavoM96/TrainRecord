@@ -6,6 +6,8 @@ using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Persistence.Interceptions;
 using TrainRecord.Infrastructure.Repositories;
+using MediatR;
+using System.Reflection;
 
 namespace TrainRecord.Infrastructure;
 
@@ -16,6 +18,8 @@ public static class ConfigureServices
         IConfiguration configuration
     )
     {
+        services.AddMediatR(Assembly.GetExecutingAssembly());
+
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();

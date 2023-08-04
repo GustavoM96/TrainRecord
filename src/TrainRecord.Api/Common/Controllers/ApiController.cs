@@ -62,13 +62,13 @@ public abstract class ApiController : ControllerBase
 
     public override OkObjectResult Ok(object? obj)
     {
-        UnitOfWork.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync().Wait();
         return base.Ok(obj);
     }
 
     public override CreatedAtActionResult CreatedAtAction(string? actionName, object? obj)
     {
-        UnitOfWork.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync().Wait();
         return base.CreatedAtAction(actionName, obj);
     }
 
@@ -78,13 +78,13 @@ public abstract class ApiController : ControllerBase
         object? obj
     )
     {
-        UnitOfWork.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync().Wait();
         return base.CreatedAtAction(actionName, routeValues, obj);
     }
 
     public override NoContentResult NoContent()
     {
-        UnitOfWork.SaveChangesAsync();
+        UnitOfWork.SaveChangesAsync().Wait();
         return base.NoContent();
     }
 }

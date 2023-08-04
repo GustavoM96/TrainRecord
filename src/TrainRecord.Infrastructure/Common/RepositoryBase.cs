@@ -5,13 +5,14 @@ using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common
 {
     public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
-        where TEntity : AuditableEntityBase<TEntity>
+        where TEntity : class, IEntity
     {
         private readonly DbSet<TEntity> _dbSet;
         protected readonly AppDbContext _context;
@@ -22,7 +23,7 @@ namespace TrainRecord.Infrastructure.Common
             _context = context;
         }
 
-        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : AuditableEntityBase<TDbSet>
+        protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : class, IEntity
         {
             return _context.Set<TDbSet>();
         }
