@@ -20,6 +20,7 @@ public class CurrentUserService : ICurrentUserService
     private HttpContext? _httpContext => _httpContextAccessor.HttpContext;
 
     public string? UserId => _httpContext?.User?.FindFirstValue(ClaimTypes.Sid);
+    public string? UserEmail => _httpContext?.User?.FindFirstValue(ClaimTypes.Email);
     public string? Role => _httpContext?.User?.FindFirstValue(ClaimTypes.Role);
     public bool IsAdmin => Role == "Adm";
     public bool IsOwnerResource => GetUserIdByRoute().EqualsIgnoreCase(UserId);
