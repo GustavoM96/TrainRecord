@@ -10,7 +10,7 @@ public class AuditableEntityBase<TEntity> : IAuditableEntityBase where TEntity :
     private readonly List<IDomainEvent> _domainEvents = new();
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    public void AddDomainEevnt(IDomainEvent domainEvent)
+    public void AddDomainEvent(IDomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
     }

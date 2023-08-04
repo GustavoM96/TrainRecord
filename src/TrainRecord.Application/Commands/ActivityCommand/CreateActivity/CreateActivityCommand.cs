@@ -36,7 +36,7 @@ public class CreateActivityCommandHandler
             return ActivityErrors.NameAlreadyExists;
         }
 
-        newActivity.AddDomainEevnt(new CreateActivityEvent() { ActivityName = newActivity.Name });
+        newActivity.AddDomainEvent(new CreateActivityEvent() { ActivityName = newActivity.Name });
         await _activityRepository.AddAsync(newActivity);
         return newActivity;
     }

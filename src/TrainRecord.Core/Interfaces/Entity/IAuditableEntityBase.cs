@@ -2,7 +2,7 @@ namespace TrainRecord.Core.Interfaces;
 
 public interface IAuditableEntityBase
 {
-    void AddDomainEevnt(IDomainEvent domainEvent);
+    void AddDomainEvent(IDomainEvent domainEvent);
     void ClearDomainEvent();
     public IReadOnlyList<IDomainEvent> DomainEvents { get; }
     void SetUpdatedInfo(string lastModifiedBy, DateTime lastModifiedAt);

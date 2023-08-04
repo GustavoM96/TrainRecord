@@ -59,7 +59,7 @@ public class RegisterUserCommandHandler
         var passwordHash = _genaratorHash.Generate(user);
         var newUser = user.UpdateNewUserPassword(passwordHash);
 
-        newUser.AddDomainEevnt(new RegisterUserEvent() { Email = newUser.Email });
+        newUser.AddDomainEvent(new RegisterUserEvent() { Email = newUser.Email });
 
         await _userRepository.AddAsync(newUser);
         return newUser.Adapt<RegisterUserResponse>();
