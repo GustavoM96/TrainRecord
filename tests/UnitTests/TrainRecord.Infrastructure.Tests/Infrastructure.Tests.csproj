@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.9" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="xunit" Version="2.4.2" />
@@ -23,12 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\TrainRecord.Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\src\TrainRecord.Core\Core.csproj" />
     <ProjectReference Include="..\..\..\src\TrainRecord.Application\Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common/" />
   </ItemGroup>
 
 </Project>
