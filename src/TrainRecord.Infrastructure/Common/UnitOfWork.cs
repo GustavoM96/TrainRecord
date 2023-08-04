@@ -21,7 +21,10 @@ namespace TrainRecord.Infrastructure.Common
 
         public int RollBack()
         {
-            var changedEntriesCopy = _context.ChangeTracker.Entries().Where(e => e.AnyChange());
+            var changedEntriesCopy = _context.ChangeTracker
+                .Entries()
+                .Where(e => e.AnyChange())
+                .ToList();
 
             foreach (var entry in changedEntriesCopy)
             {

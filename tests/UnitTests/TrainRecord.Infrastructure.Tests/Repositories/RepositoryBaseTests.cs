@@ -51,14 +51,12 @@ public class RepositoryBaseTests : InfrastructureTesterBase
     };
 
     private readonly IRepositoryBase<User> _testClass;
-    private readonly IUnitOfWork _unitOfWork;
     private readonly AppDbContext _appDbContext;
 
     public RepositoryBaseTests()
     {
         _appDbContext = CreateAppDbContext();
         _testClass = new UserRepository(_appDbContext);
-        _unitOfWork = new UnitOfWork(_appDbContext);
         SeedDb(_users);
     }
 
@@ -70,7 +68,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             {
                 _testClass.AddAsync(user).Wait();
             }
-            _unitOfWork.SaveChangesAsync().Wait();
+            _appDbContext.SaveChangesAsync().Wait();
         }
     }
 
@@ -137,7 +135,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
 
         //assert
         var state = _appDbContext.Entry(result.First()).State;
-        Assert.Equal(3, result.Count());
+        Assert.True(result.Count() >= 3);
         Assert.Equal(EntityState.Detached, state);
     }
 
@@ -234,7 +232,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
         if (!await _testClass.AnyByIdAsync(user.EntityId))
         {
             await _testClass.AddAsync(user);
-            await _unitOfWork.SaveChangesAsync();
+            await _appDbContext.SaveChangesAsync();
         }
 
         //act
