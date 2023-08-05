@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
+using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Events.AuthEvents;

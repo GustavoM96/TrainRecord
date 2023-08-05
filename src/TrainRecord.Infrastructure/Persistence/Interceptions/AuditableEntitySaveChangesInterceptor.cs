@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Extentions;
 
@@ -26,9 +27,9 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             InterceptionResult<int> result
         )
         {
-            var entitiesEntry = GetEntities(eventData.Context);
-            UpdateEntities(entitiesEntry);
-            PublishEvents(entitiesEntry);
+            var entitiesBaseEntry = GetEntitiesBase(eventData.Context);
+            PublishEvents(entitiesBaseEntry);
+            UpdateEntities(entitiesBaseEntry);
 
             return base.SavingChanges(eventData, result);
         }
@@ -39,27 +40,25 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             CancellationToken cancellationToken = default
         )
         {
-            var entitiesEntry = GetEntities(eventData.Context);
-            UpdateEntities(entitiesEntry);
-            PublishEvents(entitiesEntry);
+            var entitiesBaseEntry = GetEntitiesBase(eventData.Context);
+            PublishEvents(entitiesBaseEntry);
+            UpdateEntities(entitiesBaseEntry);
 
             return base.SavingChangesAsync(eventData, result, cancellationToken);
         }
 
-        private static IEnumerable<EntityEntry<IAuditableEntityBase>> GetEntities(
-            DbContext? context
-        )
+        private static IEnumerable<EntityEntry<IEntityBase>> GetEntitiesBase(DbContext? context)
         {
             return context == null
-                ? Enumerable.Empty<EntityEntry<IAuditableEntityBase>>()
-                : context.ChangeTracker.Entries<IAuditableEntityBase>();
+                ? Enumerable.Empty<EntityEntry<IEntityBase>>()
+                : context.ChangeTracker.Entries<IEntityBase>();
         }
 
-        private void PublishEvents(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        private void PublishEvents(IEnumerable<EntityEntry<IEntityBase>> entitiesEntry)
         {
             var entities = entitiesEntry.Select(e => e.Entity).ToList();
-
             var notifications = entities.SelectMany(entity => entity.DomainEvents).ToList();
+
             entities.ForEach(entity => entity.ClearDomainEvent());
 
             foreach (var notification in notifications)
@@ -68,7 +67,7 @@ namespace TrainRecord.Infrastructure.Persistence.Interceptions
             }
         }
 
-        private void UpdateEntities(IEnumerable<EntityEntry<IAuditableEntityBase>> entitiesEntry)
+        private void UpdateEntities(IEnumerable<EntityEntry<IEntityBase>> entitiesEntry)
         {
             foreach (var entry in entitiesEntry)
             {

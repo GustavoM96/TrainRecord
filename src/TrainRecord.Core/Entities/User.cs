@@ -4,7 +4,7 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Entities;
 
-public class User : AuditableEntityBase<User>, IEntity
+public class User : EntityBase<User>, IEntity
 {
     public string Email { get; init; } = null!;
     public string Password { get; init; } = null!;
