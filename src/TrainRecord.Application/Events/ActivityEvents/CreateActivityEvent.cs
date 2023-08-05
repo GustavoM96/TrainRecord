@@ -1,11 +1,10 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Events.ActivityEvents;
 
-public class CreateActivityEvent : IDomainEvent<Activity>
+public class CreateActivityEvent : IDomainEvent
 {
     public required string ActivityName { get; init; }
 }

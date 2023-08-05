@@ -1,8 +1,10 @@
+using TrainRecord.Core.Commum.Bases;
+
 namespace TrainRecord.Core.Interfaces;
 
-public interface IEntityBase<TEntity> : IAuditableEntityBase where TEntity : IEntity
+public interface IEntityBase : IAuditableEntityBase
 {
-    void AddDomainEvent(IDomainEvent<TEntity> domainEvent);
+    void AddDomainEvent(IDomainEvent domainEvent);
     void ClearDomainEvent();
-    public IReadOnlyList<IDomainEvent<TEntity>> DomainEvents { get; }
+    public IReadOnlyList<IDomainEvent> DomainEvents { get; }
 }
