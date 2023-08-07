@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace TrainRecord.Core.Interfaces;
 
 public interface IAuditableEntityBase

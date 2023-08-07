@@ -82,6 +82,16 @@ public abstract class ApiController : ControllerBase
         return base.CreatedAtAction(actionName, routeValues, obj);
     }
 
+    public override CreatedAtRouteResult CreatedAtRoute(
+        string? routeName,
+        object? routeValues,
+        object? obj
+    )
+    {
+        UnitOfWork.SaveChangesAsync().Wait();
+        return base.CreatedAtRoute(routeName, routeValues, obj);
+    }
+
     public override NoContentResult NoContent()
     {
         UnitOfWork.SaveChangesAsync().Wait();
