@@ -31,7 +31,7 @@ public class TeacherController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
     }
 
     [HttpGet("{userId}/Student")]
@@ -46,7 +46,7 @@ public class TeacherController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => Ok(result), errors => ProblemErrors(errors));
+        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
     }
 
     [HttpDelete("{userId}/Student/{studentId}")]
@@ -61,7 +61,7 @@ public class TeacherController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => NoContent(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContentResult(), errors => ProblemErrors(errors));
     }
 
     [HttpPost("{userId}/Student/{studentId}")]
@@ -77,7 +77,7 @@ public class TeacherController : ApiController
         var result = await Mediator.Send(query);
 
         return result.Match(
-            result => CreatedAtAction("GetAllStudent", new { userId }, result),
+            result => CreatedResult("GetAllStudent", new { userId }, result),
             errors => ProblemErrors(errors)
         );
     }

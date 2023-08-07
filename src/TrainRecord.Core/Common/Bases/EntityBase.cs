@@ -1,3 +1,4 @@
+using MediatR;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Commum.Bases;
@@ -6,16 +7,17 @@ public abstract class EntityBase<TEntity> : AuditableEntityBase, IEntityBase whe
 {
     public Guid Id { get; init; } = Guid.NewGuid();
     public EntityId<TEntity> EntityId => new(Id);
-    private readonly List<IDomainEvent> _domainEvents = new();
-    public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-    public void AddDomainEvent(IDomainEvent domainEvent)
-    {
-        _domainEvents.Add(domainEvent);
-    }
+    private readonly List<INotification> _domainEvents = new();
+    public IReadOnlyList<INotification> DomainEvents => _domainEvents.AsReadOnly();
 
     public void ClearDomainEvent()
     {
         _domainEvents.Clear();
+    }
+
+    public void AddDomainEvent(IDomainEvent<TEntity> domainEvent)
+    {
+        _domainEvents.Add(domainEvent);
     }
 }
