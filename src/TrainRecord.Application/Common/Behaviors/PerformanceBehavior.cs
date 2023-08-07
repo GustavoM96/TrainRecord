@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
 
-namespace TrainRecord.Application.Common.Behaviours;
+namespace TrainRecord.Application.Common.Behaviors;
 
 public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

@@ -6,7 +6,7 @@ using MediatR;
 using Throw;
 using ValidationException = TrainRecord.Core.Exceptions.ValidationException;
 
-namespace TrainRecord.Application.Common.Behaviours;
+namespace TrainRecord.Application.Common.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

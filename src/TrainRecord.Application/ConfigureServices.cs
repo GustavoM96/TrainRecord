@@ -6,7 +6,7 @@ using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TrainRecord.Application.Common.Behaviours;
+using TrainRecord.Application.Common.Behaviors;
 
 namespace TrainRecord.Application;
 
