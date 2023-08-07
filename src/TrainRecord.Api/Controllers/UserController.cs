@@ -34,7 +34,7 @@ public class UserController : ApiController
 
         return result.Match(
             result => CreatedResult($"GetAllActivity", new { userId }, result),
-            errors => ProblemErrors(errors)
+            ProblemErrors
         );
     }
 
@@ -46,7 +46,7 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
@@ -66,7 +66,7 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpGet]
@@ -84,7 +84,7 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpGet("{userId}")]
@@ -95,7 +95,7 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
@@ -110,7 +110,7 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => NoContentResult(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContentResult(), ProblemErrors);
     }
 
     [HttpPatch("{userId}")]
@@ -126,7 +126,7 @@ public class UserController : ApiController
         };
 
         var result = await Mediator.Send(command);
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpDelete("{userId}/Record/{recordId}")]
@@ -137,6 +137,6 @@ public class UserController : ApiController
 
         var result = await Mediator.Send(query);
 
-        return result.Match(result => NoContentResult(), errors => ProblemErrors(errors));
+        return result.Match(result => NoContentResult(), ProblemErrors);
     }
 }
