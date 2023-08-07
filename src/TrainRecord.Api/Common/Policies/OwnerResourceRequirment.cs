@@ -4,30 +4,29 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Exceptions;
 using TrainRecord.Core.Interfaces;
 
-namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment
+namespace TrainRecord.Api.Common.Policies.OwnerResourceRequirment;
+
+public class OwnerResourceRequirment : IAuthorizationRequirement { }
+
+public class OwnerResourceHandler : AuthorizationHandler<OwnerResourceRequirment>
 {
-    public class OwnerResourceRequirment : IAuthorizationRequirement { }
+    private readonly ICurrentUserService _currentUserService;
 
-    public class OwnerResourceHandler : AuthorizationHandler<OwnerResourceRequirment>
+    public OwnerResourceHandler(ICurrentUserService currentUserService)
     {
-        private readonly ICurrentUserService _currentUserService;
+        _currentUserService = currentUserService;
+    }
 
-        public OwnerResourceHandler(ICurrentUserService currentUserService)
-        {
-            _currentUserService = currentUserService;
-        }
+    protected override Task HandleRequirementAsync(
+        AuthorizationHandlerContext context,
+        OwnerResourceRequirment requirement
+    )
+    {
+        _currentUserService
+            .Throw(() => new AuthorizationException(UserError.IsNotOwnerResourceNorAdm))
+            .IfFalse(u => u.IsOwnerResource || u.IsAdmin);
 
-        protected override Task HandleRequirementAsync(
-            AuthorizationHandlerContext context,
-            OwnerResourceRequirment requirement
-        )
-        {
-            _currentUserService
-                .Throw(() => new AuthorizationException(UserError.IsNotOwnerResourceNorAdm))
-                .IfFalse(u => u.IsOwnerResource || u.IsAdmin);
-
-            context.Succeed(requirement);
-            return Task.CompletedTask;
-        }
+        context.Succeed(requirement);
+        return Task.CompletedTask;
     }
 }

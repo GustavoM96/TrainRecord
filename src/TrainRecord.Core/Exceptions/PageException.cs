@@ -1,10 +1,9 @@
 using ErrorOr;
 using TrainRecord.Core.Commum.Bases;
 
-namespace TrainRecord.Core.Exceptions
+namespace TrainRecord.Core.Exceptions;
+
+public class PageException : HandlerException
 {
-    public class PageException : HandlerException
-    {
-        public PageException(Error error) : base(error) { }
-    }
+    public PageException(Error error) : base(error) { }
 }

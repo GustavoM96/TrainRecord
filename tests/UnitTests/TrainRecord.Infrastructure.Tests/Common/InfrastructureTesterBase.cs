@@ -1,4 +1,3 @@
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Persistence.Interceptions;

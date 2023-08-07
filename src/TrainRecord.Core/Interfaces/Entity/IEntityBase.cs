@@ -1,5 +1,4 @@
 using MediatR;
-using TrainRecord.Core.Commum.Bases;
 
 namespace TrainRecord.Core.Interfaces;
 

@@ -24,7 +24,7 @@ public class AuthController : ApiController
     {
         var result = await Mediator.Send(loginUserCommand);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 
     [HttpPatch("[action]")]
@@ -49,6 +49,6 @@ public class AuthController : ApiController
         };
         var updateResult = await Mediator.Send(updateCommand);
 
-        return updateResult.Match(result => NoContentResult(), errors => ProblemErrors(errors));
+        return updateResult.Match(result => NoContentResult(), ProblemErrors);
     }
 }

@@ -1,9 +1,8 @@
 using Mapster;
 
-namespace TrainRecord.Application.Mapping
+namespace TrainRecord.Application.Mapping;
+
+public class AuthMappingConfig : IRegister
 {
-    public class AuthMappingConfig : IRegister
-    {
-        public void Register(TypeAdapterConfig config) { }
-    }
+    public void Register(TypeAdapterConfig config) { }
 }

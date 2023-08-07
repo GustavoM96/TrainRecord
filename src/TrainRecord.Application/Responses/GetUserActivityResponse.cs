@@ -1,8 +1,7 @@
-namespace TrainRecord.Application.Responses
+namespace TrainRecord.Application.Responses;
+
+public class GetUserActivityResponse
 {
-    public class GetUserActivityResponse
-    {
-        public Guid Id { get; init; }
-        public required string Name { get; init; }
-    }
+    public Guid Id { get; init; }
+    public required string Name { get; init; }
 }

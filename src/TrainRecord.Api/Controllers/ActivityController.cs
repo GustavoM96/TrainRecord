@@ -16,10 +16,7 @@ public class ActivityController : ApiController
     {
         var result = await Mediator.Send(createActivityCommand);
 
-        return result.Match(
-            result => CreatedResult("GetAll", result),
-            errors => ProblemErrors(errors)
-        );
+        return result.Match(result => CreatedResult("GetAll", result), ProblemErrors);
     }
 
     [HttpGet]
@@ -29,6 +26,6 @@ public class ActivityController : ApiController
         var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
         var result = await Mediator.Send(getAllActivityQuery);
 
-        return result.Match(result => OkResult(result), errors => ProblemErrors(errors));
+        return result.Match(OkResult, ProblemErrors);
     }
 }

@@ -1,9 +1,8 @@
-namespace TrainRecord.Core.Enum
+namespace TrainRecord.Core.Enum;
+
+public enum Role
 {
-    public enum Role
-    {
-        User = 0,
-        Adm = 1,
-        Teacher = 2
-    }
+    User = 0,
+    Adm = 1,
+    Teacher = 2
 }

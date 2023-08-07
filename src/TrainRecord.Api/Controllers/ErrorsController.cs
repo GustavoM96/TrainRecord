@@ -4,27 +4,26 @@ using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Core.Commum.Bases;
 
-namespace TrainRecord.Controllers
+namespace TrainRecord.Controllers;
+
+[ApiExplorerSettings(IgnoreApi = true)]
+public class ErrorsController : ApiController
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public class ErrorsController : ApiController
+    [Route("/error")]
+    public IActionResult ErrorHandle()
     {
-        [Route("/error")]
-        public IActionResult ErrorHandle()
+        var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        if (exception is HandlerException handlerException)
         {
-            var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
-
-            if (exception is HandlerException handlerException)
-            {
-                return ProblemErrors(handlerException.Errors);
-            }
-
-            var errorMessage = exception?.Message;
-            var unexpectedError = errorMessage is null
-                ? Error.Unexpected()
-                : Error.Unexpected(description: errorMessage);
-
-            return ProblemUniqueError(unexpectedError);
+            return ProblemErrors(handlerException.Errors);
         }
+
+        var errorMessage = exception?.Message;
+        var unexpectedError = errorMessage is null
+            ? Error.Unexpected()
+            : Error.Unexpected(description: errorMessage);
+
+        return ProblemUniqueError(unexpectedError);
     }
 }

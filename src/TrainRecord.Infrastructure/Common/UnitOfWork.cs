@@ -3,35 +3,34 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Extentions;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace TrainRecord.Infrastructure.Common
+namespace TrainRecord.Infrastructure.Common;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    protected readonly AppDbContext _context;
+
+    public UnitOfWork(AppDbContext context)
     {
-        protected readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public UnitOfWork(AppDbContext context)
+    public async Task<int> SaveChangesAsync()
+    {
+        return await _context.SaveChangesAsync();
+    }
+
+    public int RollBack()
+    {
+        var changedEntriesCopy = _context.ChangeTracker
+            .Entries()
+            .Where(e => e.AnyChange())
+            .ToList();
+
+        foreach (var entry in changedEntriesCopy)
         {
-            _context = context;
+            entry.State = EntityState.Detached;
         }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
-        public int RollBack()
-        {
-            var changedEntriesCopy = _context.ChangeTracker
-                .Entries()
-                .Where(e => e.AnyChange())
-                .ToList();
-
-            foreach (var entry in changedEntriesCopy)
-            {
-                entry.State = EntityState.Detached;
-            }
-
-            return changedEntriesCopy.Count();
-        }
+        return changedEntriesCopy.Count;
     }
 }
