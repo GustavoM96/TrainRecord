@@ -13,7 +13,7 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
         RuleFor(u => u.Password)
             .Matches(_passwordPattern)
             .WithMessage(
-                "senha deve possuir mais de 6 caracteres com letras minúsculas,maiúsculas, números e símbolos"
+                "senha deve possuir mais de 6 caracteres com letras minúsculas, maiúsculas, números e símbolos"
             )
             .NotEmpty();
     }

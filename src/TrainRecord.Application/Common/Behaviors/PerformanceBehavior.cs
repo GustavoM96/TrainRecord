@@ -6,14 +6,14 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Common.Behaviours;
 
-public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
     private readonly ICurrentUserService _currentUserService;
 
-    public PerformanceBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService)
+    public PerformanceBehavior(ILogger<TRequest> logger, ICurrentUserService currentUserService)
     {
         _timer = new Stopwatch();
         _logger = logger;
