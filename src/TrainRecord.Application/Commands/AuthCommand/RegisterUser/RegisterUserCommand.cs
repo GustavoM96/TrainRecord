@@ -8,7 +8,6 @@ using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Events.AuthEvents;
-using TrainRecord.Application.Events.ActivityEvents;
 
 namespace TrainRecord.Application.AuthCommand;
 

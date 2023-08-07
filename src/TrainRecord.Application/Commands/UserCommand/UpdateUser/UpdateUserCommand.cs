@@ -1,5 +1,4 @@
 using ErrorOr;
-using LaDeak.JsonMergePatch.Abstractions;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
@@ -7,7 +6,6 @@ using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
-using TrainRecord.Application.Requests;
 
 namespace TrainRecord.Application.UserCommand;
 
