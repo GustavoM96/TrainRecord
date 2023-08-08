@@ -7,25 +7,28 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class CreateActivityCommandHandlerTests : TesterBase
+public class CreateActivityCommandHandlerTests : ApplicationTesterBase
 {
     private readonly CreateActivityCommandHandler _testClass;
-    private readonly Mock<IActivityRepository> _activityRepository = new();
+    private readonly CreateActivityCommand _command;
+    private readonly Mock<IActivityRepository> _activityRepository;
 
     public CreateActivityCommandHandlerTests()
     {
-        _testClass = new CreateActivityCommandHandler(_activityRepository.Object);
+        _activityRepository = FreezeFixture<Mock<IActivityRepository>>();
+
+        _testClass = CreateFixture<CreateActivityCommandHandler>();
+        _command = CreateFixture<CreateActivityCommand>();
     }
 
     [Fact]
     public async Task Test_Handle_WhenNotFoundActivity_ShouldAddActivity()
     {
         //arrange
-        var command = new CreateActivityCommand() { Name = "pular corda", };
-        _activityRepository.Setup(m => m.AnyByNameAsync("pular corda")).ReturnsAsync(false);
+        _activityRepository.Setup(m => m.AnyByNameAsync(_command.Name)).ReturnsAsync(false);
 
         //act
-        var result = await _testClass.Handle(command, default);
+        var result = await _testClass.Handle(_command, default);
 
         //assert
         _activityRepository.Verify(m => m.AddAsync(It.IsAny<Activity>()));
@@ -36,11 +39,10 @@ public class CreateActivityCommandHandlerTests : TesterBase
     public async Task Test_Handle_WhenFoundActivity_ShouldReturnActivityError()
     {
         //arranges
-        var command = new CreateActivityCommand() { Name = "pular corda", };
-        _activityRepository.Setup(m => m.AnyByNameAsync("pular corda")).ReturnsAsync(true);
+        _activityRepository.Setup(m => m.AnyByNameAsync(_command.Name)).ReturnsAsync(true);
 
         //act
-        var result = await _testClass.Handle(command, default);
+        var result = await _testClass.Handle(_command, default);
 
         //assert
         _activityRepository.Verify(m => m.AddAsync(It.IsAny<Activity>()), Times.Never);
@@ -50,7 +52,7 @@ public class CreateActivityCommandHandlerTests : TesterBase
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public async Task Test_CreateActivityCommandValidator(string activityName)
+    public async Task Test_CreateActivityCommandValidator_Error(string activityName)
     {
         //arrange
         var command = new CreateActivityCommand() { Name = activityName };
@@ -58,5 +60,18 @@ public class CreateActivityCommandHandlerTests : TesterBase
 
         //assert
         Assert.True(await IsInvalidPropertiesAsync(validator, command, "Name"));
+    }
+
+    [Theory]
+    [InlineData("pular corda")]
+    [InlineData("supino")]
+    public async Task Test_CreateActivityCommandValidator_Valid(string activityName)
+    {
+        //arrange
+        var command = new CreateActivityCommand() { Name = activityName };
+        var validator = new CreateActivityCommandValidator();
+
+        //assert
+        Assert.True(await IsValidPropertiesAsync(validator, command));
     }
 }

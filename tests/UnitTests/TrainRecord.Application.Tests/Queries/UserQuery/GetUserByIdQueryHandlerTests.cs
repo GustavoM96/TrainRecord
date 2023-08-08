@@ -8,16 +8,18 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class GetUserByIdQueryHandlerTests : TesterBase
+public class GetUserByIdQueryHandlerTests : ApplicationTesterBase
 {
     private readonly GetUserByIdQueryHandler _testClass;
     private readonly GetUserByIdQuery _query;
-    private readonly Mock<IUserRepository> _userRepository = new();
+    private readonly Mock<IUserRepository> _userRepository;
 
     public GetUserByIdQueryHandlerTests()
     {
-        _testClass = new GetUserByIdQueryHandler(_userRepository.Object);
-        _query = new GetUserByIdQuery() { UserId = new(GuidUnique) };
+        _userRepository = FreezeFixture<Mock<IUserRepository>>();
+
+        _testClass = CreateFixture<GetUserByIdQueryHandler>();
+        _query = CreateFixture<GetUserByIdQuery>();
     }
 
     [Fact]

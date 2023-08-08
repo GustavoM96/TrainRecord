@@ -11,15 +11,17 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class GetAllUserQueryHandlerTests : TesterBase
+public class GetAllUserQueryHandlerTests : ApplicationTesterBase
 {
     private readonly GetAllUserQueryHandler _testClass;
     private readonly GetAllUserQuery _query;
-    private readonly Mock<IUserRepository> _userRepository = new();
+    private readonly Mock<IUserRepository> _userRepository;
 
     public GetAllUserQueryHandlerTests()
     {
-        _testClass = new GetAllUserQueryHandler(_userRepository.Object);
+        _userRepository = FreezeFixture<Mock<IUserRepository>>();
+
+        _testClass = CreateFixture<GetAllUserQueryHandler>();
         _query = new GetAllUserQuery() { Pagination = PaginationOne };
     }
 

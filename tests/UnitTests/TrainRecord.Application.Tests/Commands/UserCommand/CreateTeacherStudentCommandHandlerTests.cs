@@ -8,24 +8,20 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class CreateTeacherStudentCommandHandlerTests : TesterBase
+public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
 {
     private readonly CreateTeacherStudentCommandHandler _testClass;
     private readonly CreateTeacherStudentCommand _command;
-    private readonly Mock<IUserRepository> _userRepository = new();
-    private readonly Mock<ITeacherStudentRepository> _teacherStudentRepository = new();
+    private readonly Mock<IUserRepository> _userRepository;
+    private readonly Mock<ITeacherStudentRepository> _teacherStudentRepository;
 
     public CreateTeacherStudentCommandHandlerTests()
     {
-        _testClass = new CreateTeacherStudentCommandHandler(
-            _userRepository.Object,
-            _teacherStudentRepository.Object
-        );
-        _command = new CreateTeacherStudentCommand()
-        {
-            TeacherId = new(GuidUnique),
-            StudentId = new(GuidUnique)
-        };
+        _userRepository = FreezeFixture<Mock<IUserRepository>>();
+        _teacherStudentRepository = FreezeFixture<Mock<ITeacherStudentRepository>>();
+
+        _testClass = CreateFixture<CreateTeacherStudentCommandHandler>();
+        _command = CreateFixture<CreateTeacherStudentCommand>();
     }
 
     [Fact]
