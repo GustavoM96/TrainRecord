@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
@@ -49,17 +50,15 @@ public class UnitOfWorkTests : InfrastructureTesterBase
         _appDbContext = appDbContext;
         _repositoryBase = new UserRepository(appDbContext);
         _unitOfWork = new UnitOfWork(appDbContext);
+
+        DeleteUserIfAny(_users[0].EntityId);
+        DeleteUserIfAny(_users[1].EntityId);
     }
 
     [Fact]
     public async Task Test_SaveChangeAsync()
     {
         //arrange
-        if (await _repositoryBase.AnyByIdAsync(_users[0].EntityId))
-        {
-            await _repositoryBase.DeleteById(_users[0].EntityId);
-        }
-
         await _repositoryBase.AddAsync(_users[0]);
 
         //act
@@ -73,15 +72,6 @@ public class UnitOfWorkTests : InfrastructureTesterBase
     public async Task Test_RollBack()
     {
         //arrange
-        if (await _repositoryBase.AnyByIdAsync(_users[0].EntityId))
-        {
-            await _repositoryBase.DeleteById(_users[0].EntityId);
-        }
-        if (await _repositoryBase.AnyByIdAsync(_users[1].EntityId))
-        {
-            await _repositoryBase.DeleteById(_users[1].EntityId);
-        }
-
         await _repositoryBase.AddAsync(_users[0]);
         await _repositoryBase.AddAsync(_users[1]);
 
@@ -98,5 +88,13 @@ public class UnitOfWorkTests : InfrastructureTesterBase
         Assert.False(await _repositoryBase.AnyByIdAsync(_users[1].EntityId));
 
         Assert.Equal(2, result);
+    }
+
+    private void DeleteUserIfAny(EntityId<User> entityBase)
+    {
+        if (_repositoryBase.AnyByIdAsync(entityBase).GetAwaiter().GetResult())
+        {
+            _repositoryBase.DeleteById(entityBase).Wait();
+        }
     }
 }

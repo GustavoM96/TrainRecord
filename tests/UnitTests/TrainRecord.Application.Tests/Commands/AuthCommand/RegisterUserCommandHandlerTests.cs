@@ -10,29 +10,20 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class RegisterUserCommandHandlerTests : TesterBase
+public class RegisterUserCommandHandlerTests : ApplicationTesterBase
 {
     private readonly RegisterUserCommandHandler _testClass;
     private readonly RegisterUserCommand _command;
-    private readonly Mock<IUserRepository> _userRepository = new();
-    private readonly Mock<IGenaratorHash> _genaratorHash = new();
-    private readonly Mock<ICurrentUserService> _currentUserService = new();
+    private readonly Mock<IUserRepository> _userRepository;
+    private readonly Mock<IGenaratorHash> _genaratorHash;
 
     public RegisterUserCommandHandlerTests()
     {
-        _testClass = new RegisterUserCommandHandler(
-            _genaratorHash.Object,
-            _userRepository.Object,
-            _currentUserService.Object
-        );
-        _command = new RegisterUserCommand()
-        {
-            Email = "gustavo@gmail.com",
-            FirstName = "gustavo",
-            LastName = "messias",
-            Password = "Gus#123",
-            Role = Role.User
-        };
+        _userRepository = FreezeFixture<Mock<IUserRepository>>();
+        _genaratorHash = FreezeFixture<Mock<IGenaratorHash>>();
+
+        _testClass = CreateFixture<RegisterUserCommandHandler>();
+        _command = CreateFixture<RegisterUserCommand>();
     }
 
     [Fact]
@@ -114,7 +105,7 @@ public class RegisterUserCommandHandlerTests : TesterBase
     [InlineData("gustavo", "1234")]
     [InlineData("gustavo.com", "abcdeF")]
     [InlineData("@gustavo.com", "S1a")]
-    public async Task Test_RegisterUserCommandValidator(string email, string password)
+    public async Task Test_RegisterUserCommandValidator_Error(string email, string password)
     {
         //arrange
         var command = new RegisterUserCommand()
@@ -130,5 +121,26 @@ public class RegisterUserCommandHandlerTests : TesterBase
 
         //assert
         Assert.True(await IsInvalidPropertiesAsync(validator, command, "Email", "Password"));
+    }
+
+    [Theory]
+    [InlineData("gustavo@gmail.com", "abc23F@$@#deF")]
+    [InlineData("gustavo@hotmail.com", "!@WEd4")]
+    public async Task Test_RegisterUserCommandValidator_Success(string email, string password)
+    {
+        //arrange
+        var command = new RegisterUserCommand()
+        {
+            Email = email,
+            FirstName = "gustavo",
+            LastName = "messias",
+            Password = password,
+            Role = Role.User
+        };
+
+        var validator = new RegisterUserCommandValidator();
+
+        //assert
+        Assert.True(await IsValidPropertiesAsync(validator, command));
     }
 }

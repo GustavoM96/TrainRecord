@@ -1,10 +1,21 @@
+using AutoFixture;
+using AutoFixture.AutoMoq;
 using FluentValidation;
 using TrainRecord.Core.Common;
 
 namespace TrainRecord.Application.Tests.Common;
 
-public abstract class TesterBase
+public abstract class ApplicationTesterBase
 {
+    public ApplicationTesterBase()
+    {
+        var fixture = new Fixture();
+        fixture.Customize(new AutoMoqCustomization());
+        fixture.Customize<Pagination>(c => c.With(c => c.PageNumber, 1).With(c => c.PerPage, 1));
+
+        _fixture = fixture;
+    }
+
     protected static async Task<bool> IsInvalidPropertiesAsync<TValidate>(
         AbstractValidator<TValidate> validator,
         TValidate validateItem,
@@ -17,6 +28,15 @@ public abstract class TesterBase
         return EqualItems(propertyNames, errorsDistinct);
     }
 
+    protected static async Task<bool> IsValidPropertiesAsync<TValidate>(
+        AbstractValidator<TValidate> validator,
+        TValidate validateItem
+    )
+    {
+        var validationResults = await validator.ValidateAsync(validateItem);
+        return validationResults.IsValid;
+    }
+
     protected static bool EqualItems<T>(IEnumerable<T> listOne, IEnumerable<T> listTwo)
     {
         var listOneOrderBy = listOne.OrderBy(item => item);
@@ -27,4 +47,10 @@ public abstract class TesterBase
 
     protected static Guid GuidUnique => Guid.NewGuid();
     protected static Pagination PaginationOne => new() { PageNumber = 1, PerPage = 1 };
+
+    protected T CreateFixture<T>() => _fixture.Create<T>();
+
+    protected T FreezeFixture<T>() => _fixture.Freeze<T>();
+
+    private readonly Fixture _fixture;
 }

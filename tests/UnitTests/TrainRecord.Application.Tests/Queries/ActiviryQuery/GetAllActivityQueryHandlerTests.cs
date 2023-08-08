@@ -8,16 +8,18 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class GetAllActivityQueryHandlerTests : TesterBase
+public class GetAllActivityQueryHandlerTests : ApplicationTesterBase
 {
     private readonly GetAllActivityQueryHandler _testClass;
     private readonly GetAllActivityQuery _query;
-    private readonly Mock<IActivityRepository> _activityRepository = new();
+    private readonly Mock<IActivityRepository> _activityRepository;
 
     public GetAllActivityQueryHandlerTests()
     {
-        _testClass = new GetAllActivityQueryHandler(_activityRepository.Object);
-        _query = new GetAllActivityQuery() { Pagination = PaginationOne };
+        _activityRepository = FreezeFixture<Mock<IActivityRepository>>();
+
+        _testClass = CreateFixture<GetAllActivityQueryHandler>();
+        _query = CreateFixture<GetAllActivityQuery>();
     }
 
     [Fact]

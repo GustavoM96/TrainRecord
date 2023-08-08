@@ -7,20 +7,18 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
-public class GetActivityByUserQueryHandlerTests : TesterBase
+public class GetActivityByUserQueryHandlerTests : ApplicationTesterBase
 {
     private readonly GetActivityByUserQueryHandler _testClass;
     private readonly GetActivityByUserQuery _query;
-    private readonly Mock<IUserActivityRepository> _userActivityRepository = new();
+    private readonly Mock<IUserActivityRepository> _userActivityRepository;
 
     public GetActivityByUserQueryHandlerTests()
     {
-        _testClass = new GetActivityByUserQueryHandler(_userActivityRepository.Object);
-        _query = new GetActivityByUserQuery()
-        {
-            UserId = new(GuidUnique),
-            Pagination = PaginationOne
-        };
+        _userActivityRepository = FreezeFixture<Mock<IUserActivityRepository>>();
+
+        _testClass = FreezeFixture<GetActivityByUserQueryHandler>();
+        _query = FreezeFixture<GetActivityByUserQuery>();
     }
 
     [Fact]
