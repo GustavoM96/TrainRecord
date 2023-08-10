@@ -15,11 +15,11 @@ public class StudentController : ApiController
     public async Task<IActionResult> GetAllTeacher(
         [FromQuery] Pagination pagination,
         Guid userId,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var query = new GetAllTeacherByStudentQuery(new(userId), pagination);
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 
     [HttpDelete("{userId}/Teacher/{teacherId}")]
@@ -27,18 +27,18 @@ public class StudentController : ApiController
     public async Task<IActionResult> RemoveTeacherFromStudent(
         Guid userId,
         Guid teacherId,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var command = new DeleteTeacherStudentCommand(new(teacherId), new(userId));
-        return await SendNoContent(command, cs);
+        return await SendNoContent(command, ct);
     }
 
     [HttpPost("{userId}/Teacher/{teacherId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId, CancellationToken cs)
+    public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId, CancellationToken ct)
     {
         var command = new CreateTeacherStudentCommand(new(teacherId), new(userId));
-        return await SendCreated(command, cs);
+        return await SendCreated(command, ct);
     }
 }

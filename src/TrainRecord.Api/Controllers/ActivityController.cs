@@ -12,16 +12,16 @@ public class ActivityController : ApiController
 {
     [HttpPost]
     [Authorize(Policy = "IsAdm")]
-    public async Task<IActionResult> Create(CreateActivityCommand command, CancellationToken cs)
+    public async Task<IActionResult> Create(CreateActivityCommand command, CancellationToken ct)
     {
-        return await SendCreated(command, cs);
+        return await SendCreated(command, ct);
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination, CancellationToken cs)
+    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination, CancellationToken ct)
     {
         var query = new GetAllActivityQuery() { Pagination = pagination };
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 }

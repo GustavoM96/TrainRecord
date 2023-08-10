@@ -19,7 +19,7 @@ public class UserController : ApiController
         [FromRoute] Guid activityId,
         [FromRoute] Guid userId,
         [FromBody] CreateUserActivityRequest createUserActivityResquest,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var command = new CreateUserActivityCommand(
@@ -30,7 +30,7 @@ public class UserController : ApiController
             createUserActivityResquest.Serie
         );
 
-        return await SendCreated(command, cs);
+        return await SendCreated(command, ct);
     }
 
     [HttpGet("{userId}/Activity")]
@@ -38,11 +38,11 @@ public class UserController : ApiController
     public async Task<IActionResult> GetAllActivity(
         Guid userId,
         [FromQuery] Pagination pagination,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var query = new GetActivityByUserQuery(new(userId), pagination);
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
@@ -51,11 +51,11 @@ public class UserController : ApiController
         Guid userId,
         Guid activityId,
         [FromQuery] Pagination pagination,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var query = new GetRecordQuery(new(userId), new(activityId), pagination);
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 
     [HttpGet]
@@ -63,19 +63,19 @@ public class UserController : ApiController
     public async Task<IActionResult> GetAll(
         [FromQuery] Pagination pagination,
         [FromQuery] UserQueryRequest userQueryRequest,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var query = new GetAllUserQuery(userQueryRequest, pagination);
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 
     [HttpGet("{userId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> GetById(Guid userId, CancellationToken cs)
+    public async Task<IActionResult> GetById(Guid userId, CancellationToken ct)
     {
         var query = new GetUserByIdQuery(new(userId));
-        return await SendOk(query, cs);
+        return await SendOk(query, ct);
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
@@ -83,11 +83,11 @@ public class UserController : ApiController
     public async Task<IActionResult> DeleteAllRecord(
         Guid userId,
         Guid activityId,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var command = new DeleteAllRecordByUserActivityCommand(new(userId), new(activityId));
-        return await SendNoContent(command, cs);
+        return await SendNoContent(command, ct);
     }
 
     [HttpPatch("{userId}")]
@@ -96,18 +96,18 @@ public class UserController : ApiController
     public async Task<IActionResult> Update(
         Guid userId,
         [FromBody] UpdateUserRequest request,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var command = new UpdateUserCommand(new(userId), request.FirstName, request.LastName);
-        return await SendOk(command, cs);
+        return await SendOk(command, ct);
     }
 
     [HttpDelete("{userId}/Record/{recordId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> DeleteRecord(Guid recordId, CancellationToken cs)
+    public async Task<IActionResult> DeleteRecord(Guid recordId, CancellationToken ct)
     {
         var command = new DeleteRecordCommand(new(recordId));
-        return await SendNoContent(command, cs);
+        return await SendNoContent(command, ct);
     }
 }
