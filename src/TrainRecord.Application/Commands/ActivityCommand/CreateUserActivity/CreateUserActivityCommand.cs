@@ -8,14 +8,13 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityCommand;
 
-public class CreateUserActivityCommand : IRequest<ErrorOr<UserActivity>>
-{
-    public required EntityId<User> UserId { get; init; }
-    public required EntityId<Activity> ActivityId { get; init; }
-    public required int Weight { get; init; }
-    public required int Repetition { get; init; }
-    public required int Serie { get; init; }
-}
+public record CreateUserActivityCommand(
+    EntityId<User> UserId,
+    EntityId<Activity> ActivityId,
+    int Weight,
+    int Repetition,
+    int Serie
+) : IRequest<ErrorOr<UserActivity>> { }
 
 public class CreateUserActivityCommandHandler
     : IRequestHandler<CreateUserActivityCommand, ErrorOr<UserActivity>>

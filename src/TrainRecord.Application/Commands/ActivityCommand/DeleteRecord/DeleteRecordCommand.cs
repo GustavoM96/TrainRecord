@@ -7,10 +7,7 @@ using TrainRecord.Core.Entities;
 
 namespace TrainRecord.Application.ActivityCommand;
 
-public class DeleteRecordCommand : IRequest<ErrorOr<Deleted>>
-{
-    public required EntityId<UserActivity> RecordId { get; init; }
-}
+public record DeleteRecordCommand(EntityId<UserActivity> RecordId) : IRequest<ErrorOr<Deleted>> { }
 
 public class DeleteRecordCommandHandler : IRequestHandler<DeleteRecordCommand, ErrorOr<Deleted>>
 {

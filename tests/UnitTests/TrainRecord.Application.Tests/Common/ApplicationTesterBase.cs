@@ -1,7 +1,9 @@
 using AutoFixture;
 using AutoFixture.AutoMoq;
 using FluentValidation;
+using TrainRecord.Application.AuthCommand;
 using TrainRecord.Core.Common;
+using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Application.Tests.Common;
 
@@ -12,6 +14,7 @@ public abstract class ApplicationTesterBase
         var fixture = new Fixture();
         fixture.Customize(new AutoMoqCustomization());
         fixture.Customize<Pagination>(c => c.With(c => c.PageNumber, 1).With(c => c.PerPage, 1));
+        fixture.Customize<RegisterUserCommand>(c => c.With(c => c.Role, Role.User));
 
         _fixture = fixture;
     }

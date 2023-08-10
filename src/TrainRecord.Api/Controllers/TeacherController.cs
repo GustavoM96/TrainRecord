@@ -17,68 +17,46 @@ public class TeacherController : ApiController
     [Authorize]
     public async Task<IActionResult> GetAll(
         [FromQuery] Pagination pagination,
-        [FromQuery] TeacherQueryRequest teacherQueryRequest
+        [FromQuery] TeacherQueryRequest request,
+        CancellationToken cs
     )
     {
-        var userQueryRequest = teacherQueryRequest.Adapt<UserQueryRequest>();
+        var userQueryRequest = request.Adapt<UserQueryRequest>();
         userQueryRequest.Role = Role.Teacher;
 
-        var query = new GetAllUserQuery()
-        {
-            Pagination = pagination,
-            UserQueryRequest = userQueryRequest
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(OkResult, ProblemErrors);
+        var query = new GetAllUserQuery(userQueryRequest, pagination);
+        return await SendOk(query, cs);
     }
 
     [HttpGet("{userId}/Student")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> GetAllStudent([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> GetAllStudent(
+        [FromQuery] Pagination pagination,
+        Guid userId,
+        CancellationToken cs
+    )
     {
-        var query = new GetAllStudentByTeacherQuery()
-        {
-            Pagination = pagination,
-            TeacherId = new(userId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(OkResult, ProblemErrors);
+        var query = new GetAllStudentByTeacherQuery(new(userId), pagination);
+        return await SendOk(query, cs);
     }
 
     [HttpDelete("{userId}/Student/{studentId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> RemoveStudentFromTeacher(Guid userId, Guid studentId)
+    public async Task<IActionResult> RemoveStudentFromTeacher(
+        Guid userId,
+        Guid studentId,
+        CancellationToken cs
+    )
     {
-        var query = new DeleteTeacherStudentCommand()
-        {
-            StudentId = new(studentId),
-            TeacherId = new(userId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(result => NoContentResult(), ProblemErrors);
+        var command = new DeleteTeacherStudentCommand(new(userId), new(studentId));
+        return await SendNoContent(command, cs);
     }
 
     [HttpPost("{userId}/Student/{studentId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> AddStudent(Guid userId, Guid studentId)
+    public async Task<IActionResult> AddStudent(Guid userId, Guid studentId, CancellationToken cs)
     {
-        var query = new CreateTeacherStudentCommand()
-        {
-            StudentId = new(studentId),
-            TeacherId = new(userId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(
-            result => CreatedResult("GetAllStudent", new { userId }, result),
-            ProblemErrors
-        );
+        var command = new CreateTeacherStudentCommand(new(userId), new(studentId));
+        return await SendCreated(command, cs);
     }
 }

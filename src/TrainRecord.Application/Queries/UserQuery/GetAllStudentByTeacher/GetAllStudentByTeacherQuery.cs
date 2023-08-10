@@ -9,11 +9,8 @@ using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 
-public class GetAllStudentByTeacherQuery : IRequest<ErrorOr<Page<RegisterUserResponse>>>
-{
-    public required Pagination Pagination { get; init; }
-    public required EntityId<User> TeacherId { get; init; }
-}
+public record GetAllStudentByTeacherQuery(EntityId<User> TeacherId, Pagination Pagination)
+    : IRequest<ErrorOr<Page<RegisterUserResponse>>> { }
 
 public class GetAllStudentByTeacherQueryHandler
     : IRequestHandler<GetAllStudentByTeacherQuery, ErrorOr<Page<RegisterUserResponse>>>

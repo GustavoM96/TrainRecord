@@ -80,14 +80,13 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
     public async Task Test_Handle_WhenRegisterAdmAndIsNotAnotherAdm_ShouldReturnErros()
     {
         //arrange
-        var commandAdm = new RegisterUserCommand()
-        {
-            Email = "gustavoAdm@gmail.com",
-            FirstName = "gustavoAdm",
-            LastName = "messiasAdm",
-            Password = "Gus#123Adm",
-            Role = Role.Adm
-        };
+        var commandAdm = new RegisterUserCommand(
+            "gustavoAdm@gmail.com",
+            "Gus#123Adm",
+            "gustavoAdm",
+            "messiasAdm",
+            Role.Adm
+        );
 
         _userRepository.Setup(m => m.AnyByEmailAsync(commandAdm.Email)).ReturnsAsync(false);
 
@@ -108,14 +107,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
     public async Task Test_RegisterUserCommandValidator_Error(string email, string password)
     {
         //arrange
-        var command = new RegisterUserCommand()
-        {
-            Email = email,
-            FirstName = "gustavo",
-            LastName = "messias",
-            Password = password,
-            Role = Role.User
-        };
+        var command = new RegisterUserCommand(email, password, "gustavo", "messias", Role.User);
 
         var validator = new RegisterUserCommandValidator();
 
@@ -129,14 +121,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
     public async Task Test_RegisterUserCommandValidator_Success(string email, string password)
     {
         //arrange
-        var command = new RegisterUserCommand()
-        {
-            Email = email,
-            FirstName = "gustavo",
-            LastName = "messias",
-            Password = password,
-            Role = Role.User
-        };
+        var command = new RegisterUserCommand(email, password, "gustavo", "messias", Role.User);
 
         var validator = new RegisterUserCommandValidator();
 

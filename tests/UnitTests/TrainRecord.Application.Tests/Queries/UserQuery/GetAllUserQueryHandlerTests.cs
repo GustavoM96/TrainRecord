@@ -1,12 +1,9 @@
 using Moq;
-using TrainRecord.Application.ActivityQuery;
-using TrainRecord.Application.Errors;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Extentions;
 using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
@@ -22,7 +19,7 @@ public class GetAllUserQueryHandlerTests : ApplicationTesterBase
         _userRepository = FreezeFixture<Mock<IUserRepository>>();
 
         _testClass = CreateFixture<GetAllUserQueryHandler>();
-        _query = new GetAllUserQuery() { Pagination = PaginationOne };
+        _query = new GetAllUserQuery(null, PaginationOne);
     }
 
     [Fact]
@@ -55,11 +52,10 @@ public class GetAllUserQueryHandlerTests : ApplicationTesterBase
 
         var query = users.AsQueryable();
 
-        var filterByGmailQuery = new GetAllUserQuery()
-        {
-            Pagination = new() { PageNumber = 1, PerPage = 10 },
-            UserQueryRequest = new() { Email = "gmail" }
-        };
+        var filterByGmailQuery = new GetAllUserQuery(
+            new() { Email = "gmail" },
+            new() { PageNumber = 1, PerPage = 10 }
+        );
 
         _userRepository.Setup(m => m.AsNoTracking()).Returns(query);
 
