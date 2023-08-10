@@ -69,25 +69,6 @@ public abstract class ApiController : ControllerBase
 
     protected async Task<IActionResult> SendCreated<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        string? actionName,
-        object? routeValues,
-        CancellationToken cs = default
-    )
-    {
-        return await SendCreatedBase(request, actionName, routeValues, cs);
-    }
-
-    protected async Task<IActionResult> SendCreated<TResponse>(
-        IRequest<ErrorOr<TResponse>> request,
-        string? actionName,
-        CancellationToken cs = default
-    )
-    {
-        return await SendCreatedBase(request, actionName, cs: cs);
-    }
-
-    protected async Task<IActionResult> SendCreated<TResponse>(
-        IRequest<ErrorOr<TResponse>> request,
         CancellationToken cs = default
     )
     {
@@ -135,33 +116,5 @@ public abstract class ApiController : ControllerBase
         };
 
         return Problem(statusCode: statusCode, title: error.Description);
-    }
-
-    protected OkObjectResult OkResult(object? obj)
-    {
-        UnitOfWork.SaveChangesAsync().Wait();
-        return base.Ok(obj);
-    }
-
-    protected CreatedAtActionResult CreatedResult(string? actionName, object? obj)
-    {
-        UnitOfWork.SaveChangesAsync().Wait();
-        return base.CreatedAtAction(actionName, obj);
-    }
-
-    protected CreatedAtActionResult CreatedResult(
-        string? actionName,
-        object? routeValues,
-        object? obj
-    )
-    {
-        UnitOfWork.SaveChangesAsync().Wait();
-        return base.CreatedAtAction(actionName, routeValues, obj);
-    }
-
-    protected NoContentResult NoContentResult()
-    {
-        UnitOfWork.SaveChangesAsync().Wait();
-        return base.NoContent();
     }
 }

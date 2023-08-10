@@ -15,7 +15,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 {
     private readonly IGenaratorHash _genaratorHash;
     private readonly IGenaratorToken _genaratorToken;
-    public readonly IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
         IGenaratorHash genaratorHash,
