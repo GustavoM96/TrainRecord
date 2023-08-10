@@ -29,7 +29,7 @@ public abstract class ApiController : ControllerBase
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync();
+        await UnitOfWork.SaveChangesAsync(ct);
         return Ok(result.Value);
     }
 
@@ -45,7 +45,7 @@ public abstract class ApiController : ControllerBase
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync();
+        await UnitOfWork.SaveChangesAsync(ct);
         return NoContent();
     }
 
@@ -63,7 +63,7 @@ public abstract class ApiController : ControllerBase
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync();
+        await UnitOfWork.SaveChangesAsync(ct);
         return CreatedAtAction(actionName, routeValues, result.Value);
     }
 
