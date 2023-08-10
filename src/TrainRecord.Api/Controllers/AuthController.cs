@@ -9,30 +9,30 @@ namespace TrainRecord.Controllers;
 public class AuthController : ApiController
 {
     [HttpPost("[action]")]
-    public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cs)
+    public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken ct)
     {
-        return await SendCreated(command, cs);
+        return await SendCreated(command, ct);
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Login(LoginUserCommand command, CancellationToken cs)
+    public async Task<IActionResult> Login(LoginUserCommand command, CancellationToken ct)
     {
-        return await SendOk(command, cs);
+        return await SendOk(command, ct);
     }
 
     [HttpPatch("[action]")]
     public async Task<IActionResult> ChangePassword(
         UpdatePasswordRequest request,
-        CancellationToken cs
+        CancellationToken ct
     )
     {
         var loginUserCommand = new LoginUserCommand(request.Email, request.Password);
-        var loginResult = await Mediator.Send(loginUserCommand, cs);
+        var loginResult = await Mediator.Send(loginUserCommand, ct);
 
         var updatePasswordCommand = new UpdatePasswordCommand(request.Email, request.NewPassword);
 
         return loginResult.IsError
             ? ProblemErrors(loginResult.Errors)
-            : await SendOk(updatePasswordCommand, cs);
+            : await SendOk(updatePasswordCommand, ct);
     }
 }

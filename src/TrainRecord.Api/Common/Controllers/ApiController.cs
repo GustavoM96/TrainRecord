@@ -19,10 +19,10 @@ public abstract class ApiController : ControllerBase
 
     protected async Task<IActionResult> SendOk<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken cs = default
+        CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, cs);
+        var result = await Mediator.Send(request, ct);
 
         if (result.IsError)
         {
@@ -35,10 +35,10 @@ public abstract class ApiController : ControllerBase
 
     protected async Task<IActionResult> SendNoContent<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken cs = default
+        CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, cs);
+        var result = await Mediator.Send(request, ct);
 
         if (result.IsError)
         {
@@ -53,10 +53,10 @@ public abstract class ApiController : ControllerBase
         IRequest<ErrorOr<TResponse>> request,
         string? actionName = null,
         object? routeValues = null,
-        CancellationToken cs = default
+        CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, cs);
+        var result = await Mediator.Send(request, ct);
 
         if (result.IsError)
         {
@@ -69,10 +69,10 @@ public abstract class ApiController : ControllerBase
 
     protected async Task<IActionResult> SendCreated<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken cs = default
+        CancellationToken ct = default
     )
     {
-        return await SendCreatedBase(request, cs: cs);
+        return await SendCreatedBase(request, ct: ct);
     }
 
     protected IActionResult ProblemErrors(List<Error> errors)
