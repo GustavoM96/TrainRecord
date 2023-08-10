@@ -14,7 +14,7 @@ public record GetUserByIdQuery(EntityId<User> UserId) : IRequest<ErrorOr<Registe
 public class GetUserByIdQueryHandler
     : IRequestHandler<GetUserByIdQuery, ErrorOr<RegisterUserResponse>>
 {
-    public readonly IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
     public GetUserByIdQueryHandler(IUserRepository userRepository)
     {

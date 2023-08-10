@@ -12,7 +12,7 @@ public record UpdatePasswordCommand(string Email, string NewPassword)
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
 {
     private readonly IGenaratorHash _genaratorHash;
-    public readonly IUserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
     public UpdatePasswordCommandHandler(
         IGenaratorHash genaratorHash,

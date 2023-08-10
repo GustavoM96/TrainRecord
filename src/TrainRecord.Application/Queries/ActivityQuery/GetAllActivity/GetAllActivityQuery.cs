@@ -14,7 +14,7 @@ public class GetAllActivityQuery : IRequest<ErrorOr<Page<Activity>>>
 public class GetAllActivityQueryHandler
     : IRequestHandler<GetAllActivityQuery, ErrorOr<Page<Activity>>>
 {
-    public readonly IActivityRepository _activityRepository;
+    private readonly IActivityRepository _activityRepository;
 
     public GetAllActivityQueryHandler(IActivityRepository activityRepository)
     {
