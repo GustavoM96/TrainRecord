@@ -66,14 +66,13 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
     )
     {
         //arrange
-        var command = new CreateUserActivityCommand()
-        {
-            UserId = new(GuidUnique),
-            ActivityId = new(GuidUnique),
-            Weight = weight,
-            Repetition = repetition,
-            Serie = serie
-        };
+        var command = new CreateUserActivityCommand(
+            new(GuidUnique),
+            new(GuidUnique),
+            weight,
+            repetition,
+            serie
+        );
         var validator = new CreateUserActivityCommandValidator();
 
         //assert
@@ -96,14 +95,13 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
     )
     {
         //arrange
-        var command = new CreateUserActivityCommand()
-        {
-            UserId = new(GuidUnique),
-            ActivityId = new(GuidUnique),
-            Weight = weight,
-            Repetition = repetition,
-            Serie = serie
-        };
+        var command = new CreateUserActivityCommand(
+            new(GuidUnique),
+            new(GuidUnique),
+            weight,
+            repetition,
+            serie
+        );
         var validator = new CreateUserActivityCommandValidator();
 
         //assert

@@ -8,11 +8,8 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.UserCommand;
 
-public class CreateTeacherStudentCommand : IRequest<ErrorOr<TeacherStudent>>
-{
-    public required EntityId<User> TeacherId { get; init; }
-    public required EntityId<User> StudentId { get; init; }
-}
+public record CreateTeacherStudentCommand(EntityId<User> TeacherId, EntityId<User> StudentId)
+    : IRequest<ErrorOr<TeacherStudent>> { }
 
 public class CreateTeacherStudentCommandHandler
     : IRequestHandler<CreateTeacherStudentCommand, ErrorOr<TeacherStudent>>

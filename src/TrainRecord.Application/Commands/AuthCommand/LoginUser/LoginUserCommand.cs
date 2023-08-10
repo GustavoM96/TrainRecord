@@ -8,11 +8,8 @@ using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.AuthCommand;
 
-public class LoginUserCommand : IRequest<ErrorOr<LoginUserResponse>>
-{
-    public required string Email { get; init; }
-    public required string Password { get; init; }
-}
+public record LoginUserCommand(string Email, string Password)
+    : IRequest<ErrorOr<LoginUserResponse>> { }
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
@@ -60,6 +57,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         }
 
         var token = _genaratorToken.Generate(userFound);
-        return new LoginUserResponse() { IdToken = token };
+        return new LoginUserResponse(token);
     }
 }

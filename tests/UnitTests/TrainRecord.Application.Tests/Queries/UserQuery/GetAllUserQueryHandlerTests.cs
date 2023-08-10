@@ -22,7 +22,7 @@ public class GetAllUserQueryHandlerTests : ApplicationTesterBase
         _userRepository = FreezeFixture<Mock<IUserRepository>>();
 
         _testClass = CreateFixture<GetAllUserQueryHandler>();
-        _query = new GetAllUserQuery() { Pagination = PaginationOne };
+        _query = new GetAllUserQuery(null, PaginationOne);
     }
 
     [Fact]
@@ -55,11 +55,10 @@ public class GetAllUserQueryHandlerTests : ApplicationTesterBase
 
         var query = users.AsQueryable();
 
-        var filterByGmailQuery = new GetAllUserQuery()
-        {
-            Pagination = new() { PageNumber = 1, PerPage = 10 },
-            UserQueryRequest = new() { Email = "gmail" }
-        };
+        var filterByGmailQuery = new GetAllUserQuery(
+            new() { Email = "gmail" },
+            new() { PageNumber = 1, PerPage = 10 }
+        );
 
         _userRepository.Setup(m => m.AsNoTracking()).Returns(query);
 

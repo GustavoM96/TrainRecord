@@ -6,11 +6,8 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.AuthCommand;
 
-public class UpdatePasswordCommand : IRequest<ErrorOr<Updated>>
-{
-    public required string Email { get; init; }
-    public required string NewPassword { get; init; }
-}
+public record UpdatePasswordCommand(string Email, string NewPassword)
+    : IRequest<ErrorOr<Updated>> { }
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
 {

@@ -11,14 +11,13 @@ using TrainRecord.Application.Events.AuthEvents;
 
 namespace TrainRecord.Application.AuthCommand;
 
-public class RegisterUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
-{
-    public required string Email { get; init; }
-    public required string Password { get; init; }
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public required Role Role { get; init; }
-}
+public record RegisterUserCommand(
+    string Email,
+    string Password,
+    string FirstName,
+    string LastName,
+    Role Role
+) : IRequest<ErrorOr<RegisterUserResponse>> { }
 
 public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>

@@ -9,12 +9,8 @@ using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserCommand;
 
-public class UpdateUserCommand : IRequest<ErrorOr<RegisterUserResponse>>
-{
-    public required string FirstName { get; init; }
-    public required string LastName { get; init; }
-    public required EntityId<User> UserId { get; init; }
-}
+public record UpdateUserCommand(EntityId<User> UserId, string FirstName, string LastName)
+    : IRequest<ErrorOr<RegisterUserResponse>> { }
 
 public class UpdateUserCommandHandler
     : IRequestHandler<UpdateUserCommand, ErrorOr<RegisterUserResponse>>

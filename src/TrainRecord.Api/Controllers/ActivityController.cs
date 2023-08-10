@@ -12,20 +12,16 @@ public class ActivityController : ApiController
 {
     [HttpPost]
     [Authorize(Policy = "IsAdm")]
-    public async Task<IActionResult> Create(CreateActivityCommand createActivityCommand)
+    public async Task<IActionResult> Create(CreateActivityCommand command, CancellationToken cs)
     {
-        var result = await Mediator.Send(createActivityCommand);
-
-        return result.Match(result => CreatedResult("GetAll", result), ProblemErrors);
+        return await SendCreated(command, cs);
     }
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination)
+    public async Task<IActionResult> GetAll([FromQuery] Pagination pagination, CancellationToken cs)
     {
-        var getAllActivityQuery = new GetAllActivityQuery() { Pagination = pagination };
-        var result = await Mediator.Send(getAllActivityQuery);
-
-        return result.Match(OkResult, ProblemErrors);
+        var query = new GetAllActivityQuery() { Pagination = pagination };
+        return await SendOk(query, cs);
     }
 }

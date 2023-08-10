@@ -12,49 +12,33 @@ public class StudentController : ApiController
 {
     [HttpGet("{userId}/Teacher")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> GetAllTeacher([FromQuery] Pagination pagination, Guid userId)
+    public async Task<IActionResult> GetAllTeacher(
+        [FromQuery] Pagination pagination,
+        Guid userId,
+        CancellationToken cs
+    )
     {
-        var query = new GetAllTeacherByStudentQuery()
-        {
-            Pagination = pagination,
-            StudentId = new(userId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(OkResult, ProblemErrors);
+        var query = new GetAllTeacherByStudentQuery(new(userId), pagination);
+        return await SendOk(query, cs);
     }
 
     [HttpDelete("{userId}/Teacher/{teacherId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> RemoveTeacherFromStudent(Guid userId, Guid teacherId)
+    public async Task<IActionResult> RemoveTeacherFromStudent(
+        Guid userId,
+        Guid teacherId,
+        CancellationToken cs
+    )
     {
-        var query = new DeleteTeacherStudentCommand()
-        {
-            StudentId = new(userId),
-            TeacherId = new(teacherId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(result => NoContentResult(), ProblemErrors);
+        var command = new DeleteTeacherStudentCommand(new(teacherId), new(userId));
+        return await SendNoContent(command, cs);
     }
 
     [HttpPost("{userId}/Teacher/{teacherId}")]
     [Authorize(Policy = "OwnerResource")]
-    public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId)
+    public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId, CancellationToken cs)
     {
-        var query = new CreateTeacherStudentCommand()
-        {
-            StudentId = new(userId),
-            TeacherId = new(teacherId)
-        };
-
-        var result = await Mediator.Send(query);
-
-        return result.Match(
-            result => CreatedResult("GetAllTeacher", new { userId }, result),
-            ProblemErrors
-        );
+        var command = new CreateTeacherStudentCommand(new(teacherId), new(userId));
+        return await SendCreated(command, cs);
     }
 }

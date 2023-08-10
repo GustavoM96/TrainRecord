@@ -8,11 +8,8 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityQuery;
 
-public class GetActivityByUserQuery : IRequest<ErrorOr<Page<Activity>>>
-{
-    public required EntityId<User> UserId { get; init; }
-    public required Pagination Pagination { get; init; }
-}
+public record GetActivityByUserQuery(EntityId<User> UserId, Pagination Pagination)
+    : IRequest<ErrorOr<Page<Activity>>> { }
 
 public class GetActivityByUserQueryHandler
     : IRequestHandler<GetActivityByUserQuery, ErrorOr<Page<Activity>>>

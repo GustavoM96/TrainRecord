@@ -9,46 +9,30 @@ namespace TrainRecord.Controllers;
 public class AuthController : ApiController
 {
     [HttpPost("[action]")]
-    public async Task<IActionResult> Register(RegisterUserCommand userRegisterCommand)
+    public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cs)
     {
-        var result = await Mediator.Send(userRegisterCommand);
-
-        return result.Match(
-            result => CreatedResult("Login", result),
-            errors => ProblemErrors(errors)
-        );
+        return await SendCreated(command, cs);
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
+    public async Task<IActionResult> Login(LoginUserCommand command, CancellationToken cs)
     {
-        var result = await Mediator.Send(loginUserCommand);
-
-        return result.Match(OkResult, ProblemErrors);
+        return await SendOk(command, cs);
     }
 
     [HttpPatch("[action]")]
-    public async Task<IActionResult> ChangePassword(UpdatePasswordRequest request)
+    public async Task<IActionResult> ChangePassword(
+        UpdatePasswordRequest request,
+        CancellationToken cs
+    )
     {
-        var loginUserCommand = new LoginUserCommand()
-        {
-            Email = request.Email,
-            Password = request.Password
-        };
-        var loginResult = await Mediator.Send(loginUserCommand);
+        var loginUserCommand = new LoginUserCommand(request.Email, request.Password);
+        var loginResult = await Mediator.Send(loginUserCommand, cs);
 
-        if (loginResult.IsError)
-        {
-            return ProblemErrors(loginResult.Errors);
-        }
+        var updatePasswordCommand = new UpdatePasswordCommand(request.Email, request.NewPassword);
 
-        var updateCommand = new UpdatePasswordCommand()
-        {
-            Email = request.Email,
-            NewPassword = request.NewPassword
-        };
-        var updateResult = await Mediator.Send(updateCommand);
-
-        return updateResult.Match(result => NoContentResult(), ProblemErrors);
+        return loginResult.IsError
+            ? ProblemErrors(loginResult.Errors)
+            : await SendOk(updatePasswordCommand, cs);
     }
 }
