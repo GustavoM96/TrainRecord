@@ -1,6 +1,6 @@
 # TrainRecord 🏋️‍♀️
 
-TrainRecord é uma aplicação desenvolvida em NET C# com a finalidade de gerenciar atividades de academia para alunos e monitoramento para os professores.
+TrainRecord é uma aplicação desenvolvida em .NET C# com a finalidade de gerenciar atividades de academia para alunos e monitoramento para os professores.
 
 Temos 3 tipos de users:
 - Adm (usuário dono do app)
