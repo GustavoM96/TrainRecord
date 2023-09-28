@@ -55,7 +55,7 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
     public async Task Test_CreateActivityCommandValidator_Error(string activityName)
     {
         //arrange
-        var command = new CreateActivityCommand() { Name = activityName };
+        var command = new CreateActivityCommand(activityName);
         var validator = new CreateActivityCommandValidator();
 
         //assert
@@ -68,7 +68,7 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
     public async Task Test_CreateActivityCommandValidator_Valid(string activityName)
     {
         //arrange
-        var command = new CreateActivityCommand() { Name = activityName };
+        var command = new CreateActivityCommand(activityName);
         var validator = new CreateActivityCommandValidator();
 
         //assert

@@ -8,10 +8,7 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityCommand;
 
-public class CreateActivityCommand : IRequest<ErrorOr<Activity>>
-{
-    public required string Name { get; init; }
-}
+public record CreateActivityCommand(string Name) : IRequest<ErrorOr<Activity>> { }
 
 public class CreateActivityCommandHandler
     : IRequestHandler<CreateActivityCommand, ErrorOr<Activity>>

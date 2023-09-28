@@ -6,10 +6,7 @@ using TrainRecord.Infrastructure.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityQuery;
 
-public class GetAllActivityQuery : IRequest<ErrorOr<Page<Activity>>>
-{
-    public required Pagination Pagination { get; init; }
-}
+public record GetAllActivityQuery(Pagination Pagination) : IRequest<ErrorOr<Page<Activity>>> { }
 
 public class GetAllActivityQueryHandler
     : IRequestHandler<GetAllActivityQuery, ErrorOr<Page<Activity>>>
