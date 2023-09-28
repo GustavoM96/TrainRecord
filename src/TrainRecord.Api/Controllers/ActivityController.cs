@@ -21,7 +21,7 @@ public class ActivityController : ApiController
     [Authorize]
     public async Task<IActionResult> GetAll([FromQuery] Pagination pagination, CancellationToken ct)
     {
-        var query = new GetAllActivityQuery() { Pagination = pagination };
+        var query = new GetAllActivityQuery(pagination);
         return await SendOk(query, ct);
     }
 }

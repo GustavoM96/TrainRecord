@@ -46,10 +46,9 @@ public class UnitOfWorkTests : InfrastructureTesterBase
 
     public UnitOfWorkTests()
     {
-        var appDbContext = CreateAppDbContext();
-        _appDbContext = appDbContext;
-        _repositoryBase = new UserRepository(appDbContext);
-        _unitOfWork = new UnitOfWork(appDbContext);
+        _appDbContext = CreateAppDbContext();
+        _repositoryBase = new UserRepository(_appDbContext);
+        _unitOfWork = new UnitOfWork(_appDbContext);
 
         DeleteUserIfAny(_users[0].EntityId);
         DeleteUserIfAny(_users[1].EntityId);
