@@ -3,7 +3,6 @@ using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Application.Interfaces.Repositories;
-
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Repositories;
 using TrainRecord.Infrastructure.Tests.Common;

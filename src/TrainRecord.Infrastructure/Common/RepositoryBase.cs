@@ -7,7 +7,6 @@ using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Application.Interfaces.Repositories;
-
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common;

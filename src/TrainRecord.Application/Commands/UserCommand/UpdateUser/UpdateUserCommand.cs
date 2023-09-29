@@ -5,7 +5,6 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Application.Interfaces.Repositories;
-
 using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserCommand;

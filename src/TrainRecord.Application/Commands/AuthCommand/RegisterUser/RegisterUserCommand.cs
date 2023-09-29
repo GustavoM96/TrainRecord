@@ -6,7 +6,6 @@ using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Application.Interfaces.Repositories;
-
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Events.AuthEvents;
 
