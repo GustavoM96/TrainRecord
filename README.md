@@ -53,7 +53,7 @@ Temos 3 tipos de users:
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
-- [Star 🪪](#star-⭐)
+- [Star ⭐](#star-⭐)
 
 # Tecnologias 💻
 
