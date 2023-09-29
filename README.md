@@ -1,5 +1,10 @@
-# TrainRecord 🏋️‍♀️
+<p align="center">
+<img src="assets/gym.jpg" alt="drawing" width="200px" style="border-radius:50%"/>
+</p>
 
+<h1 align="center"> TrainRecord 🏋️‍♀️ </h1>
+
+<br/>
 TrainRecord é uma aplicação desenvolvida em .NET C# com a finalidade de gerenciar atividades de academia para alunos e monitoramento para os professores.
 
 Temos 3 tipos de users:
@@ -48,6 +53,7 @@ Temos 3 tipos de users:
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
+- [Star ⭐](#star-⭐)
 
 # Tecnologias 💻
 
