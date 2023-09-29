@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainRecord.Core\Core.csproj" />
+    <ProjectReference Include="..\TrainRecord.Application\Application.csproj" />
   </ItemGroup>
 
 </Project>

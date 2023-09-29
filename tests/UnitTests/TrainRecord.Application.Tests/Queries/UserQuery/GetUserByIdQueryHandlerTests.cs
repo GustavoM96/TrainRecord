@@ -4,7 +4,7 @@ using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 

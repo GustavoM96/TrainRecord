@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Responses;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
+
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Repositories;
 using TrainRecord.Infrastructure.Tests.Common;

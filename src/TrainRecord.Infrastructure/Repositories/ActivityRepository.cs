@@ -1,5 +1,5 @@
 using TrainRecord.Core.Entities;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
 

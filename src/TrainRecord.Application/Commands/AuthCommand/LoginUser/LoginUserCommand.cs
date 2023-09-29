@@ -3,7 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
+
 using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.AuthCommand;

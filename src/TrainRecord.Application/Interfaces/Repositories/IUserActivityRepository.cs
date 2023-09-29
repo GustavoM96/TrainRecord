@@ -1,7 +1,7 @@
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 
-namespace TrainRecord.Infrastructure.Interfaces.Repositories;
+namespace TrainRecord.Application.Interfaces.Repositories;
 
 public interface IUserActivityRepository : IRepositoryBase<UserActivity>
 {
