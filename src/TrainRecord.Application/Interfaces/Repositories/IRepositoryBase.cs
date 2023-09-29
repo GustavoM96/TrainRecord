@@ -3,7 +3,7 @@ using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Interfaces;
 
-namespace TrainRecord.Infrastructure.Interfaces.Repositories;
+namespace TrainRecord.Application.Interfaces.Repositories;
 
 public interface IRepositoryBase<TEntity> where TEntity : class, IEntity
 {

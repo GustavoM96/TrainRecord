@@ -5,7 +5,7 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Events.AuthEvents;
 

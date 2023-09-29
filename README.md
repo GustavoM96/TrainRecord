@@ -768,3 +768,7 @@ sem corpo de resposta
 # License 🪪
 
 This project is licensed under the terms of the [MIT](https://github.com/GustavoM96/TrainRecord/blob/main/LICENSE) license.
+
+# Star ⭐
+
+Espero que tenha gostado do projeto, se sim, não esqueça de dar a sua ⭐

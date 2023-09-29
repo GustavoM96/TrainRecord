@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainRecord.Core\Core.csproj" />
-    <ProjectReference Include="..\TrainRecord.Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

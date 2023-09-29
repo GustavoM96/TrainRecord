@@ -4,7 +4,7 @@ using MediatR;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
-using TrainRecord.Infrastructure.Interfaces.Repositories;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Requests;
 using TrainRecord.Application.Responses;
 
