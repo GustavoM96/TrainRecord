@@ -2,7 +2,7 @@
 <img src="assets/gym.png" alt="drawing" width="200px"/>
 </p>
 
-<h1 align="center"> TrainRecord 🏋️‍♀️ </h1>
+<h1 align="center">TrainRecord🏋️‍♀️</h1>
 
 <br/>
 TrainRecord é uma aplicação desenvolvida em .NET C# com a finalidade de gerenciar atividades de academia para alunos e monitoramento para os professores.
@@ -97,7 +97,7 @@ No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do 
 
 ## Via Localmente
 
-Simplismente em seu terminal.
+Simplesmente em seu terminal.
 
 ```sh
 git clone https://github.com/GustavoM96/TrainRecord.git
@@ -107,7 +107,7 @@ dotnet run --project src/TrainRecord.Api
 
 ## Via Docker
 
-Simplismente em seu terminal.
+Simplesmente em seu terminal.
 
 ```sh
 git clone https://github.com/GustavoM96/TrainRecord.git
