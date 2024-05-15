@@ -5,10 +5,7 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Events.ActivityEvents;
 
-public class CreateActivityEvent : IDomainEvent<Activity>
-{
-    public required string ActivityName { get; init; }
-}
+public record CreateActivityEvent(string ActivityName) : IDomainEvent<Activity> { }
 
 public class CreateActivityEventHandle : INotificationHandler<CreateActivityEvent>
 {

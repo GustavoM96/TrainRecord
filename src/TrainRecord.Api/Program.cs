@@ -47,8 +47,6 @@ app.Use(
     }
 );
 
-app.UseMiddleware<LogMiddleware>();
-
 app.UseRouting();
 app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();

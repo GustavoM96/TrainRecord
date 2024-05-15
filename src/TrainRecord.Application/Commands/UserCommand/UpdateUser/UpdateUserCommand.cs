@@ -33,9 +33,9 @@ public class UpdateUserCommandHandler
             return UserError.NotFound;
         }
 
-        var updatedUser = user.UpdateNewUser(request.FirstName, request.LastName);
-        _userRepository.Update(updatedUser);
+        user.UpdateName(request.FirstName, request.LastName);
+        _userRepository.Update(user);
 
-        return updatedUser.Adapt<RegisterUserResponse>();
+        return user.Adapt<RegisterUserResponse>();
     }
 }

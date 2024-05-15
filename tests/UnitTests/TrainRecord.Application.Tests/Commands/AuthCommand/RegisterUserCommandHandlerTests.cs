@@ -57,7 +57,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         //assert
         _genaratorHash.Verify(m => m.Generate(It.Is<User>(user => user.Email == _command.Email)));
         _genaratorHash.Verify(
-            m => m.Generate(It.Is<User>(user => user.Password == _command.Password))
+            m => m.Generate(It.Is<User>(user => user.FirstName == _command.FirstName))
         );
         Assert.IsType<RegisterUserResponse>(result.Value);
     }

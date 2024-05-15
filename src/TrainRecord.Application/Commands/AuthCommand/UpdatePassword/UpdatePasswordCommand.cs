@@ -6,7 +6,7 @@ using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.AuthCommand;
 
-public record UpdatePasswordCommand(string Email, string NewPassword)
+public record UpdatePasswordCommand(string Email, string Password, string NewPassword)
     : IRequest<ErrorOr<Updated>> { }
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
@@ -28,16 +28,13 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository.GetByEmailAsync(request.Email);
-        if (user is null)
-        {
-            return UserError.EmailExists;
-        }
+        var hashedPassword = _genaratorHash.Generate(new() { Password = request.Password });
 
-        var userWithNewPassword = user.UpdateNewUserPassword(request.NewPassword);
-        var hashedNewPassword = _genaratorHash.Generate(userWithNewPassword);
-
-        await _userRepository.UpdatePasswordById(hashedNewPassword, user.EntityId);
-        return Result.Updated;
+        var hasUpdated = await _userRepository.UpdatePasswordByEmail(
+            request.Email,
+            request.Password,
+            hashedPassword
+        );
+        return hasUpdated ? Result.Updated : UserError.EmailExists;
     }
 }

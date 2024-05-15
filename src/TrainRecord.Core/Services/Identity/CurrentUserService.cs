@@ -23,7 +23,7 @@ public class CurrentUserService : ICurrentUserService
     public string? UserEmail => _httpContext?.User?.FindFirstValue(ClaimTypes.Email);
     public string? Role => _httpContext?.User?.FindFirstValue(ClaimTypes.Role);
     public bool IsAdmin => Role == "Adm";
-    public bool IsOwnerResource => GetUserIdByRoute().EqualsIgnoreCase(UserId);
+    public bool IsResourceOwner => GetUserIdByRoute().EqualsIgnoreCase(UserId);
 
     public string GetUserIdByRoute()
     {

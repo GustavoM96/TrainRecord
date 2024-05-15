@@ -29,10 +29,16 @@ public class AuthController : ApiController
         var loginUserCommand = new LoginUserCommand(request.Email, request.Password);
         var loginResult = await Mediator.Send(loginUserCommand, ct);
 
-        var updatePasswordCommand = new UpdatePasswordCommand(request.Email, request.NewPassword);
+        if (loginResult.IsError)
+        {
+            ProblemErrors(loginResult.Errors);
+        }
 
-        return loginResult.IsError
-            ? ProblemErrors(loginResult.Errors)
-            : await SendOk(updatePasswordCommand, ct);
+        var updatePasswordCommand = new UpdatePasswordCommand(
+            request.Email,
+            request.Password,
+            request.NewPassword
+        );
+        return await SendOk(updatePasswordCommand, ct);
     }
 }
