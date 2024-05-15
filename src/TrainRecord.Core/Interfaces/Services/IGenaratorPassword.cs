@@ -3,7 +3,7 @@ using TrainRecord.Core.Entities;
 
 namespace TrainRecord.Core.Interfaces;
 
-public interface IGenaratorHash
+public interface IhashGenerator
 {
     public string Generate(User user);
     PasswordVerificationResult VerifyHashedPassword(

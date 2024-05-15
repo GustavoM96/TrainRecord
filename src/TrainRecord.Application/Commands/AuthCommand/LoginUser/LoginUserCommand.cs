@@ -13,17 +13,17 @@ public record LoginUserCommand(string Email, string Password)
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
-    private readonly IGenaratorHash _genaratorHash;
+    private readonly IhashGenerator _hashGenerator;
     private readonly IGenaratorToken _genaratorToken;
     private readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
-        IGenaratorHash genaratorHash,
+        IhashGenerator hashGenerator,
         IGenaratorToken genaratorToken,
         IUserRepository userRepository
     )
     {
-        _genaratorHash = genaratorHash;
+        _hashGenerator = hashGenerator;
         _genaratorToken = genaratorToken;
         _userRepository = userRepository;
     }
@@ -39,7 +39,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
             return UserError.LoginInvalid;
         }
 
-        var verificationResult = _genaratorHash.VerifyHashedPassword(
+        var verificationResult = _hashGenerator.VerifyHashedPassword(
             userFound,
             request.Password,
             userFound.Password
@@ -52,7 +52,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
 
         if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))
         {
-            var rehashedPassword = _genaratorHash.Generate(userFound);
+            var rehashedPassword = _hashGenerator.Generate(userFound);
             await _userRepository.UpdatePasswordById(rehashedPassword, userFound.EntityId);
         }
 
