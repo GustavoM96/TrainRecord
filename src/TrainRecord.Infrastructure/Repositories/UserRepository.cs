@@ -26,13 +26,9 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
         return await UpdateById(u => u.SetProperty(u => u.Password, u => password), userId);
     }
 
-    public async Task<bool> UpdatePasswordByEmail(
-        string email,
-        string oldPassword,
-        string hashedPassword
-    )
+    public async Task<bool> UpdatePasswordByEmail(string email, string hashedPassword)
     {
-        return await Where(user => user.Email == email && user.Password == oldPassword)
+        return await Where(user => user.Email == email)
                 .ExecuteUpdateAsync(u => u.SetProperty(u => u.Password, u => hashedPassword)) > 0;
     }
 }

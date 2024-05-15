@@ -16,7 +16,7 @@ public static class ConfigureServices
         IConfiguration configuration
     )
     {
-        services.AddScoped<IGenaratorHash, GenaratorHash>();
+        services.AddScoped<IhashGenerator, hashGenerator>();
         services.AddScoped<IGenaratorToken, GenaratorToken>();
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
