@@ -5,10 +5,7 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Events.AuthEvents;
 
-public class RegisterUserEvent : IDomainEvent<User>
-{
-    public required string Email { get; init; }
-}
+public record RegisterUserEvent(string Email) : IDomainEvent<User> { }
 
 public class RegisterUserEvenHandle : INotificationHandler<RegisterUserEvent>
 {

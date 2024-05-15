@@ -32,7 +32,7 @@ public class PerformanceBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
         var userId = _currentUserService.UserId ?? string.Empty;
 
         _logger.LogInformation(
-            "TrainRecord Long Running: {Name} TimeSpan: {Elapsed} UserID: {@UserId} {@Request}",
+            "TrainRecord Long Running: {Name} TimeSpan: {Elapsed} UserID: {UserId} {Request}",
             requestName,
             result.Elapsed,
             userId,

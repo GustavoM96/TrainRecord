@@ -14,7 +14,7 @@ namespace TrainRecord.Controllers;
 public class UserController : ApiController
 {
     [HttpPost("{userId}/Activity/{activityId}/Record")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> CreateRecord(
         [FromRoute] Guid activityId,
         [FromRoute] Guid userId,
@@ -34,7 +34,7 @@ public class UserController : ApiController
     }
 
     [HttpGet("{userId}/Activity")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> GetAllActivity(
         Guid userId,
         [FromQuery] Pagination pagination,
@@ -46,7 +46,7 @@ public class UserController : ApiController
     }
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> GetAllRecord(
         Guid userId,
         Guid activityId,
@@ -71,7 +71,7 @@ public class UserController : ApiController
     }
 
     [HttpGet("{userId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> GetById(Guid userId, CancellationToken ct)
     {
         var query = new GetUserByIdQuery(new(userId));
@@ -79,7 +79,7 @@ public class UserController : ApiController
     }
 
     [HttpDelete("{userId}/Activity/{activityId}/Record")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> DeleteAllRecord(
         Guid userId,
         Guid activityId,
@@ -91,7 +91,7 @@ public class UserController : ApiController
     }
 
     [HttpPatch("{userId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     [Consumes("application/merge-patch+json")]
     public async Task<IActionResult> Update(
         Guid userId,
@@ -104,7 +104,7 @@ public class UserController : ApiController
     }
 
     [HttpDelete("{userId}/Record/{recordId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> DeleteRecord(Guid recordId, CancellationToken ct)
     {
         var command = new DeleteRecordCommand(new(recordId));

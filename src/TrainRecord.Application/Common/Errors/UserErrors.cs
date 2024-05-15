@@ -15,9 +15,9 @@ public static class UserError
 
     public static Error LoginInvalid => Error.NotFound("User.NotFound", "conta ou senha inválida");
 
-    public static Error IsNotOwnerResourceNorAdm =>
+    public static Error IsNotResourceOwnerNorAdm =>
         Error.Failure(
-            "User.IsNotOwnerResource",
+            "User.IsNotResourceOwner",
             "usuário não é dono do recurso ou não tem acesso de administrador"
         );
     public static Error RegisterAdmInvalid =>

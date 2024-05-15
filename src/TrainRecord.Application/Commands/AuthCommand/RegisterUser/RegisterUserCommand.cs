@@ -55,12 +55,12 @@ public class RegisterUserCommandHandler
             return UserError.EmailExists;
         }
 
-        var passwordHash = _genaratorHash.Generate(user);
-        var newUser = user.UpdateNewUserPassword(passwordHash);
+        var hashedPassword = _genaratorHash.Generate(user);
+        user.UpdatePassword(hashedPassword);
 
-        newUser.AddDomainEvent(new RegisterUserEvent() { Email = newUser.Email });
+        user.AddDomainEvent(new RegisterUserEvent(user.Email));
 
-        await _userRepository.AddAsync(newUser);
-        return newUser.Adapt<RegisterUserResponse>();
+        await _userRepository.AddAsync(user);
+        return user.Adapt<RegisterUserResponse>();
     }
 }

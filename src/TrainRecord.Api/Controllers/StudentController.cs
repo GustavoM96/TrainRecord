@@ -11,7 +11,7 @@ namespace TrainRecord.Controllers;
 public class StudentController : ApiController
 {
     [HttpGet("{userId}/Teacher")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> GetAllTeacher(
         [FromQuery] Pagination pagination,
         Guid userId,
@@ -23,7 +23,7 @@ public class StudentController : ApiController
     }
 
     [HttpDelete("{userId}/Teacher/{teacherId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> RemoveTeacherFromStudent(
         Guid userId,
         Guid teacherId,
@@ -35,7 +35,7 @@ public class StudentController : ApiController
     }
 
     [HttpPost("{userId}/Teacher/{teacherId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> AddTeacher(Guid userId, Guid teacherId, CancellationToken ct)
     {
         var command = new CreateTeacherStudentCommand(new(teacherId), new(userId));

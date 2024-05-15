@@ -29,7 +29,7 @@ public class TeacherController : ApiController
     }
 
     [HttpGet("{userId}/Student")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> GetAllStudent(
         [FromQuery] Pagination pagination,
         Guid userId,
@@ -41,7 +41,7 @@ public class TeacherController : ApiController
     }
 
     [HttpDelete("{userId}/Student/{studentId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> RemoveStudentFromTeacher(
         Guid userId,
         Guid studentId,
@@ -53,7 +53,7 @@ public class TeacherController : ApiController
     }
 
     [HttpPost("{userId}/Student/{studentId}")]
-    [Authorize(Policy = "OwnerResource")]
+    [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> AddStudent(Guid userId, Guid studentId, CancellationToken ct)
     {
         var command = new CreateTeacherStudentCommand(new(userId), new(studentId));

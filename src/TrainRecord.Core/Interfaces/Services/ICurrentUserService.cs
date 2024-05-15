@@ -6,6 +6,6 @@ public interface ICurrentUserService
     string? UserId { get; }
     string? Role { get; }
     bool IsAdmin { get; }
-    bool IsOwnerResource { get; }
+    bool IsResourceOwner { get; }
     string? GetUserIdByRoute();
 }
