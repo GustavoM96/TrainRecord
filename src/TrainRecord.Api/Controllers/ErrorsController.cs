@@ -19,11 +19,6 @@ public class ErrorsController : ApiController
             return ProblemErrors(handlerException.Errors);
         }
 
-        var errorMessage = exception?.Message;
-        var unexpectedError = errorMessage is null
-            ? Error.Unexpected()
-            : Error.Unexpected(description: errorMessage);
-
-        return ProblemUniqueError(unexpectedError);
+        return UnexpectedProblem(exception?.Message);
     }
 }

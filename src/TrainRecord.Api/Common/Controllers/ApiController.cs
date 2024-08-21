@@ -79,13 +79,21 @@ public abstract class ApiController : ControllerBase
     {
         if (errors.Count == 0)
         {
-            return Problem();
+            return UnexpectedProblem();
         }
 
+        var statusCode = StatusCodes.Status400BadRequest;
         if (errors.Count == 1)
         {
-            var firstError = errors[0];
-            return ProblemUniqueError(firstError);
+            statusCode = errors[0].Type switch
+            {
+                ErrorType.Validation => StatusCodes.Status400BadRequest,
+                ErrorType.Conflict => StatusCodes.Status409Conflict,
+                ErrorType.Forbidden => StatusCodes.Status403Forbidden,
+                ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
+                ErrorType.NotFound => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status400BadRequest,
+            };
         }
 
         var modelStateDictionary = new ModelStateDictionary();
@@ -94,27 +102,17 @@ public abstract class ApiController : ControllerBase
             modelStateDictionary.AddModelError(error.Code, error.Description);
         }
 
-        return ValidationProblem(modelStateDictionary);
+        return ValidationProblem(
+            statusCode: statusCode,
+            modelStateDictionary: modelStateDictionary
+        );
     }
 
-    protected IActionResult ProblemUniqueError(Error error)
+    protected IActionResult UnexpectedProblem(string? title = null)
     {
-        if (error.Type == ErrorType.Validation)
-        {
-            var modelStateDictionary = new ModelStateDictionary();
-            modelStateDictionary.AddModelError(error.Code, error.Description);
-
-            return ValidationProblem(modelStateDictionary);
-        }
-
-        var statusCode = error.Type switch
-        {
-            ErrorType.Conflict => StatusCodes.Status409Conflict,
-            ErrorType.Failure => StatusCodes.Status403Forbidden,
-            ErrorType.NotFound => StatusCodes.Status404NotFound,
-            _ => StatusCodes.Status500InternalServerError,
-        };
-
-        return Problem(statusCode: statusCode, title: error.Description);
+        return Problem(
+            title: title ?? "Internal Error Unexpected",
+            statusCode: StatusCodes.Status500InternalServerError
+        );
     }
 }

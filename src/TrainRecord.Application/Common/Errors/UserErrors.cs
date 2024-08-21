@@ -16,17 +16,17 @@ public static class UserError
     public static Error LoginInvalid => Error.NotFound("User.NotFound", "conta ou senha inválida");
 
     public static Error IsNotResourceOwnerNorAdm =>
-        Error.Failure(
+        Error.Forbidden(
             "User.IsNotResourceOwner",
             "usuário não é dono do recurso ou não tem acesso de administrador"
         );
     public static Error RegisterAdmInvalid =>
-        Error.Failure(
+        Error.Forbidden(
             "User.RegisterAdmInvalid",
             "usuário não pode registrar um adm, pois este não tem permissão de administrador"
         );
     public static Error IsNotAdm =>
-        Error.Failure("User.IsNotAdm", "usuário não tem acesso de administrador");
+        Error.Forbidden("User.IsNotAdm", "usuário não tem acesso de administrador");
 
     public static Error TeacherNotFound =>
         Error.NotFound("User.TeacherNotFound", "professor não encontrado");
