@@ -31,7 +31,7 @@ public class AuthController : ApiController
 
         if (loginResult.IsError)
         {
-            ProblemErrors(loginResult.Errors);
+            return ProblemErrors(loginResult.Errors);
         }
 
         var updatePasswordCommand = new UpdatePasswordCommand(
