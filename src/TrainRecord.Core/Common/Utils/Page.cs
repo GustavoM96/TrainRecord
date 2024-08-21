@@ -1,5 +1,4 @@
-﻿using Throw;
-using TrainRecord.Common.Errors;
+﻿using TrainRecord.Common.Errors;
 using TrainRecord.Core.Exceptions;
 
 namespace TrainRecord.Core.Common;
@@ -10,7 +9,10 @@ public class Page<T> : Pagination
 
     public void AddItems(IEnumerable<T> itens)
     {
-        Items.Throw(() => new PageException(PageError.AlreadyHasItems)).IfNotEmpty();
+        if (Items.Any())
+        {
+            throw new PageException(PageError.AlreadyHasItems);
+        }
         Items = itens;
     }
 }
