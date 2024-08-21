@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Authorization;
-using Throw;
 using TrainRecord.Application.Errors;
 using TrainRecord.Core.Exceptions;
 using TrainRecord.Core.Interfaces;
@@ -22,9 +21,10 @@ public class ResourceOwnerHandler : AuthorizationHandler<ResourceOwnerRequirment
         ResourceOwnerRequirment requirement
     )
     {
-        _currentUserService
-            .Throw(() => new AuthorizationException(UserError.IsNotResourceOwnerNorAdm))
-            .IfFalse(u => u.IsResourceOwner || u.IsAdmin);
+        if (!_currentUserService.IsResourceOwner && !_currentUserService.IsAdmin)
+        {
+            throw new AuthorizationException(UserError.IsNotResourceOwnerNorAdm);
+        }
 
         context.Succeed(requirement);
         return Task.CompletedTask;

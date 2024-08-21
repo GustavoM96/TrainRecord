@@ -18,8 +18,9 @@ public static class ConfigureServices
         IConfiguration configuration
     )
     {
-        services.AddMediatR(Assembly.GetExecutingAssembly());
-
+        services.AddMediatR(
+            cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())
+        );
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IActivityRepository, ActivityRepository>();

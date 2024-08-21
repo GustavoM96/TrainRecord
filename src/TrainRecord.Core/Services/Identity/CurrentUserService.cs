@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
-using Throw;
 using TrainRecord.Common.Errors;
 using TrainRecord.Core.Exceptions;
 using TrainRecord.Core.Extentions;
@@ -29,7 +28,10 @@ public class CurrentUserService : ICurrentUserService
     {
         var userId = _httpContext?.Request.RouteValues.GetValueOrDefault("userId");
 
-        userId.ThrowIfNull(() => new RequestException(RequestError.UserIdNotFound));
+        if (userId is null)
+        {
+            throw new RequestException(RequestError.UserIdNotFound);
+        }
         return userId.ToString()!;
     }
 }

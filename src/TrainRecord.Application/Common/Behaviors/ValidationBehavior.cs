@@ -3,7 +3,6 @@ using ErrorOr;
 using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using Throw;
 using ValidationException = TrainRecord.Core.Exceptions.ValidationException;
 
 namespace TrainRecord.Application.Common.Behaviors;
