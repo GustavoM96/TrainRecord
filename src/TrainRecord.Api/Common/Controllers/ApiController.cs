@@ -1,8 +1,13 @@
-﻿using ErrorOr;
+﻿using System.Diagnostics;
+using System.Security.Claims;
+using System.Text.Json;
+using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using TrainRecord.Api.Common.Builders;
+using TrainRecord.Api.Common.Controllers;
 using TrainRecord.Application.Interfaces.Repositories;
+using TrainRecord.Core.Extentions;
 
 namespace TrainRecord.Api.Common.Controller;
 
@@ -11,26 +16,31 @@ public abstract class ApiController : ControllerBase
 {
     private ISender _mediator = null!;
     private IUnitOfWork _unitOfWork = null!;
+    private ILogger<ApiController> _logger = null!;
     protected ISender Mediator =>
         _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
     private IUnitOfWork UnitOfWork =>
         _unitOfWork ??= HttpContext.RequestServices.GetRequiredService<IUnitOfWork>();
 
+    private ILogger<ApiController> Logger =>
+        _logger ??= HttpContext.RequestServices.GetRequiredService<ILogger<ApiController>>();
+
     protected async Task<IActionResult> SendOk<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
         CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, ct);
-
+        var result = await GetResult(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
         }
 
         await UnitOfWork.SaveChangesAsync(ct);
-        return Ok(result.Value);
+        var response = new ApiOkResponse(result.Value, HttpContext.TraceIdentifier);
+
+        return Ok(response);
     }
 
     protected async Task<IActionResult> SendNoContent<TResponse>(
@@ -38,8 +48,7 @@ public abstract class ApiController : ControllerBase
         CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, ct);
-
+        var result = await GetResult(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
@@ -49,70 +58,60 @@ public abstract class ApiController : ControllerBase
         return NoContent();
     }
 
-    protected async Task<IActionResult> SendCreatedBase<TResponse>(
+    protected async Task<IActionResult> SendCreated<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        string? actionName = null,
-        object? routeValues = null,
         CancellationToken ct = default
     )
     {
-        var result = await Mediator.Send(request, ct);
-
+        var result = await GetResult(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
         }
 
         await UnitOfWork.SaveChangesAsync(ct);
-        return CreatedAtAction(actionName, routeValues, result.Value);
+        var response = new ApiCreatedResponse(result.Value, HttpContext.TraceIdentifier);
+
+        return CreatedAtAction(null, response);
     }
 
-    protected async Task<IActionResult> SendCreated<TResponse>(
+    private async Task<ErrorOr<TResponse>> GetResult<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken ct = default
+        CancellationToken ct
     )
     {
-        return await SendCreatedBase(request, ct: ct);
+        var timer = new Stopwatch();
+        var result = await timer.GetTimeAsync(() => Mediator.Send(request, ct));
+        var response = result.Value;
+
+        Logger.LogInformation(
+            "{Name} TraceId: {TraceId} TimeSpan: {Elapsed} UserID: {UserId} Request: {Request}, Response: {Response}",
+            request.GetType().ToString(),
+            HttpContext.TraceIdentifier,
+            result.Elapsed,
+            HttpContext?.User?.FindFirstValue(ClaimTypes.Sid) ?? "'no userId inserted'",
+            JsonSerializer.Serialize((object)request),
+            response.IsError
+                ? JsonSerializer.Serialize(response.Errors)
+                : JsonSerializer.Serialize(response.Value)
+        );
+
+        return response;
     }
 
     protected IActionResult ProblemErrors(List<Error> errors)
     {
+        Logger.LogError(
+            ProblemDetailsBuilder.UnhandledExceptionMsg + "TraceId: {traceId}",
+            HttpContext.TraceIdentifier
+        );
+
         if (errors.Count == 0)
         {
-            return UnexpectedProblem();
+            throw new ArgumentException("A list of error cannot be empty");
         }
 
-        var statusCode = StatusCodes.Status400BadRequest;
-        if (errors.Count == 1)
-        {
-            statusCode = errors[0].Type switch
-            {
-                ErrorType.Validation => StatusCodes.Status400BadRequest,
-                ErrorType.Conflict => StatusCodes.Status409Conflict,
-                ErrorType.Forbidden => StatusCodes.Status403Forbidden,
-                ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
-                ErrorType.NotFound => StatusCodes.Status404NotFound,
-                _ => StatusCodes.Status400BadRequest,
-            };
-        }
-
-        var modelStateDictionary = new ModelStateDictionary();
-        foreach (var error in errors)
-        {
-            modelStateDictionary.AddModelError(error.Code, error.Description);
-        }
-
-        return ValidationProblem(
-            statusCode: statusCode,
-            modelStateDictionary: modelStateDictionary
-        );
-    }
-
-    protected IActionResult UnexpectedProblem(string? title = null)
-    {
-        return Problem(
-            title: title ?? "Internal Error Unexpected",
-            statusCode: StatusCodes.Status500InternalServerError
-        );
+        var problemDetails = ProblemDetailsBuilder.Build(HttpContext.TraceIdentifier, errors);
+        return new ObjectResult(problemDetails);
     }
 }

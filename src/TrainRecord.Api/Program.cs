@@ -1,7 +1,8 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using LaDeak.JsonMergePatch.AspNetCore;
 using LaDeak.JsonMergePatch.Generated.SafeApi;
 using TrainRecord.Api;
-using TrainRecord.Api.Middlewares;
 using TrainRecord.Application;
 using TrainRecord.Core;
 using TrainRecord.Infrastructure;
@@ -11,9 +12,15 @@ var config = builder.Configuration;
 var services = builder.Services;
 
 // Add services to the container.
+services.AddProblemDetails();
 
 services
     .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    })
     .AddMvcOptions(options =>
     {
         LaDeak.JsonMergePatch.Abstractions.JsonMergePatchOptions.Repository =
@@ -32,6 +39,8 @@ services.AddCoreServices(config);
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -48,7 +57,6 @@ app.Use(
 );
 
 app.UseRouting();
-app.UseExceptionHandler("/error");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

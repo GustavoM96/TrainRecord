@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace TrainRecord.Application.AuthCommand;
 
@@ -16,5 +16,8 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
                 "senha deve possuir mais de 6 caracteres com letras minúsculas, maiúsculas, números e símbolos"
             )
             .NotEmpty();
+
+        RuleFor(u => u.FirstName).NotEmpty();
+        RuleFor(u => u.LastName).NotEmpty();
     }
 }
