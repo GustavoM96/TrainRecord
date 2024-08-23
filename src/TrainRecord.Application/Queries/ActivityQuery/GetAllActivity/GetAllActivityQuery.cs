@@ -1,8 +1,8 @@
 using ErrorOr;
 using MediatR;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.ActivityQuery;
 

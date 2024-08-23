@@ -1,10 +1,10 @@
 using Moq;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserQuery;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
@@ -47,7 +47,7 @@ public class GetAllUserQueryHandlerTests : ApplicationTesterBase
             new() { Email = "gustavo.hmessias96@gmail.com" },
             new() { Email = "gustavo.hmessias96@hotmail.com" },
             new() { Email = "gustavo@gmail.com" },
-            new() { Email = "gustavo.hmessias96@outlook.com" }
+            new() { Email = "gustavo.hmessias96@outlook.com" },
         };
 
         var query = users.AsQueryable();

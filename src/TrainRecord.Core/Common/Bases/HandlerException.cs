@@ -4,7 +4,8 @@ namespace TrainRecord.Core.Commum.Bases;
 
 public abstract class HandlerException : Exception
 {
-    public HandlerException(Error error) : base(error.Description)
+    public HandlerException(Error error)
+        : base(error.Description)
     {
         Errors = new() { error };
     }

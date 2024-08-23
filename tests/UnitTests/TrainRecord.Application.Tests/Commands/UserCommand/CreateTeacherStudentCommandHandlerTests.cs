@@ -1,10 +1,10 @@
 using Moq;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Application.UserCommand;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
@@ -40,11 +40,11 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
         var result = await _testClass.Handle(_command, default);
 
         //assert
-        _teacherStudentRepository.Verify(
-            m => m.AddAsync(It.Is<TeacherStudent>(ts => ts.TeacherId == _command.TeacherId))
+        _teacherStudentRepository.Verify(m =>
+            m.AddAsync(It.Is<TeacherStudent>(ts => ts.TeacherId == _command.TeacherId))
         );
-        _teacherStudentRepository.Verify(
-            m => m.AddAsync(It.Is<TeacherStudent>(ts => ts.StudentId == _command.StudentId))
+        _teacherStudentRepository.Verify(m =>
+            m.AddAsync(It.Is<TeacherStudent>(ts => ts.StudentId == _command.StudentId))
         );
         Assert.IsType<TeacherStudent>(result.Value);
     }

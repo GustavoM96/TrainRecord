@@ -2,11 +2,11 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Extentions;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common;
@@ -23,7 +23,8 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         _context = context;
     }
 
-    protected DbSet<TDbSet> GetOtherDbSet<TDbSet>() where TDbSet : class, IEntity
+    protected DbSet<TDbSet> GetOtherDbSet<TDbSet>()
+        where TDbSet : class, IEntity
     {
         return _context.Set<TDbSet>();
     }

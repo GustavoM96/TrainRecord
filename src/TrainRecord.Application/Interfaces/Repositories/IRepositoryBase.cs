@@ -5,7 +5,8 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.Interfaces.Repositories;
 
-public interface IRepositoryBase<TEntity> where TEntity : class, IEntity
+public interface IRepositoryBase<TEntity>
+    where TEntity : class, IEntity
 {
     Task<TEntity?> FindByIdAsync(EntityId<TEntity> id);
     Task<bool> DeleteById(EntityId<TEntity> id);

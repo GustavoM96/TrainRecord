@@ -13,24 +13,23 @@ public partial class Initial : Migration
     {
         migrationBuilder.CreateTable(
             name: "Activities",
-            columns: table =>
-                new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: false,
-                        defaultValueSql: "getdate()"
-                    ),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
-                    LastModifiedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: true,
-                        defaultValueSql: "getdate()"
-                    ),
-                    LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true)
-                },
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                Name = table.Column<string>(type: "TEXT", nullable: false),
+                CreatedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: false,
+                    defaultValueSql: "getdate()"
+                ),
+                CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
+                LastModifiedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: true,
+                    defaultValueSql: "getdate()"
+                ),
+                LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true),
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Activities", x => x.Id);
@@ -39,27 +38,26 @@ public partial class Initial : Migration
 
         migrationBuilder.CreateTable(
             name: "Users",
-            columns: table =>
-                new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: false),
-                    LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: false,
-                        defaultValueSql: "getdate()"
-                    ),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
-                    LastModifiedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: true,
-                        defaultValueSql: "getdate()"
-                    ),
-                    LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true)
-                },
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                Email = table.Column<string>(type: "TEXT", nullable: false),
+                Password = table.Column<string>(type: "TEXT", nullable: false),
+                FirstName = table.Column<string>(type: "TEXT", nullable: false),
+                LastName = table.Column<string>(type: "TEXT", nullable: false),
+                CreatedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: false,
+                    defaultValueSql: "getdate()"
+                ),
+                CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
+                LastModifiedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: true,
+                    defaultValueSql: "getdate()"
+                ),
+                LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true),
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Users", x => x.Id);
@@ -68,27 +66,26 @@ public partial class Initial : Migration
 
         migrationBuilder.CreateTable(
             name: "UserActivities",
-            columns: table =>
-                new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ActivityId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Weight = table.Column<int>(type: "INTEGER", nullable: false),
-                    Repetition = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: false,
-                        defaultValueSql: "getdate()"
-                    ),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
-                    LastModifiedAt = table.Column<DateTime>(
-                        type: "DATETIME",
-                        nullable: true,
-                        defaultValueSql: "getdate()"
-                    ),
-                    LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true)
-                },
+            columns: table => new
+            {
+                Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                UserId = table.Column<Guid>(type: "TEXT", nullable: false),
+                ActivityId = table.Column<Guid>(type: "TEXT", nullable: false),
+                Weight = table.Column<int>(type: "INTEGER", nullable: false),
+                Repetition = table.Column<int>(type: "INTEGER", nullable: false),
+                CreatedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: false,
+                    defaultValueSql: "getdate()"
+                ),
+                CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
+                LastModifiedAt = table.Column<DateTime>(
+                    type: "DATETIME",
+                    nullable: true,
+                    defaultValueSql: "getdate()"
+                ),
+                LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true),
+            },
             constraints: table =>
             {
                 table.PrimaryKey("PK_UserActivities", x => x.Id);

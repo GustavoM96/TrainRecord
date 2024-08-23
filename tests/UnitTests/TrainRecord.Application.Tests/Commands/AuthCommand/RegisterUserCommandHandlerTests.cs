@@ -1,12 +1,12 @@
 using Moq;
 using TrainRecord.Application.AuthCommand;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
@@ -39,8 +39,8 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
 
         //assert
         _userRepository.Verify(m => m.AddAsync(It.Is<User>(user => user.Email == _command.Email)));
-        _userRepository.Verify(
-            m => m.AddAsync(It.Is<User>(user => user.Password == hashedPassword))
+        _userRepository.Verify(m =>
+            m.AddAsync(It.Is<User>(user => user.Password == hashedPassword))
         );
         Assert.IsType<RegisterUserResponse>(result.Value);
     }
@@ -56,8 +56,8 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
 
         //assert
         _hashGenerator.Verify(m => m.Generate(It.Is<User>(user => user.Email == _command.Email)));
-        _hashGenerator.Verify(
-            m => m.Generate(It.Is<User>(user => user.FirstName == _command.FirstName))
+        _hashGenerator.Verify(m =>
+            m.Generate(It.Is<User>(user => user.FirstName == _command.FirstName))
         );
         Assert.IsType<RegisterUserResponse>(result.Value);
     }

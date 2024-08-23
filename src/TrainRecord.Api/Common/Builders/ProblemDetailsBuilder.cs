@@ -16,7 +16,7 @@ public static class ProblemDetailsBuilder
         {
             Status = StatusCodes.Status500InternalServerError,
             Title = UnhandledExceptionMsg,
-            Detail = exception.Message
+            Detail = exception.Message,
         };
 
         problemDetails.Extensions["dateTime"] = DateTime.Now;
@@ -24,7 +24,7 @@ public static class ProblemDetailsBuilder
 
         problemDetails.Extensions["errors"] = new List<Error>()
         {
-            Error.Unexpected(exception.GetType().ToString(), exception.Message)
+            Error.Unexpected(exception.GetType().ToString(), exception.Message),
         };
 
         problemDetails.Extensions["exceptionInfo"] = exception.ToString();
@@ -53,7 +53,7 @@ public static class ProblemDetailsBuilder
         {
             Status = statusCode,
             Title = OneOrMoreErrosMsg,
-            Detail = string.Join(" | ", errors.Select(e => e.Description))
+            Detail = string.Join(" | ", errors.Select(e => e.Description)),
         };
 
         problemDetails.Extensions["dateTime"] = DateTime.Now;

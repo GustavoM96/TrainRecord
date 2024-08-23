@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Repositories;
 using TrainRecord.Infrastructure.Tests.Common;
@@ -17,7 +17,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             new Guid("00000000-0000-0000-0000-000000000001"),
             new Guid("00000000-0000-0000-0000-000000000002"),
             new Guid("00000000-0000-0000-0000-000000000003"),
-            new Guid("00000000-0000-0000-0000-000000000004")
+            new Guid("00000000-0000-0000-0000-000000000004"),
         };
 
     private readonly User[] _users = new User[3]
@@ -28,7 +28,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Gustavo",
             LastName = "Henrique",
             Email = "gustavomessias@gmail.com",
-            Password = "Adm123"
+            Password = "Adm123",
         },
         new()
         {
@@ -36,7 +36,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Gustavo",
             LastName = "Messias",
             Email = "gustavomessias@outlook.com",
-            Password = "Adm123"
+            Password = "Adm123",
         },
         new()
         {
@@ -44,8 +44,8 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Caio",
             LastName = "Costa",
             Email = "caiocosta@hotmail.com",
-            Password = "Adm123"
-        }
+            Password = "Adm123",
+        },
     };
 
     private readonly IRepositoryBase<User> _testClass;
@@ -182,7 +182,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Marcos",
             LastName = "Mssias",
             Email = "marcosmessias@gmail.com",
-            Password = "Adm123"
+            Password = "Adm123",
         };
 
         //act
@@ -203,7 +203,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Marcos",
             LastName = "Mssias",
             Email = "marcosmessias@gmail.com",
-            Password = "Adm123"
+            Password = "Adm123",
         };
 
         //act
@@ -224,7 +224,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
             FirstName = "Marcos",
             LastName = "Mssias",
             Email = "marcosmessias@gmail.com",
-            Password = "Adm123"
+            Password = "Adm123",
         };
 
         if (!await _testClass.AnyByIdAsync(user.EntityId))

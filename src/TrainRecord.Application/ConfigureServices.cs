@@ -14,8 +14,8 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddMediatR(
-            cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())
+        services.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly())
         );
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 

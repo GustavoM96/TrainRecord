@@ -2,12 +2,12 @@ using ErrorOr;
 using Mapster;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.Events.AuthEvents;
+using TrainRecord.Application.Interfaces.Repositories;
+using TrainRecord.Application.Responses;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Application.Interfaces.Repositories;
-using TrainRecord.Application.Responses;
-using TrainRecord.Application.Events.AuthEvents;
 
 namespace TrainRecord.Application.AuthCommand;
 

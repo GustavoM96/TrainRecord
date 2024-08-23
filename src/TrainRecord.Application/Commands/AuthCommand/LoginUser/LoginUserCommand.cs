@@ -2,9 +2,9 @@ using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using TrainRecord.Application.Errors;
-using TrainRecord.Core.Interfaces;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.AuthCommand;
 

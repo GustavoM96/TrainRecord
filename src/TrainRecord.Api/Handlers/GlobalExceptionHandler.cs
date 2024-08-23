@@ -20,7 +20,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         new(JsonSerializerDefaults.Web)
         {
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
     public async ValueTask<bool> TryHandleAsync(
