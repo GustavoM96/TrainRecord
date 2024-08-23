@@ -31,7 +31,7 @@ public static class EntityEntryExtensions
         {
             EntityState.Added,
             EntityState.Modified,
-            EntityState.Deleted
+            EntityState.Deleted,
         };
         return states.Contains(entry.State);
     }

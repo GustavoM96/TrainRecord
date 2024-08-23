@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Infrastructure.Common;
-using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Persistence;
 using TrainRecord.Infrastructure.Repositories;
 using TrainRecord.Infrastructure.Tests.Common;
@@ -17,7 +17,7 @@ public class UnitOfWorkTests : InfrastructureTesterBase
             new Guid("00000000-0000-0000-0000-000000000011"),
             new Guid("00000000-0000-0000-0000-000000000012"),
             new Guid("00000000-0000-0000-0000-000000000013"),
-            new Guid("00000000-0000-0000-0000-000000000014")
+            new Guid("00000000-0000-0000-0000-000000000014"),
         };
 
     private readonly User[] _users = new User[2]
@@ -28,7 +28,7 @@ public class UnitOfWorkTests : InfrastructureTesterBase
             FirstName = "Gustavo",
             LastName = "Tests",
             Email = "gustavo.teste@gmail.com",
-            Password = "Adm123"
+            Password = "Adm123",
         },
         new()
         {
@@ -36,8 +36,8 @@ public class UnitOfWorkTests : InfrastructureTesterBase
             FirstName = "Gustavo2",
             LastName = "Tests2",
             Email = "gustavo2.teste@gmail.com",
-            Password = "Adm123"
-        }
+            Password = "Adm123",
+        },
     };
 
     private readonly IRepositoryBase<User> _repositoryBase;

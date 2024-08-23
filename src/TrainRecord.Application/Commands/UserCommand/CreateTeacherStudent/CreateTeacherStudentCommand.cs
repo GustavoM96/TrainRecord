@@ -1,10 +1,10 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Application.Errors;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.UserCommand;
 
@@ -41,7 +41,7 @@ public class CreateTeacherStudentCommandHandler
         var teacherStudent = new TeacherStudent()
         {
             StudentId = request.StudentId,
-            TeacherId = request.TeacherId
+            TeacherId = request.TeacherId,
         };
 
         await _teacherStudentRepository.AddAsync(teacherStudent);

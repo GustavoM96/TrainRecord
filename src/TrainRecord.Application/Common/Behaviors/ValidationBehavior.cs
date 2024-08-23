@@ -45,8 +45,11 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
         out TResponse response
     )
     {
-        List<Error> errors = validationFailures.ConvertAll(
-            x => Error.Validation(code: x.PropertyName, description: x.ErrorMessage)
+        List<Error> errors = validationFailures.ConvertAll(val =>
+            Error.Validation(
+                code: val.PropertyName + ".Validation.Invalid",
+                description: val.ErrorMessage
+            )
         );
 
         response = (TResponse?)

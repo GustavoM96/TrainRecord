@@ -5,5 +5,6 @@ namespace TrainRecord.Core.Exceptions;
 
 public class PageException : HandlerException
 {
-    public PageException(Error error) : base(error) { }
+    public PageException(Error error)
+        : base(error) { }
 }

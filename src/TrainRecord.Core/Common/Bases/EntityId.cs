@@ -2,7 +2,8 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Commum.Bases;
 
-public class EntityId<TEntity> where TEntity : IEntity
+public class EntityId<TEntity>
+    where TEntity : IEntity
 {
     public Guid Value { get; }
 

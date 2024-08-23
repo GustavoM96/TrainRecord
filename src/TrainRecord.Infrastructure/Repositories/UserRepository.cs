@@ -1,15 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace TrainRecord.Infrastructure.Repositories;
 
 public class UserRepository : RepositoryBase<User>, IUserRepository
 {
-    public UserRepository(AppDbContext context) : base(context) { }
+    public UserRepository(AppDbContext context)
+        : base(context) { }
 
     public async Task<User?> GetByEmailAsync(string email)
     {

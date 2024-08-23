@@ -1,6 +1,6 @@
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
 
@@ -8,7 +8,8 @@ namespace TrainRecord.Infrastructure.Repositories;
 
 public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivityRepository
 {
-    public UserActivityRepository(AppDbContext context) : base(context) { }
+    public UserActivityRepository(AppDbContext context)
+        : base(context) { }
 
     public IQueryable<Activity> GetActivitiesByUserId(EntityId<User> userId)
     {

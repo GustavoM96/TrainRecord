@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
 using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.ActivityQuery;
-using TrainRecord.Application.UserQuery;
-using TrainRecord.Core.Common;
 using TrainRecord.Application.Requests;
 using TrainRecord.Application.UserCommand;
+using TrainRecord.Application.UserQuery;
+using TrainRecord.Core.Common;
 
 namespace TrainRecord.Controllers;
 

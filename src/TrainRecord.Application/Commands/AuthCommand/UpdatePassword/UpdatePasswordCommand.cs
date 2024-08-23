@@ -1,8 +1,8 @@
 using ErrorOr;
 using MediatR;
 using TrainRecord.Application.Errors;
-using TrainRecord.Core.Interfaces;
 using TrainRecord.Application.Interfaces.Repositories;
+using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.AuthCommand;
 

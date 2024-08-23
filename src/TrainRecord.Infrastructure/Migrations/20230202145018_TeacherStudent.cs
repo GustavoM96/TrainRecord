@@ -13,17 +13,16 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "TeacherStudent",
-                columns: table =>
-                    new
-                    {
-                        Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                        TeacherId = table.Column<Guid>(type: "TEXT", nullable: false),
-                        StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
-                        CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                        CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
-                        LastModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                        LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true)
-                    },
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TeacherId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    StudentId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "DATETIME", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: true),
+                    LastModifiedAt = table.Column<DateTime>(type: "DATETIME", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "TEXT", nullable: true),
+                },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TeacherStudent", x => x.Id);

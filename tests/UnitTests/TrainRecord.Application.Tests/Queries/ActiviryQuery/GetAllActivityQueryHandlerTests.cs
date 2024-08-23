@@ -1,10 +1,10 @@
 using Moq;
 using TrainRecord.Application.ActivityQuery;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
@@ -29,8 +29,10 @@ public class GetAllActivityQueryHandlerTests : ApplicationTesterBase
         var activities = new List<Activity>()
         {
             new() { Id = GuidUnique },
-            new() { Id = GuidUnique }
-        }.AsQueryable().AsPage(_query.Pagination);
+            new() { Id = GuidUnique },
+        }
+            .AsQueryable()
+            .AsPage(_query.Pagination);
 
         _activityRepository.Setup(m => m.AsPage(_query.Pagination)).Returns(activities);
 

@@ -1,9 +1,9 @@
 using Moq;
 using TrainRecord.Application.ActivityQuery;
+using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Application.Interfaces.Repositories;
 
 namespace TrainRecord.Application.Tests;
 
@@ -28,7 +28,7 @@ public class GetActivityByUserQueryHandlerTests : ApplicationTesterBase
         var activities = new List<Activity>()
         {
             new() { Id = GuidUnique },
-            new() { Id = GuidUnique }
+            new() { Id = GuidUnique },
         }.AsQueryable();
 
         _userActivityRepository

@@ -1,11 +1,11 @@
 using ErrorOr;
 using MediatR;
+using TrainRecord.Application.Interfaces.Repositories;
+using TrainRecord.Application.Responses;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Extentions;
-using TrainRecord.Application.Interfaces.Repositories;
-using TrainRecord.Application.Responses;
 
 namespace TrainRecord.Application.UserQuery;
 

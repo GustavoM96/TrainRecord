@@ -17,7 +17,8 @@ public class AppDbContext : DbContext
     public AppDbContext(
         DbContextOptions<AppDbContext> dbContextOptions,
         AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor
-    ) : base(dbContextOptions)
+    )
+        : base(dbContextOptions)
     {
         _auditableEntitySaveChangesInterceptor = auditableEntitySaveChangesInterceptor;
     }

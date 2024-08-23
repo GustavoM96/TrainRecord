@@ -21,8 +21,8 @@ public class UnitOfWork : IUnitOfWork
 
     public int RollBack()
     {
-        var changedEntriesCopy = _context.ChangeTracker
-            .Entries()
+        var changedEntriesCopy = _context
+            .ChangeTracker.Entries()
             .Where(e => e.AnyChange())
             .ToList();
 
