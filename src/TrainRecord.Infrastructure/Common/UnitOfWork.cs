@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Infrastructure.Extentions;
 using TrainRecord.Infrastructure.Persistence;
@@ -17,6 +18,19 @@ public class UnitOfWork : IUnitOfWork
     public async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
         return await _context.SaveChangesAsync(ct);
+    }
+
+    public async Task<IDbContextTransaction> BeginTransaction(CancellationToken ct = default)
+    {
+        return await _context.Database.BeginTransactionAsync(ct);
+    }
+
+    public async Task CommitTransactionAsync(
+        IDbContextTransaction transaction,
+        CancellationToken ct = default
+    )
+    {
+        await transaction.CommitAsync(ct);
     }
 
     public int RollBack()

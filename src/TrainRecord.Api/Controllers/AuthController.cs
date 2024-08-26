@@ -39,6 +39,6 @@ public class AuthController : ApiController
             request.Password,
             request.NewPassword
         );
-        return await SendOk(updatePasswordCommand, ct);
+        return await SendOk(updatePasswordCommand, ct, new() { UseSqlTransaction = false });
     }
 }

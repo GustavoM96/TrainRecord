@@ -4,6 +4,7 @@ using System.Text.Json;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 using TrainRecord.Api.Common.Builders;
 using TrainRecord.Api.Common.Controllers;
 using TrainRecord.Application.Interfaces.Repositories;
@@ -28,9 +29,15 @@ public abstract class ApiController : ControllerBase
 
     protected async Task<IActionResult> SendOk<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken ct = default
+        CancellationToken ct = default,
+        ApiOptions? apiOptions = default
     )
     {
+        var options = apiOptions ?? new();
+        using IDbContextTransaction? transaction = options.UseSqlTransaction
+            ? await UnitOfWork.BeginTransaction(ct)
+            : null;
+
         var result = await GetResult(request, ct);
         if (result.IsError)
         {
@@ -38,16 +45,26 @@ public abstract class ApiController : ControllerBase
         }
 
         await UnitOfWork.SaveChangesAsync(ct);
-        var response = new ApiOkResponse(result.Value, HttpContext.TraceIdentifier);
+        if (transaction is not null)
+        {
+            await UnitOfWork.CommitTransactionAsync(transaction, ct);
+        }
 
+        var response = new ApiOkResponse(result.Value, HttpContext.TraceIdentifier);
         return Ok(response);
     }
 
     protected async Task<IActionResult> SendNoContent<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken ct = default
+        CancellationToken ct = default,
+        ApiOptions? apiOptions = default
     )
     {
+        var options = apiOptions ?? new();
+        using IDbContextTransaction? transaction = options.UseSqlTransaction
+            ? await UnitOfWork.BeginTransaction(ct)
+            : null;
+
         var result = await GetResult(request, ct);
         if (result.IsError)
         {
@@ -55,14 +72,25 @@ public abstract class ApiController : ControllerBase
         }
 
         await UnitOfWork.SaveChangesAsync(ct);
+        if (transaction is not null)
+        {
+            await UnitOfWork.CommitTransactionAsync(transaction, ct);
+        }
+
         return NoContent();
     }
 
     protected async Task<IActionResult> SendCreated<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
-        CancellationToken ct = default
+        CancellationToken ct = default,
+        ApiOptions? apiOptions = null
     )
     {
+        var options = apiOptions ?? new();
+        using IDbContextTransaction? transaction = options.UseSqlTransaction
+            ? await UnitOfWork.BeginTransaction(ct)
+            : null;
+
         var result = await GetResult(request, ct);
         if (result.IsError)
         {
@@ -70,8 +98,12 @@ public abstract class ApiController : ControllerBase
         }
 
         await UnitOfWork.SaveChangesAsync(ct);
-        var response = new ApiCreatedResponse(result.Value, HttpContext.TraceIdentifier);
+        if (transaction is not null)
+        {
+            await UnitOfWork.CommitTransactionAsync(transaction, ct);
+        }
 
+        var response = new ApiCreatedResponse(result.Value, HttpContext.TraceIdentifier);
         return CreatedAtAction(null, response);
     }
 

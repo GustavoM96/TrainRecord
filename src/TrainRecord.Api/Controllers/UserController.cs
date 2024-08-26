@@ -100,7 +100,7 @@ public class UserController : ApiController
     )
     {
         var command = new UpdateUserCommand(new(userId), request.FirstName, request.LastName);
-        return await SendOk(command, ct);
+        return await SendOk(command, ct, new() { UseSqlTransaction = false });
     }
 
     [HttpDelete("{userId}/Record/{recordId}")]

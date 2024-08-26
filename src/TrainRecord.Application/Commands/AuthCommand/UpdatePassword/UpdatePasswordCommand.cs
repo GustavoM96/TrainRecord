@@ -30,7 +30,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
     {
         var hashedPassword = _hashGenerator.Generate(new() { Password = request.NewPassword });
 
-        var hasUpdated = await _userRepository.UpdatePasswordByEmail(request.Email, hashedPassword);
-        return hasUpdated ? Result.Updated : UserError.EmailExists;
+        await _userRepository.UpdatePasswordByEmail(request.Email, hashedPassword);
+        return Result.Updated;
     }
 }
