@@ -4,6 +4,7 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Application.Tests;
 
@@ -47,6 +48,9 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         //arrange
         _activityRepository.Setup(m => m.AnyByIdAsync(_command.ActivityId)).ReturnsAsync(true);
         _userRepository.Setup(m => m.AnyByIdAsync(_command.UserId)).ReturnsAsync(true);
+        _userRepository
+            .Setup(m => m.AnyByRole(_command.TeacherId, Role.Teacher))
+            .ReturnsAsync(true);
 
         //act
         var result = await _testClass.Handle(_command, default);
