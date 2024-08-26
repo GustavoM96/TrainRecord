@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Controller;
+using TrainRecord.Application.ActivityQuery;
 using TrainRecord.Application.Requests;
 using TrainRecord.Application.UserCommand;
 using TrainRecord.Application.UserQuery;
@@ -58,5 +59,18 @@ public class TeacherController : ApiController
     {
         var command = new CreateTeacherStudentCommand(new(userId), new(studentId));
         return await SendCreated(command, ct);
+    }
+
+    [HttpGet("{userId}/Student/{studentId}/Record")]
+    [Authorize(Policy = "ResourceOwner")]
+    public async Task<IActionResult> GetAllRecordByStudentId(
+        Guid userId,
+        Guid studentId,
+        [FromQuery] Pagination pagination,
+        CancellationToken ct
+    )
+    {
+        var query = new GetAllRecordQuery(new(studentId), new(userId), pagination);
+        return await SendOk(query, ct);
     }
 }

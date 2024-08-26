@@ -51,7 +51,7 @@ public class UserController : ApiController
 
     [HttpGet("{userId}/Activity/{activityId}/Record")]
     [Authorize(Policy = "ResourceOwner")]
-    public async Task<IActionResult> GetAllRecord(
+    public async Task<IActionResult> GetRecordByActivityId(
         Guid userId,
         Guid activityId,
         [FromQuery] Pagination pagination,
@@ -59,6 +59,18 @@ public class UserController : ApiController
     )
     {
         var query = new GetRecordQuery(new(userId), new(activityId), pagination);
+        return await SendOk(query, ct);
+    }
+
+    [HttpGet("{userId}/Record")]
+    [Authorize(Policy = "ResourceOwner")]
+    public async Task<IActionResult> GetAllRecord(
+        Guid userId,
+        [FromQuery] Pagination pagination,
+        CancellationToken ct
+    )
+    {
+        var query = new GetAllRecordQuery(new(userId), null, pagination);
         return await SendOk(query, ct);
     }
 

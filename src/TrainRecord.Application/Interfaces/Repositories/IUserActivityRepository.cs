@@ -10,6 +10,7 @@ public interface IUserActivityRepository : IRepositoryBase<UserActivity>
         EntityId<User> userId,
         EntityId<Activity> activityId
     );
+    IQueryable<UserActivity> GetAllRecordByUser(EntityId<User> userId, EntityId<User>? teacherId);
     Task<UserActivity?> GetRecordByUserAndActivityId(
         EntityId<User> userId,
         EntityId<Activity> activityId

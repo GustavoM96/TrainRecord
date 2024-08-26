@@ -28,6 +28,15 @@ public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivit
         return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
     }
 
+    public IQueryable<UserActivity> GetAllRecordByUser(
+        EntityId<User> userId,
+        EntityId<User>? teacherId
+    )
+    {
+        return Where(ua => ua.UserId == userId)
+            .WhereIf(teacherId is not null, ua => ua.TeacherId == teacherId!.Value);
+    }
+
     public async Task<UserActivity?> GetRecordByUserAndActivityId(
         EntityId<User> userId,
         EntityId<Activity> activityId
