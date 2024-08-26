@@ -5,15 +5,18 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Application.ActivityCommand;
 
 public record CreateUserActivityCommand(
     EntityId<User> UserId,
+    EntityId<User>? TeacherId,
     EntityId<Activity> ActivityId,
     int Weight,
     int Repetition,
-    int Serie
+    int Serie,
+    string? TrainGroup
 ) : IRequest<ErrorOr<UserActivity>> { }
 
 public class CreateUserActivityCommandHandler
@@ -40,7 +43,7 @@ public class CreateUserActivityCommandHandler
     )
     {
         var newUserActivity = request.Adapt<UserActivity>();
-        var hasUserAndActivityResult = await HasUserAndActivity(request);
+        var hasUserAndActivityResult = await ExistsUserAndActivity(request);
 
         if (hasUserAndActivityResult.IsError)
         {
@@ -51,7 +54,7 @@ public class CreateUserActivityCommandHandler
         return newUserActivity;
     }
 
-    private async Task<ErrorOr<Success>> HasUserAndActivity(CreateUserActivityCommand request)
+    private async Task<ErrorOr<Success>> ExistsUserAndActivity(CreateUserActivityCommand request)
     {
         var errors = new List<Error>();
 
@@ -61,12 +64,20 @@ public class CreateUserActivityCommandHandler
             errors.Add(UserError.NotFound);
         }
 
+        if (
+            request.TeacherId is not null
+            && !await _userRepository.AnyByRole(request.TeacherId, Role.Teacher)
+        )
+        {
+            errors.Add(UserError.TeacherNotFound);
+        }
+
         var anyActivity = await _activityRepository.AnyByIdAsync(request.ActivityId);
         if (!anyActivity)
         {
             errors.Add(ActivityErrors.NotFound);
         }
 
-        return errors.Any() ? errors : Result.Success;
+        return errors.Count != 0 ? errors : Result.Success;
     }
 }

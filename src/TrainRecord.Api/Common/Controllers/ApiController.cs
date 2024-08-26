@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using TrainRecord.Api.Common.Builders;
 using TrainRecord.Api.Common.Controllers;
 using TrainRecord.Application.Interfaces.Repositories;
-using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Extensions;
 
 namespace TrainRecord.Api.Common.Controller;
 

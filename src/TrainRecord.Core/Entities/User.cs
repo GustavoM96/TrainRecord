@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
@@ -7,6 +8,8 @@ namespace TrainRecord.Core.Entities;
 public class User : EntityBase<User>, IEntity
 {
     public string Email { get; init; } = null!;
+
+    [JsonIgnore]
     public string Password { get; set; } = null!;
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;

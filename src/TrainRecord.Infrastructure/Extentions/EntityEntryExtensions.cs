@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace TrainRecord.Infrastructure.Extentions;
+namespace TrainRecord.Infrastructure.Extensions;
 
 public static class EntityEntryExtensions
 {

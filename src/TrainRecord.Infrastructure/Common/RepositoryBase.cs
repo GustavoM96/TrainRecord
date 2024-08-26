@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
-using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Extensions;
 using TrainRecord.Core.Interfaces;
 using TrainRecord.Infrastructure.Persistence;
 

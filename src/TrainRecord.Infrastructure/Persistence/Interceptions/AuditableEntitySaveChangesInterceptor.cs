@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using TrainRecord.Core.Interfaces;
-using TrainRecord.Infrastructure.Extentions;
+using TrainRecord.Infrastructure.Extensions;
 
 namespace TrainRecord.Infrastructure.Persistence.Interceptions;
 

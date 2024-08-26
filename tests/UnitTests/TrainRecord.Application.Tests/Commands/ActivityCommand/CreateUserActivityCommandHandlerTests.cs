@@ -69,9 +69,11 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         var command = new CreateUserActivityCommand(
             new(GuidUnique),
             new(GuidUnique),
+            new(GuidUnique),
             weight,
             repetition,
-            serie
+            serie,
+            "A"
         );
         var validator = new CreateUserActivityCommandValidator();
 
@@ -98,9 +100,11 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         var command = new CreateUserActivityCommand(
             new(GuidUnique),
             new(GuidUnique),
+            new(GuidUnique),
             weight,
             repetition,
-            serie
+            serie,
+            "A"
         );
         var validator = new CreateUserActivityCommandValidator();
 

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using TrainRecord.Application.Interfaces.Repositories;
-using TrainRecord.Infrastructure.Extentions;
+using TrainRecord.Infrastructure.Extensions;
 using TrainRecord.Infrastructure.Persistence;
 
 namespace TrainRecord.Infrastructure.Common;

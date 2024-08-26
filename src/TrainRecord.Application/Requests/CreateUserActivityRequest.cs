@@ -1,3 +1,9 @@
 namespace TrainRecord.Application.Requests;
 
-public record CreateUserActivityRequest(int Weight, int Repetition, int Serie) { }
+public record CreateUserActivityRequest(
+    Guid? TeacherId,
+    int Weight,
+    int Repetition,
+    int Serie,
+    string? TrainGroup
+) { }

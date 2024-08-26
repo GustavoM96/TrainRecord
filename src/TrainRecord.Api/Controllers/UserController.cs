@@ -24,10 +24,14 @@ public class UserController : ApiController
     {
         var command = new CreateUserActivityCommand(
             new(userId),
+            createUserActivityResquest.TeacherId is null
+                ? null
+                : new(createUserActivityResquest.TeacherId.Value),
             new(activityId),
             createUserActivityResquest.Weight,
             createUserActivityResquest.Repetition,
-            createUserActivityResquest.Serie
+            createUserActivityResquest.Serie,
+            createUserActivityResquest.TrainGroup
         );
 
         return await SendCreated(command, ct);

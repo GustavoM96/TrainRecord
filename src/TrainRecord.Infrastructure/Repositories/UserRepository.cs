@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Enum;
 using TrainRecord.Infrastructure.Common;
 using TrainRecord.Infrastructure.Persistence;
 
@@ -31,5 +32,10 @@ public class UserRepository : RepositoryBase<User>, IUserRepository
     {
         return await Where(user => user.Email == email)
                 .ExecuteUpdateAsync(u => u.SetProperty(u => u.Password, u => hashedPassword)) > 0;
+    }
+
+    public async Task<bool> AnyByRole(EntityId<User> userId, Role role)
+    {
+        return await AnyAsync(user => user.Id == userId && user.Role == role);
     }
 }

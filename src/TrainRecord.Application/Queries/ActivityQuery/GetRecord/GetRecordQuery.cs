@@ -4,7 +4,7 @@ using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Extensions;
 
 namespace TrainRecord.Application.ActivityQuery;
 
