@@ -69,7 +69,7 @@ public class CreateTeacherStudentCommandHandler
             erros.Add(UserError.IsNotTeacher);
         }
 
-        var anyTeacherStudent = await _teacherStudentRepository.GetByTeacherStudentId(
+        var anyTeacherStudent = await _teacherStudentRepository.IsTeacherStudent(
             request.StudentId,
             request.TeacherId
         );

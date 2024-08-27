@@ -57,6 +57,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         }
 
         var token = _genaratorToken.Generate(userFound);
-        return new LoginUserResponse(token);
+        return new LoginUserResponse(token.Key, token.ExpiresHours, token.ExpiresDateTime);
     }
 }

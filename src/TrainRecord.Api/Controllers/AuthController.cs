@@ -9,8 +9,15 @@ namespace TrainRecord.Controllers;
 public class AuthController : ApiController
 {
     [HttpPost("[action]")]
-    public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken ct)
+    public async Task<IActionResult> Register(RegisterUserRequest request, CancellationToken ct)
     {
+        var command = new RegisterUserCommand(
+            request.Email,
+            request.Password,
+            request.FirstName,
+            request.LastName,
+            request.Role
+        );
         return await SendCreated(command, ct);
     }
 
@@ -39,6 +46,6 @@ public class AuthController : ApiController
             request.Password,
             request.NewPassword
         );
-        return await SendOk(updatePasswordCommand, ct);
+        return await SendOk(updatePasswordCommand, ct, new() { UseSqlTransaction = false });
     }
 }

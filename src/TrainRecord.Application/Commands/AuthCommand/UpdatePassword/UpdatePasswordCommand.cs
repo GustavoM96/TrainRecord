@@ -1,13 +1,20 @@
+using System.Text.Json.Serialization;
 using ErrorOr;
 using MediatR;
-using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.AuthCommand;
 
 public record UpdatePasswordCommand(string Email, string Password, string NewPassword)
-    : IRequest<ErrorOr<Updated>> { }
+    : IRequest<ErrorOr<Updated>>
+{
+    [JsonIgnore]
+    public string Password { get; init; } = Password;
+
+    [JsonIgnore]
+    public string NewPassword { get; init; } = NewPassword;
+}
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
 {
@@ -30,7 +37,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
     {
         var hashedPassword = _hashGenerator.Generate(new() { Password = request.NewPassword });
 
-        var hasUpdated = await _userRepository.UpdatePasswordByEmail(request.Email, hashedPassword);
-        return hasUpdated ? Result.Updated : UserError.EmailExists;
+        await _userRepository.UpdatePasswordByEmail(request.Email, hashedPassword);
+        return Result.Updated;
     }
 }

@@ -5,7 +5,7 @@ namespace TrainRecord.Application.Interfaces.Repositories;
 
 public interface ITeacherStudentRepository : IRepositoryBase<TeacherStudent>
 {
-    Task<bool> GetByTeacherStudentId(EntityId<User> studentId, EntityId<User> teacherId);
+    Task<bool> IsTeacherStudent(EntityId<User> studentId, EntityId<User> teacherId);
     IQueryable<User> GetAllStudentByTeacherId(EntityId<User> teacherId);
     IQueryable<User> GetAllTeachersByStudentId(EntityId<User> studentId);
     Task<bool> DeleteTeacherStudentId(EntityId<User> studentId, EntityId<User> teacherId);

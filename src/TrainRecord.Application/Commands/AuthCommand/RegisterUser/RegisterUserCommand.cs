@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ErrorOr;
 using Mapster;
 using MediatR;
@@ -17,7 +18,11 @@ public record RegisterUserCommand(
     string FirstName,
     string LastName,
     Role Role
-) : IRequest<ErrorOr<RegisterUserResponse>> { }
+) : IRequest<ErrorOr<RegisterUserResponse>>
+{
+    [JsonIgnore]
+    public string Password { get; init; } = Password;
+}
 
 public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>

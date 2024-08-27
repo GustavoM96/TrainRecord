@@ -33,7 +33,7 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(true);
         _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
         _teacherStudentRepository
-            .Setup(m => m.GetByTeacherStudentId(_command.StudentId, _command.TeacherId))
+            .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(false);
 
         //act
@@ -58,7 +58,7 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(false);
         _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
         _teacherStudentRepository
-            .Setup(m => m.GetByTeacherStudentId(_command.StudentId, _command.TeacherId))
+            .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(false);
 
         //act
@@ -82,7 +82,7 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
             .ReturnsAsync(teacherWithNoRole);
 
         _teacherStudentRepository
-            .Setup(m => m.GetByTeacherStudentId(_command.StudentId, _command.TeacherId))
+            .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(false);
 
         //act
@@ -101,7 +101,7 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(true);
         _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
         _teacherStudentRepository
-            .Setup(m => m.GetByTeacherStudentId(_command.StudentId, _command.TeacherId))
+            .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(true);
 
         //act

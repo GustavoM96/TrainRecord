@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
@@ -28,6 +29,15 @@ public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivit
         return Where(ua => ua.UserId == userId && ua.ActivityId == activityId);
     }
 
+    public IQueryable<UserActivity> GetAllRecordByUser(
+        EntityId<User> userId,
+        EntityId<User>? teacherId
+    )
+    {
+        return Where(ua => ua.UserId == userId)
+            .WhereIf(teacherId is not null, ua => ua.TeacherId == teacherId!.Value);
+    }
+
     public async Task<UserActivity?> GetRecordByUserAndActivityId(
         EntityId<User> userId,
         EntityId<Activity> activityId
@@ -42,5 +52,15 @@ public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivit
     )
     {
         return await Delete(ua => ua.UserId == userId && ua.ActivityId == activityId);
+    }
+
+    public async Task<bool> DeleteRecordByTeacherId(
+        EntityId<UserActivity> userActivityId,
+        EntityId<User>? teacherId
+    )
+    {
+        return await Where(ua => ua.Id == userActivityId)
+                .WhereIf(teacherId is not null, ua => ua.TeacherId == teacherId!)
+                .ExecuteDeleteAsync() > 0;
     }
 }

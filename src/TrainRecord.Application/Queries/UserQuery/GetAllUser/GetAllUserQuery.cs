@@ -6,7 +6,7 @@ using TrainRecord.Application.Requests;
 using TrainRecord.Application.Responses;
 using TrainRecord.Core.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Extensions;
 
 namespace TrainRecord.Application.UserQuery;
 

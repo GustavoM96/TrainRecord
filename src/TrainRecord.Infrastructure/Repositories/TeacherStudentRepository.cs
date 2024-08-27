@@ -11,10 +11,7 @@ public class TeacherStudentRepository : RepositoryBase<TeacherStudent>, ITeacher
     public TeacherStudentRepository(AppDbContext context)
         : base(context) { }
 
-    public async Task<bool> GetByTeacherStudentId(
-        EntityId<User> studentId,
-        EntityId<User> teacherId
-    )
+    public async Task<bool> IsTeacherStudent(EntityId<User> studentId, EntityId<User> teacherId)
     {
         return await AnyAsync(t => t.TeacherId == teacherId && t.StudentId == studentId);
     }

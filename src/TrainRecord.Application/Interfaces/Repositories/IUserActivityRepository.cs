@@ -10,6 +10,7 @@ public interface IUserActivityRepository : IRepositoryBase<UserActivity>
         EntityId<User> userId,
         EntityId<Activity> activityId
     );
+    IQueryable<UserActivity> GetAllRecordByUser(EntityId<User> userId, EntityId<User>? teacherId);
     Task<UserActivity?> GetRecordByUserAndActivityId(
         EntityId<User> userId,
         EntityId<Activity> activityId
@@ -17,5 +18,9 @@ public interface IUserActivityRepository : IRepositoryBase<UserActivity>
     Task<bool> DeleteRecordByUserAndActivityId(
         EntityId<User> userId,
         EntityId<Activity> activityId
+    );
+    Task<bool> DeleteRecordByTeacherId(
+        EntityId<UserActivity> userActivityId,
+        EntityId<User>? teacherId
     );
 }

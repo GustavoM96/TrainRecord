@@ -8,28 +8,29 @@ using TrainRecord.Core.Extensions;
 
 namespace TrainRecord.Application.ActivityQuery;
 
-public record GetRecordQuery(
+public record GetAllRecordQuery(
     EntityId<User> UserId,
-    EntityId<Activity> ActivityId,
+    EntityId<User>? TeacherId,
     Pagination Pagination
 ) : IRequest<ErrorOr<Page<UserActivity>>> { }
 
-public class GetRecordQueryHandler : IRequestHandler<GetRecordQuery, ErrorOr<Page<UserActivity>>>
+public class GetAllRecordQueryHandler
+    : IRequestHandler<GetAllRecordQuery, ErrorOr<Page<UserActivity>>>
 {
     private readonly IUserActivityRepository _userActivityRepository;
 
-    public GetRecordQueryHandler(IUserActivityRepository userActivityRepository)
+    public GetAllRecordQueryHandler(IUserActivityRepository userActivityRepository)
     {
         _userActivityRepository = userActivityRepository;
     }
 
     public async Task<ErrorOr<Page<UserActivity>>> Handle(
-        GetRecordQuery request,
+        GetAllRecordQuery request,
         CancellationToken cancellationToken
     )
     {
         return _userActivityRepository
-            .GetAllRecordByUserAndActivityId(request.UserId, request.ActivityId)
+            .GetAllRecordByUser(request.UserId, request.TeacherId)
             .AsPage(request.Pagination);
     }
 }

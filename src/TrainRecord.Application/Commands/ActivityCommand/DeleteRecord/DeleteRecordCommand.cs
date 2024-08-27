@@ -7,7 +7,8 @@ using TrainRecord.Core.Entities;
 
 namespace TrainRecord.Application.ActivityCommand;
 
-public record DeleteRecordCommand(EntityId<UserActivity> RecordId) : IRequest<ErrorOr<Deleted>> { }
+public record DeleteRecordCommand(EntityId<UserActivity> RecordId, EntityId<User>? TeacherId)
+    : IRequest<ErrorOr<Deleted>> { }
 
 public class DeleteRecordCommandHandler : IRequestHandler<DeleteRecordCommand, ErrorOr<Deleted>>
 {
@@ -23,7 +24,10 @@ public class DeleteRecordCommandHandler : IRequestHandler<DeleteRecordCommand, E
         CancellationToken cancellationToken
     )
     {
-        var deleted = await _userActivityRepository.DeleteById(request.RecordId);
+        var deleted = await _userActivityRepository.DeleteRecordByTeacherId(
+            request.RecordId,
+            request.TeacherId
+        );
         return deleted ? Result.Deleted : UserActivityErrors.NotFound;
     }
 }

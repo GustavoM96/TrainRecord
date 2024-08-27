@@ -1,8 +1,9 @@
 using TrainRecord.Core.Entities;
+using TrainRecord.Core.Services.Auth;
 
 namespace TrainRecord.Core.Interfaces;
 
 public interface IGenaratorToken
 {
-    string Generate(User user);
+    ApiTokenResponse Generate(User user);
 }

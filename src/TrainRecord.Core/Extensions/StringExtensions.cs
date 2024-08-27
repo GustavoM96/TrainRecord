@@ -1,6 +1,6 @@
-namespace TrainRecord.Core.Extentions;
+namespace TrainRecord.Core.Extensions;
 
-public static class StringExtention
+public static class StringExtensions
 {
     public static bool EqualsIgnoreCase(this string? text, string? valueToCompare)
     {

@@ -1,9 +1,9 @@
 using Mapster;
 using TrainRecord.Core.Common;
 
-namespace TrainRecord.Core.Extentions;
+namespace TrainRecord.Core.Extensions;
 
-public static class QueryableExtention
+public static class QueryableExtensions
 {
     public static Page<T> AsPage<T>(this IQueryable<T> queryable, Pagination pagination)
     {

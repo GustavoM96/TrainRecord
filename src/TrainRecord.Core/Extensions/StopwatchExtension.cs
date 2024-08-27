@@ -1,8 +1,8 @@
 using System.Diagnostics;
 
-namespace TrainRecord.Core.Extentions;
+namespace TrainRecord.Core.Extensions;
 
-public static class StopwatchExtention
+public static class StopwatchExtensions
 {
     public static TimeSpan GetTime(this Stopwatch stopwatch, Action action)
     {

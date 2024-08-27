@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using TrainRecord.Common.Errors;
 using TrainRecord.Core.Exceptions;
-using TrainRecord.Core.Extentions;
+using TrainRecord.Core.Extensions;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Infrastructure.Services.Identity;
