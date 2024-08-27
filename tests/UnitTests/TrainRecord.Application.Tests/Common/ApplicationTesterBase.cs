@@ -19,7 +19,7 @@ public abstract class ApplicationTesterBase
         _fixture = fixture;
     }
 
-    protected static async Task<bool> IsInvalidPropertiesAsync<TValidate>(
+    protected static async Task<bool> AreInvalidPropertiesAsync<TValidate>(
         AbstractValidator<TValidate> validator,
         TValidate validateItem,
         params string[] propertyNames

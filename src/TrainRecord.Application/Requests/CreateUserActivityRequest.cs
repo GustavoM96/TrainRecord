@@ -5,5 +5,7 @@ public record CreateUserActivityRequest(
     int Weight,
     int Repetition,
     int Serie,
-    string? TrainGroup
+    string? TrainGroup,
+    string? TrainName,
+    TimeOnly? Time
 ) { }
