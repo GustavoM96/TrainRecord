@@ -14,6 +14,7 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
     private readonly CreateUserActivityCommand _command;
     private readonly Mock<IActivityRepository> _activityRepository;
     private readonly Mock<IUserActivityRepository> _userActivityRepository;
+    private readonly Mock<ITeacherStudentRepository> _teacherStudentRepository;
     private readonly Mock<IUserRepository> _userRepository;
 
     public CreateUserActivityCommandHandlerTests()
@@ -21,6 +22,7 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         _activityRepository = FreezeFixture<Mock<IActivityRepository>>();
         _userActivityRepository = FreezeFixture<Mock<IUserActivityRepository>>();
         _userRepository = FreezeFixture<Mock<IUserRepository>>();
+        _teacherStudentRepository = FreezeFixture<Mock<ITeacherStudentRepository>>();
 
         _testClass = CreateFixture<CreateUserActivityCommandHandler>();
         _command = CreateFixture<CreateUserActivityCommand>();
@@ -48,8 +50,8 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         //arrange
         _activityRepository.Setup(m => m.AnyByIdAsync(_command.ActivityId)).ReturnsAsync(true);
         _userRepository.Setup(m => m.AnyByIdAsync(_command.UserId)).ReturnsAsync(true);
-        _userRepository
-            .Setup(m => m.AnyByRole(_command.TeacherId, Role.Teacher))
+        _teacherStudentRepository
+            .Setup(m => m.IsTeacherStudent(_command.UserId, _command.TeacherId!))
             .ReturnsAsync(true);
 
         //act

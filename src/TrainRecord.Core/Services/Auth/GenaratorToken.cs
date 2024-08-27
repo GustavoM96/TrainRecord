@@ -11,6 +11,7 @@ namespace TrainRecord.Core.Services.Auth;
 public class GenaratorToken : IGenaratorToken
 {
     private readonly string _secretKey;
+    private const int ExpiresHours = 48;
 
     public GenaratorToken(IConfiguration configuration)
     {
@@ -20,7 +21,7 @@ public class GenaratorToken : IGenaratorToken
     public ApiTokenResponse Generate(User user)
     {
         var key = Encoding.ASCII.GetBytes(_secretKey);
-        var apiTokenResponse = new ApiTokenResponse(4);
+        var apiTokenResponse = new ApiTokenResponse(ExpiresHours);
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(

@@ -1,13 +1,20 @@
+using System.Text.Json.Serialization;
 using ErrorOr;
 using MediatR;
-using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.AuthCommand;
 
 public record UpdatePasswordCommand(string Email, string Password, string NewPassword)
-    : IRequest<ErrorOr<Updated>> { }
+    : IRequest<ErrorOr<Updated>>
+{
+    [JsonIgnore]
+    public string Password { get; init; } = Password;
+
+    [JsonIgnore]
+    public string NewPassword { get; init; } = NewPassword;
+}
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
 {

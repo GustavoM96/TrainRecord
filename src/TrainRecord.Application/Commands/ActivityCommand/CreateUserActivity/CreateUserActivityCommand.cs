@@ -5,7 +5,6 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Core.Commum.Bases;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Application.ActivityCommand;
 
@@ -25,16 +24,19 @@ public class CreateUserActivityCommandHandler
     private readonly IUserActivityRepository _userActivityRepository;
     private readonly IUserRepository _userRepository;
     private readonly IActivityRepository _activityRepository;
+    private readonly ITeacherStudentRepository _teacherStudentRepository;
 
     public CreateUserActivityCommandHandler(
         IUserActivityRepository userActivityRepository,
         IUserRepository userRepository,
-        IActivityRepository activityRepository
+        IActivityRepository activityRepository,
+        ITeacherStudentRepository teacherStudentRepository
     )
     {
         _userActivityRepository = userActivityRepository;
         _userRepository = userRepository;
         _activityRepository = activityRepository;
+        _teacherStudentRepository = teacherStudentRepository;
     }
 
     public async Task<ErrorOr<UserActivity>> Handle(
@@ -66,10 +68,10 @@ public class CreateUserActivityCommandHandler
 
         if (
             request.TeacherId is not null
-            && !await _userRepository.AnyByRole(request.TeacherId, Role.Teacher)
+            && !await _teacherStudentRepository.IsTeacherStudent(request.UserId, request.TeacherId)
         )
         {
-            errors.Add(UserError.TeacherNotFound);
+            errors.Add(UserError.TeacherStudentNotFound);
         }
 
         var anyActivity = await _activityRepository.AnyByIdAsync(request.ActivityId);
