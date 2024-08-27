@@ -11,5 +11,7 @@ public class UserActivity : EntityBase<UserActivity>, IEntity
     public int Weight { get; init; }
     public int Repetition { get; init; }
     public int Serie { get; init; }
+    public TimeOnly? Time { get; init; }
     public string? TrainGroup { get; init; }
+    public string? TrainName { get; init; }
 }

@@ -15,7 +15,9 @@ public record CreateUserActivityCommand(
     int Weight,
     int Repetition,
     int Serie,
-    string? TrainGroup
+    string? TrainGroup,
+    string? TrainName,
+    TimeOnly? Time
 ) : IRequest<ErrorOr<UserActivity>> { }
 
 public class CreateUserActivityCommandHandler

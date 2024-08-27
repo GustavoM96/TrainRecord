@@ -100,7 +100,9 @@ public class StudentController : ApiController
             createUserActivityResquest.Weight,
             createUserActivityResquest.Repetition,
             createUserActivityResquest.Serie,
-            createUserActivityResquest.TrainGroup
+            createUserActivityResquest.TrainGroup,
+            createUserActivityResquest.TrainName,
+            createUserActivityResquest.Time
         );
 
         return await SendCreated(command, ct);

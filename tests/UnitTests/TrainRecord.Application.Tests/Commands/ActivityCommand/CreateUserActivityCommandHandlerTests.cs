@@ -79,13 +79,15 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
             weight,
             repetition,
             serie,
-            "A"
+            "A",
+            "My top trainingName",
+            new TimeOnly(0, 1)
         );
         var validator = new CreateUserActivityCommandValidator();
 
         //assert
         Assert.True(
-            await IsInvalidPropertiesAsync(
+            await AreInvalidPropertiesAsync(
                 validator,
                 command,
                 new string[3] { "Weight", "Repetition", "Serie" }
@@ -110,11 +112,13 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
             weight,
             repetition,
             serie,
-            "A"
+            "A",
+            "My top trainingName",
+            new TimeOnly(0, 1)
         );
         var validator = new CreateUserActivityCommandValidator();
 
         //assert
-        Assert.True(await IsValidPropertiesAsync(validator, command));
+        Assert.True(await AreValidPropertiesAsync(validator, command));
     }
 }
