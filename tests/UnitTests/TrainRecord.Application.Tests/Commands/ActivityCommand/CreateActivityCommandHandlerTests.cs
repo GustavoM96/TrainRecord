@@ -72,6 +72,6 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
         var validator = new CreateActivityCommandValidator();
 
         //assert
-        Assert.True(await IsValidPropertiesAsync(validator, command));
+        Assert.True(await AreValidPropertiesAsync(validator, command));
     }
 }

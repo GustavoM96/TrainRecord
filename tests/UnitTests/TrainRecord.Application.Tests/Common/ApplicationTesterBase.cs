@@ -31,7 +31,7 @@ public abstract class ApplicationTesterBase
         return EqualItems(propertyNames, errorsDistinct);
     }
 
-    protected static async Task<bool> IsValidPropertiesAsync<TValidate>(
+    protected static async Task<bool> AreValidPropertiesAsync<TValidate>(
         AbstractValidator<TValidate> validator,
         TValidate validateItem
     )

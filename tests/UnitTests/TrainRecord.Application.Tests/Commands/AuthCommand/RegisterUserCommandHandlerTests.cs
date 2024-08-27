@@ -126,6 +126,6 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         var validator = new RegisterUserCommandValidator();
 
         //assert
-        Assert.True(await IsValidPropertiesAsync(validator, command));
+        Assert.True(await AreValidPropertiesAsync(validator, command));
     }
 }
