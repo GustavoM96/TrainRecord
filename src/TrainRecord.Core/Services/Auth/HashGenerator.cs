@@ -1,24 +1,17 @@
-using Microsoft.AspNetCore.Identity;
-using TrainRecord.Core.Entities;
 using TrainRecord.Core.Interfaces;
+using BC = BCrypt.Net.BCrypt;
 
 namespace TrainRecord.Core.Services.Auth;
 
-public class HashGenerator : IhashGenerator
+public class HashGenerator : IHashGenerator
 {
-    public string Generate(User user)
+    public string Generate(string password)
     {
-        var hasher = new PasswordHasher<User>();
-        return hasher.HashPassword(user, user.Password);
+        return BC.HashPassword(password);
     }
 
-    public PasswordVerificationResult VerifyHashedPassword(
-        User user,
-        string password,
-        string hashedPassword
-    )
+    public bool VerifyHashedPassword(string password, string hashedPassword)
     {
-        var hasher = new PasswordHasher<User>();
-        return hasher.VerifyHashedPassword(user, hashedPassword, password);
+        return BC.Verify(password, hashedPassword);
     }
 }

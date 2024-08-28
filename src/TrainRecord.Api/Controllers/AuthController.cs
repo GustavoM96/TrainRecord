@@ -22,8 +22,9 @@ public class AuthController : ApiController
     }
 
     [HttpPost("[action]")]
-    public async Task<IActionResult> Login(LoginUserCommand command, CancellationToken ct)
+    public async Task<IActionResult> Login(LoginUserRequest request, CancellationToken ct)
     {
+        var command = new LoginUserCommand(request.Email, request.Password);
         return await SendOk(command, ct);
     }
 

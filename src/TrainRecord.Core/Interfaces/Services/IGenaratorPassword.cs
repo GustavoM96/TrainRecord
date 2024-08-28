@@ -1,14 +1,7 @@
-using Microsoft.AspNetCore.Identity;
-using TrainRecord.Core.Entities;
-
 namespace TrainRecord.Core.Interfaces;
 
-public interface IhashGenerator
+public interface IHashGenerator
 {
-    public string Generate(User user);
-    PasswordVerificationResult VerifyHashedPassword(
-        User user,
-        string password,
-        string hashedPassword
-    );
+    public string Generate(string password);
+    bool VerifyHashedPassword(string password, string hashedPassword);
 }

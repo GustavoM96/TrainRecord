@@ -11,10 +11,12 @@ namespace TrainRecord.Core.Services.Auth;
 public class TokenGenerator : ITokenGenerator
 {
     private readonly string _secretKey;
-    private readonly TimeSpan _expires = TimeSpan.FromMinutes(600);
+    private readonly TimeSpan _expires;
 
     public TokenGenerator(IConfiguration configuration)
     {
+        var time = configuration.GetSection("Jwt:ExpireTime").Get<Dictionary<string, int>>()!;
+        _expires = new TimeSpan(time["Hours"], time["Minutes"], 0);
         _secretKey = configuration.GetValue<string>("Jwt:SecretKey")!;
     }
 
@@ -25,12 +27,11 @@ public class TokenGenerator : ITokenGenerator
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(
-                new Claim[]
-                {
+                [
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, user.Role.ToString()),
-                }
+                ]
             ),
             Expires = apiTokenResponse.ExpiresDateTime,
             SigningCredentials = new SigningCredentials(
