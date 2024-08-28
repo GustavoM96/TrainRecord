@@ -4,7 +4,7 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Services.Auth;
 
-public class hashGenerator : IhashGenerator
+public class HashGenerator : IhashGenerator
 {
     public string Generate(User user)
     {

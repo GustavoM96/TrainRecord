@@ -3,7 +3,7 @@ using TrainRecord.Core.Services.Auth;
 
 namespace TrainRecord.Core.Interfaces;
 
-public interface IGenaratorToken
+public interface ITokenGenerator
 {
     ApiTokenResponse Generate(User user);
 }

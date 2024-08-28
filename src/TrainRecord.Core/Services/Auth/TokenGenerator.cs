@@ -8,20 +8,20 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Core.Services.Auth;
 
-public class GenaratorToken : IGenaratorToken
+public class TokenGenerator : ITokenGenerator
 {
     private readonly string _secretKey;
-    private const int ExpiresHours = 48;
+    private readonly TimeSpan _expires = TimeSpan.FromMinutes(600);
 
-    public GenaratorToken(IConfiguration configuration)
+    public TokenGenerator(IConfiguration configuration)
     {
-        _secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value!;
+        _secretKey = configuration.GetValue<string>("Jwt:SecretKey")!;
     }
 
     public ApiTokenResponse Generate(User user)
     {
         var key = Encoding.ASCII.GetBytes(_secretKey);
-        var apiTokenResponse = new ApiTokenResponse(ExpiresHours);
+        var apiTokenResponse = new ApiTokenResponse(_expires);
         var tokenDescriptor = new SecurityTokenDescriptor()
         {
             Subject = new ClaimsIdentity(

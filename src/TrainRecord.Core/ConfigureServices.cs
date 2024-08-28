@@ -16,11 +16,11 @@ public static class ConfigureServices
         IConfiguration configuration
     )
     {
-        services.AddScoped<IhashGenerator, hashGenerator>();
-        services.AddScoped<IGenaratorToken, GenaratorToken>();
+        services.AddScoped<IhashGenerator, HashGenerator>();
+        services.AddScoped<ITokenGenerator, TokenGenerator>();
         services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
-        var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value!;
+        var secretKey = configuration.GetValue<string>("Jwt:SecretKey")!;
         var key = Encoding.ASCII.GetBytes(secretKey);
 
         services

@@ -18,12 +18,12 @@ public record LoginUserCommand(string Email, string Password) : IRequest<ErrorOr
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
     private readonly IhashGenerator _hashGenerator;
-    private readonly IGenaratorToken _genaratorToken;
+    private readonly ITokenGenerator _genaratorToken;
     private readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
         IhashGenerator hashGenerator,
-        IGenaratorToken genaratorToken,
+        ITokenGenerator genaratorToken,
         IUserRepository userRepository
     )
     {
@@ -61,6 +61,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
         }
 
         var token = _genaratorToken.Generate(userFound);
-        return new LoginUserResponse(token.Key, token.ExpiresHours, token.ExpiresDateTime);
+        return new LoginUserResponse(token.Key, token.Expire, token.ExpiresDateTime);
     }
 }
