@@ -33,22 +33,15 @@ public abstract class ApiController : ControllerBase
         ApiOptions? apiOptions = default
     )
     {
-        var options = apiOptions ?? new();
-        using IDbContextTransaction? transaction = options.UseSqlTransaction
-            ? await UnitOfWork.BeginTransaction(ct)
-            : null;
+        var transaction = await GetTransactionOrNullAsync(apiOptions, ct);
 
-        var result = await GetResult(request, ct);
+        var result = await GetResultAsync(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync(ct);
-        if (transaction is not null)
-        {
-            await UnitOfWork.CommitTransactionAsync(transaction, ct);
-        }
+        await SaveChangesAsync(transaction, ct);
 
         var response = new ApiOkResponse(result.Value, HttpContext.TraceIdentifier);
         return Ok(response);
@@ -60,23 +53,15 @@ public abstract class ApiController : ControllerBase
         ApiOptions? apiOptions = default
     )
     {
-        var options = apiOptions ?? new();
-        using IDbContextTransaction? transaction = options.UseSqlTransaction
-            ? await UnitOfWork.BeginTransaction(ct)
-            : null;
+        var transaction = await GetTransactionOrNullAsync(apiOptions, ct);
 
-        var result = await GetResult(request, ct);
+        var result = await GetResultAsync(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync(ct);
-        if (transaction is not null)
-        {
-            await UnitOfWork.CommitTransactionAsync(transaction, ct);
-        }
-
+        await SaveChangesAsync(transaction, ct);
         return NoContent();
     }
 
@@ -86,43 +71,42 @@ public abstract class ApiController : ControllerBase
         ApiOptions? apiOptions = null
     )
     {
-        var options = apiOptions ?? new();
-        using IDbContextTransaction? transaction = options.UseSqlTransaction
-            ? await UnitOfWork.BeginTransaction(ct)
-            : null;
+        var transaction = await GetTransactionOrNullAsync(apiOptions, ct);
 
-        var result = await GetResult(request, ct);
+        var result = await GetResultAsync(request, ct);
         if (result.IsError)
         {
             return ProblemErrors(result.Errors);
         }
 
-        await UnitOfWork.SaveChangesAsync(ct);
-        if (transaction is not null)
-        {
-            await UnitOfWork.CommitTransactionAsync(transaction, ct);
-        }
+        await SaveChangesAsync(transaction, ct);
 
         var response = new ApiCreatedResponse(result.Value, HttpContext.TraceIdentifier);
         return CreatedAtAction(null, response);
     }
 
-    private async Task<ErrorOr<TResponse>> GetResult<TResponse>(
+    private async Task<ErrorOr<TResponse>> GetResultAsync<TResponse>(
         IRequest<ErrorOr<TResponse>> request,
         CancellationToken ct
     )
     {
+        Logger.LogInformation(
+            "{Name} TraceId: {TraceId}  UserID: {UserId} Request: {Request}",
+            request.GetType().ToString(),
+            HttpContext.TraceIdentifier,
+            HttpContext?.User?.FindFirstValue(ClaimTypes.Sid) ?? "'no userId inserted'",
+            JsonSerializer.Serialize((object)request)
+        );
+
         var timer = new Stopwatch();
         var result = await timer.GetTimeAsync(() => Mediator.Send(request, ct));
         var response = result.Value;
 
         Logger.LogInformation(
-            "{Name} TraceId: {TraceId} TimeSpan: {Elapsed} UserID: {UserId} Request: {Request}, Response: {Response}",
+            "{Name} TraceId: {TraceId} TimeSpan: {Elapsed} Response: {Response}",
             request.GetType().ToString(),
-            HttpContext.TraceIdentifier,
+            HttpContext?.TraceIdentifier,
             result.Elapsed,
-            HttpContext?.User?.FindFirstValue(ClaimTypes.Sid) ?? "'no userId inserted'",
-            JsonSerializer.Serialize((object)request),
             response.IsError
                 ? JsonSerializer.Serialize(response.Errors)
                 : JsonSerializer.Serialize(response.Value)
@@ -145,5 +129,23 @@ public abstract class ApiController : ControllerBase
 
         var problemDetails = ProblemDetailsBuilder.Build(HttpContext.TraceIdentifier, errors);
         return new ObjectResult(problemDetails);
+    }
+
+    private async Task SaveChangesAsync(IDbContextTransaction? transaction, CancellationToken ct)
+    {
+        await UnitOfWork.SaveChangesAsync(ct);
+        if (transaction is not null)
+        {
+            await UnitOfWork.CommitTransactionAsync(transaction, ct);
+        }
+    }
+
+    private async Task<IDbContextTransaction?> GetTransactionOrNullAsync(
+        ApiOptions? apiOptions,
+        CancellationToken ct
+    )
+    {
+        var options = apiOptions ?? new();
+        return options.UseSqlTransaction ? await UnitOfWork.BeginTransaction(ct) : null;
     }
 }
