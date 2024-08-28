@@ -15,12 +15,12 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
     private readonly RegisterUserCommandHandler _testClass;
     private readonly RegisterUserCommand _command;
     private readonly Mock<IUserRepository> _userRepository;
-    private readonly Mock<IhashGenerator> _hashGenerator;
+    private readonly Mock<IHashGenerator> _hashGenerator;
 
     public RegisterUserCommandHandlerTests()
     {
         _userRepository = FreezeFixture<Mock<IUserRepository>>();
-        _hashGenerator = FreezeFixture<Mock<IhashGenerator>>();
+        _hashGenerator = FreezeFixture<Mock<IHashGenerator>>();
 
         _testClass = CreateFixture<RegisterUserCommandHandler>();
         _command = CreateFixture<RegisterUserCommand>();
@@ -32,7 +32,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         //arrange
         var hashedPassword = "!wds043mdfaAdDSeSAw435r";
         _userRepository.Setup(m => m.AnyByEmailAsync(_command.Email)).ReturnsAsync(false);
-        _hashGenerator.Setup(m => m.Generate(It.IsAny<User>())).Returns(hashedPassword);
+        _hashGenerator.Setup(m => m.Generate(It.IsAny<string>())).Returns(hashedPassword);
 
         //act
         var result = await _testClass.Handle(_command, default);
@@ -55,10 +55,8 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         var result = await _testClass.Handle(_command, default);
 
         //assert
-        _hashGenerator.Verify(m => m.Generate(It.Is<User>(user => user.Email == _command.Email)));
-        _hashGenerator.Verify(m =>
-            m.Generate(It.Is<User>(user => user.FirstName == _command.FirstName))
-        );
+        _hashGenerator.Verify(m => m.Generate(_command.Password));
+        _hashGenerator.Verify(m => m.Generate(_command.Password));
         Assert.IsType<RegisterUserResponse>(result.Value);
     }
 

@@ -1,7 +1,7 @@
 namespace TrainRecord.Core.Services.Auth;
 
-public record ApiTokenResponse(int ExpiresHours)
+public record ApiTokenResponse(TimeSpan Expire)
 {
-    public DateTime ExpiresDateTime = DateTime.Now.AddHours(ExpiresHours);
+    public DateTime ExpiresDateTime = DateTime.Now.Add(Expire);
     public string Key { get; set; } = "";
 }

@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Responses;
@@ -17,13 +16,13 @@ public record LoginUserCommand(string Email, string Password) : IRequest<ErrorOr
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {
-    private readonly IhashGenerator _hashGenerator;
-    private readonly IGenaratorToken _genaratorToken;
+    private readonly IHashGenerator _hashGenerator;
+    private readonly ITokenGenerator _genaratorToken;
     private readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
-        IhashGenerator hashGenerator,
-        IGenaratorToken genaratorToken,
+        IHashGenerator hashGenerator,
+        ITokenGenerator genaratorToken,
         IUserRepository userRepository
     )
     {
@@ -43,24 +42,13 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr
             return UserError.LoginInvalid;
         }
 
-        var verificationResult = _hashGenerator.VerifyHashedPassword(
-            userFound,
-            request.Password,
-            userFound.Password
-        );
-
-        if (verificationResult.Equals(PasswordVerificationResult.Failed))
+        var isVerified = _hashGenerator.VerifyHashedPassword(request.Password, userFound.Password);
+        if (!isVerified)
         {
             return UserError.LoginInvalid;
         }
 
-        if (verificationResult.Equals(PasswordVerificationResult.SuccessRehashNeeded))
-        {
-            var rehashedPassword = _hashGenerator.Generate(userFound);
-            await _userRepository.UpdatePasswordById(rehashedPassword, userFound.EntityId);
-        }
-
         var token = _genaratorToken.Generate(userFound);
-        return new LoginUserResponse(token.Key, token.ExpiresHours, token.ExpiresDateTime);
+        return new LoginUserResponse(token.Key, token.Expire, token.ExpiresDateTime);
     }
 }

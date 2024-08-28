@@ -27,12 +27,12 @@ public record RegisterUserCommand(
 public class RegisterUserCommandHandler
     : IRequestHandler<RegisterUserCommand, ErrorOr<RegisterUserResponse>>
 {
-    private readonly IhashGenerator _hashGenerator;
+    private readonly IHashGenerator _hashGenerator;
     private readonly IUserRepository _userRepository;
     private readonly ICurrentUserService _currentUserService;
 
     public RegisterUserCommandHandler(
-        IhashGenerator hashGenerator,
+        IHashGenerator hashGenerator,
         IUserRepository userRepository,
         ICurrentUserService currentUserService
     )
@@ -60,7 +60,7 @@ public class RegisterUserCommandHandler
             return UserError.EmailExists;
         }
 
-        var hashedPassword = _hashGenerator.Generate(user);
+        var hashedPassword = _hashGenerator.Generate(user.Password);
         user.UpdatePassword(hashedPassword);
 
         user.AddDomainEvent(new RegisterUserEvent(user.Email));

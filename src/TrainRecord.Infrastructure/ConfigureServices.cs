@@ -28,7 +28,7 @@ public static class ConfigureServices
         services.AddScoped<ITeacherStudentRepository, TeacherStudentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        var conn = configuration.GetSection("ConnectionStrings").GetSection("DbSqlite").Value;
+        var conn = configuration.GetValue<string>("ConnectionStrings:DbSqlite")!;
         services.AddDbContext<AppDbContext>(options =>
         {
             options.UseSqlite(conn);

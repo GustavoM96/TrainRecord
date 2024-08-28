@@ -12,8 +12,8 @@ var config = builder.Configuration;
 var services = builder.Services;
 
 // Add services to the container.
-services.AddProblemDetails();
 
+services.AddProblemDetails();
 services
     .AddControllers()
     .AddJsonOptions(options =>
@@ -47,14 +47,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.Use(
-    async (context, next) =>
-    {
-        context.Request.EnableBuffering();
-        await next();
-    }
-);
 
 app.UseRouting();
 app.UseHttpsRedirection();

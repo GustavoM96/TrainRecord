@@ -18,11 +18,11 @@ public record UpdatePasswordCommand(string Email, string Password, string NewPas
 
 public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, ErrorOr<Updated>>
 {
-    private readonly IhashGenerator _hashGenerator;
+    private readonly IHashGenerator _hashGenerator;
     private readonly IUserRepository _userRepository;
 
     public UpdatePasswordCommandHandler(
-        IhashGenerator hashGenerator,
+        IHashGenerator hashGenerator,
         IUserRepository userRepository
     )
     {
@@ -35,7 +35,7 @@ public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordComman
         CancellationToken cancellationToken
     )
     {
-        var hashedPassword = _hashGenerator.Generate(new() { Password = request.NewPassword });
+        var hashedPassword = _hashGenerator.Generate(request.NewPassword);
 
         await _userRepository.UpdatePasswordByEmail(request.Email, hashedPassword);
         return Result.Updated;
