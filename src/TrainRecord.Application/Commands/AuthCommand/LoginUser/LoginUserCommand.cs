@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,8 +9,11 @@ using TrainRecord.Core.Interfaces;
 
 namespace TrainRecord.Application.AuthCommand;
 
-public record LoginUserCommand(string Email, string Password)
-    : IRequest<ErrorOr<LoginUserResponse>> { }
+public record LoginUserCommand(string Email, string Password) : IRequest<ErrorOr<LoginUserResponse>>
+{
+    [JsonIgnore]
+    public string Password { get; set; } = Password;
+}
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, ErrorOr<LoginUserResponse>>
 {

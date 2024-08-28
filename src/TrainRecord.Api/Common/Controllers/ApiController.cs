@@ -134,7 +134,7 @@ public abstract class ApiController : ControllerBase
     protected IActionResult ProblemErrors(List<Error> errors)
     {
         Logger.LogError(
-            ProblemDetailsBuilder.UnhandledExceptionMsg + "TraceId: {traceId}",
+            ProblemDetailsBuilder.OneOrMoreErrosMsg + "TraceId: {traceId}",
             HttpContext.TraceIdentifier
         );
 
