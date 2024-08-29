@@ -56,11 +56,19 @@ public class UserActivityRepository : RepositoryBase<UserActivity>, IUserActivit
 
     public async Task<bool> DeleteRecordByTeacherId(
         EntityId<UserActivity> userActivityId,
-        EntityId<User>? teacherId
+        EntityId<User> teacherId
     )
     {
-        return await Where(ua => ua.Id == userActivityId)
-                .WhereIf(teacherId is not null, ua => ua.TeacherId == teacherId!)
+        return await Where(ua => ua.Id == userActivityId && ua.TeacherId == teacherId)
+                .ExecuteDeleteAsync() > 0;
+    }
+
+    public async Task<bool> DeleteRecordByStudentId(
+        EntityId<UserActivity> userActivityId,
+        EntityId<User> studentId
+    )
+    {
+        return await Where(ua => ua.Id == userActivityId && ua.UserId == studentId)
                 .ExecuteDeleteAsync() > 0;
     }
 }

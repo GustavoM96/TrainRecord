@@ -28,10 +28,12 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
     public async Task Test_Handle_WhenFoundTeacherAndStudent_ShouldAddTeacherAndStudent()
     {
         //arrange
-        var teacher = new User() { Role = Role.Teacher };
-
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(true);
-        _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
+
+        _userRepository
+            .Setup(m => m.AnyByRole(_command.TeacherId, Role.Teacher))
+            .ReturnsAsync(true);
+
         _teacherStudentRepository
             .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(false);
@@ -53,10 +55,13 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
     public async Task Test_Handle_WhenNotFoundTeacherAndStudent_ShouldReturnErrors()
     {
         //arrange
-        User? teacher = null;
 
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(false);
-        _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
+
+        _userRepository
+            .Setup(m => m.AnyByRole(_command.TeacherId, Role.Teacher))
+            .ReturnsAsync(false);
+
         _teacherStudentRepository
             .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(false);
@@ -71,35 +76,13 @@ public class CreateTeacherStudentCommandHandlerTests : ApplicationTesterBase
     }
 
     [Fact]
-    public async Task Test_Handle_WhenNotFoundTeacherWithNotRole_ShouldReturnErrors()
-    {
-        //arrange
-        var teacherWithNoRole = new User() { Role = Role.User };
-
-        _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(true);
-        _userRepository
-            .Setup(m => m.FindByIdAsync(_command.TeacherId))
-            .ReturnsAsync(teacherWithNoRole);
-
-        _teacherStudentRepository
-            .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
-            .ReturnsAsync(false);
-
-        //act
-        var result = await _testClass.Handle(_command, default);
-
-        //assert
-        _teacherStudentRepository.Verify(m => m.AddAsync(It.IsAny<TeacherStudent>()), Times.Never);
-        Assert.Contains(UserError.IsNotTeacher, result.Errors);
-    }
-
-    [Fact]
     public async Task Test_Handle_WhenAlreadyRegistered_ShouldReturnErrors()
     {
         var teacher = new User() { Role = Role.Teacher };
 
         _userRepository.Setup(m => m.AnyByIdAsync(_command.StudentId)).ReturnsAsync(true);
         _userRepository.Setup(m => m.FindByIdAsync(_command.TeacherId)).ReturnsAsync(teacher);
+
         _teacherStudentRepository
             .Setup(m => m.IsTeacherStudent(_command.StudentId, _command.TeacherId))
             .ReturnsAsync(true);

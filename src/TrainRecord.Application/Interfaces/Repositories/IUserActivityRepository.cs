@@ -21,6 +21,10 @@ public interface IUserActivityRepository : IRepositoryBase<UserActivity>
     );
     Task<bool> DeleteRecordByTeacherId(
         EntityId<UserActivity> userActivityId,
-        EntityId<User>? teacherId
+        EntityId<User> teacherId
+    );
+    Task<bool> DeleteRecordByStudentId(
+        EntityId<UserActivity> userActivityId,
+        EntityId<User> studentId
     );
 }

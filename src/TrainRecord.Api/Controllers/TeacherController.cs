@@ -51,7 +51,7 @@ public class TeacherController : ApiController
     )
     {
         var command = new DeleteTeacherStudentCommand(new(userId), new(studentId));
-        return await SendNoContent(command, ct);
+        return await SendNoContent(command, ct, new() { UseSqlTransaction = true });
     }
 
     [HttpPost("{userId}/Student/{studentId}")]
@@ -79,7 +79,7 @@ public class TeacherController : ApiController
     [Authorize(Policy = "ResourceOwner")]
     public async Task<IActionResult> DeleteRecord(Guid userId, Guid recordId, CancellationToken ct)
     {
-        var command = new DeleteRecordCommand(new(recordId), new(userId));
+        var command = new DeleteRecordCommand(new(recordId), null, new(userId));
         return await SendNoContent(command, ct);
     }
 

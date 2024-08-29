@@ -58,21 +58,17 @@ public class CreateTeacherStudentCommandHandler
             erros.Add(UserError.StudentNotFound);
         }
 
-        var teacher = await _userRepository.FindByIdAsync(request.TeacherId);
-        if (teacher is null)
+        var teacherFound = await _userRepository.AnyByRole(request.TeacherId, Role.Teacher);
+        if (!teacherFound)
         {
             erros.Add(UserError.TeacherNotFound);
-        }
-
-        if (teacher?.Role != Role.Teacher)
-        {
-            erros.Add(UserError.IsNotTeacher);
         }
 
         var anyTeacherStudent = await _teacherStudentRepository.IsTeacherStudent(
             request.StudentId,
             request.TeacherId
         );
+
         if (anyTeacherStudent)
         {
             erros.Add(UserError.TeacherStudentExists);
