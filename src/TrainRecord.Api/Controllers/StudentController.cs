@@ -34,7 +34,7 @@ public class StudentController : ApiController
     )
     {
         var command = new DeleteTeacherStudentCommand(new(teacherId), new(userId));
-        return await SendNoContent(command, ct);
+        return await SendNoContent(command, ct, new() { UseSqlTransaction = true });
     }
 
     [HttpPost("{userId}/Teacher/{teacherId}")]
@@ -66,7 +66,7 @@ public class StudentController : ApiController
         CancellationToken ct
     )
     {
-        var query = new GetRecordQuery(new(userId), new(activityId), pagination);
+        var query = new GetRecordByActivityIdQuery(new(userId), new(activityId), pagination);
         return await SendOk(query, ct);
     }
 
@@ -79,7 +79,7 @@ public class StudentController : ApiController
     )
     {
         var command = new DeleteAllRecordByUserActivityCommand(new(userId), new(activityId));
-        return await SendNoContent(command, ct);
+        return await SendNoContent(command, ct, new() { UseSqlTransaction = true });
     }
 
     [HttpPost("{userId}/Activity/{activityId}/Record")]
@@ -122,9 +122,9 @@ public class StudentController : ApiController
 
     [HttpDelete("{userId}/Record/{recordId}")]
     [Authorize(Policy = "ResourceOwner")]
-    public async Task<IActionResult> DeleteRecord(Guid recordId, CancellationToken ct)
+    public async Task<IActionResult> DeleteRecord(Guid recordId, Guid userId, CancellationToken ct)
     {
-        var command = new DeleteRecordCommand(new(recordId), null);
-        return await SendNoContent(command, ct);
+        var command = new DeleteRecordCommand(new(recordId), new(userId));
+        return await SendNoContent(command, ct, new() { UseSqlTransaction = true });
     }
 }
