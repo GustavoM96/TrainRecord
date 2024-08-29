@@ -59,7 +59,7 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
         var validator = new CreateActivityCommandValidator();
 
         //assert
-        Assert.True(await AreInvalidPropertiesAsync(validator, command, "Name"));
+        AssertExtensions.AreInvalidProperties(validator, command, "Name");
     }
 
     [Theory]
@@ -72,6 +72,6 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
         var validator = new CreateActivityCommandValidator();
 
         //assert
-        Assert.True(await AreValidPropertiesAsync(validator, command));
+        AssertExtensions.AreInvalidProperties(validator, command);
     }
 }

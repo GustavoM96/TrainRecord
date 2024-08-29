@@ -110,7 +110,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         var validator = new RegisterUserCommandValidator();
 
         //assert
-        Assert.True(await AreInvalidPropertiesAsync(validator, command, "Email", "Password"));
+        AssertExtensions.AreInvalidProperties(validator, command, "Email", "Password");
     }
 
     [Theory]
@@ -124,6 +124,6 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
         var validator = new RegisterUserCommandValidator();
 
         //assert
-        Assert.True(await AreValidPropertiesAsync(validator, command));
+        AssertExtensions.AreValidProperties(validator, command);
     }
 }

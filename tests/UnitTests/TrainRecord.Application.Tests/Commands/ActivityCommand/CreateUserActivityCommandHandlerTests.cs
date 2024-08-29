@@ -4,7 +4,6 @@ using TrainRecord.Application.Errors;
 using TrainRecord.Application.Interfaces.Repositories;
 using TrainRecord.Application.Tests.Common;
 using TrainRecord.Core.Entities;
-using TrainRecord.Core.Enum;
 
 namespace TrainRecord.Application.Tests;
 
@@ -86,12 +85,10 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         var validator = new CreateUserActivityCommandValidator();
 
         //assert
-        Assert.True(
-            await AreInvalidPropertiesAsync(
-                validator,
-                command,
-                new string[3] { "Weight", "Repetition", "Serie" }
-            )
+        AssertExtensions.AreInvalidProperties(
+            validator,
+            command,
+            ["Weight", "Repetition", "Serie"]
         );
     }
 
@@ -119,6 +116,6 @@ public class CreateUserActivityCommandHandlerTests : ApplicationTesterBase
         var validator = new CreateUserActivityCommandValidator();
 
         //assert
-        Assert.True(await AreValidPropertiesAsync(validator, command));
+        AssertExtensions.AreValidProperties(validator, command);
     }
 }

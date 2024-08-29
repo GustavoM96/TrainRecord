@@ -40,7 +40,7 @@ public class GetAllActivityQueryHandlerTests : ApplicationTesterBase
         var result = await _testClass.Handle(_query, default);
 
         //assert
-        Assert.Equal(activities.Items.Single(), result.Value.Items.Single());
+        AssertExtensions.SingleAndEqualItem(activities.Items, result.Value.Items);
         Assert.IsType<Page<Activity>>(result.Value);
     }
 }
