@@ -54,4 +54,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+if (!app.Environment.IsEnvironment("Test"))
+{
+    await AddMigrations();
+}
+
 app.Run();
+
+async Task AddMigrations()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DataBaseMigration.Migrate(scope.ServiceProvider);
+}
+
+public partial class Program { }

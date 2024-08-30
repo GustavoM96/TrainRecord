@@ -21,13 +21,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "tests\UnitTests\TrainRecord.Infrastructure.Tests\Infrastructure.Tests.csproj", "{8BCED48C-CBC5-4204-830F-3856C2BEF805}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IntegrationTests", "IntegrationTests", "{6B0AC25B-9628-46C7-AA05-40B8AC3EDFE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Tests", "tests\IntegrationTests\WebApp.Tests\WebApp.Tests.csproj", "{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{207E8107-A849-4419-AD4B-44D5BEC2DBB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -54,6 +55,13 @@ Global
 		{8BCED48C-CBC5-4204-830F-3856C2BEF805}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BCED48C-CBC5-4204-830F-3856C2BEF805}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BCED48C-CBC5-4204-830F-3856C2BEF805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{207E8107-A849-4419-AD4B-44D5BEC2DBB2} = {FFBE5D9C-B855-4A86-9264-0D6229B601CC}
@@ -63,5 +71,7 @@ Global
 		{8ECB9FFB-1269-4046-96F8-EC7CC67974F5} = {2E29F672-ABB0-4A22-9DBD-559177398406}
 		{8F57C3FE-DC7C-4929-A4E4-5A65E36645D1} = {8ECB9FFB-1269-4046-96F8-EC7CC67974F5}
 		{8BCED48C-CBC5-4204-830F-3856C2BEF805} = {8ECB9FFB-1269-4046-96F8-EC7CC67974F5}
+		{6B0AC25B-9628-46C7-AA05-40B8AC3EDFE1} = {2E29F672-ABB0-4A22-9DBD-559177398406}
+		{ED79DF9D-93FF-4C96-8C37-94AC0AA329F1} = {6B0AC25B-9628-46C7-AA05-40B8AC3EDFE1}
 	EndGlobalSection
 EndGlobal
