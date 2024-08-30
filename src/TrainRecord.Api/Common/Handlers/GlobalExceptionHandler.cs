@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TrainRecord.Api.Common.Builders;
 using TrainRecord.Core.Commum.Bases;
 
-namespace TrainRecord.Api.Handler;
+namespace Api.Common.Handlers;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {
