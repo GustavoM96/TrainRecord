@@ -10,8 +10,17 @@ public class UserActivityConfiguration : IEntityTypeConfiguration<UserActivity>
     {
         builder.HasKey(ua => ua.Id);
         builder.Property(ua => ua.Id).ValueGeneratedNever();
-        builder.HasOne<User>().WithMany().HasForeignKey(ua => ua.UserId);
-        builder.HasOne<Activity>().WithMany().HasForeignKey(ua => ua.ActivityId);
+        builder
+            .HasOne<User>()
+            .WithMany()
+            .HasForeignKey(ua => ua.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder
+            .HasOne<Activity>()
+            .WithMany()
+            .HasForeignKey(ua => ua.ActivityId)
+            .OnDelete(DeleteBehavior.Restrict);
+        ;
 
         builder.Property(a => a.CreatedAt).HasColumnType("DATETIME");
         builder.Property(a => a.LastModifiedAt).HasColumnType("DATETIME");

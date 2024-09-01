@@ -42,6 +42,8 @@ public class GlobalExceptionHandler : IExceptionHandler
         var json = ToJson(problemDetails);
 
         context.Response.ContentType = "application/problem+json";
+        context.Response.StatusCode = problemDetails.Status!.Value;
+
         await context.Response.WriteAsync(json, cancellationToken);
         return true;
     }
