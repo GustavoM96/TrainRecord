@@ -9,8 +9,16 @@ public class TeacherStudentConfiguration : IEntityTypeConfiguration<TeacherStude
     public void Configure(EntityTypeBuilder<TeacherStudent> builder)
     {
         builder.HasKey(t => t.Id);
-        builder.HasOne<User>().WithMany().HasForeignKey(t => t.TeacherId);
-        builder.HasOne<User>().WithMany().HasForeignKey(t => t.StudentId);
+        builder
+            .HasOne<User>()
+            .WithMany()
+            .HasForeignKey(t => t.TeacherId)
+            .OnDelete(DeleteBehavior.Restrict);
+        builder
+            .HasOne<User>()
+            .WithMany()
+            .HasForeignKey(t => t.StudentId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(t => t.CreatedAt).HasColumnType("DATETIME");
         builder.Property(t => t.LastModifiedAt).HasColumnType("DATETIME");
