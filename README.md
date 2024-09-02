@@ -93,7 +93,7 @@ Como formatador de C# está sendo utilizado o [csharpier](https://csharpier.com)
 As mensagens de commits deste repo seguem o seguinte regex
 `^(feat|fix|ci|chore|docs|test|style|refactor|perf|build|revert)(\(.+?\))?: .{1,}$`.
 
-No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do commit.
+No pré-commit executamos o comando `dotnet csharpier .` para formatar antes do commit e rodamos os testes para garantir a qualidade do código.
 
 # Rodando a aplicação ⚙️
 
@@ -140,6 +140,12 @@ docker compose up
 ### Assets
 
 - contém imagens utilizadas.
+
+### Tests
+
+- Teste de unidade, para verificar se os comandos e queries estão sendo executado como devem.
+
+- Testes de integração, para verificar o retorno das respostas api
 
 # Documentação API 💼
 
