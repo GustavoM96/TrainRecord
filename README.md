@@ -1,5 +1,5 @@
 <p align="center">
-<img src="assets/gym.png" alt="drawing" width="200px"/>
+<img src="assets/gymIcon.png" alt="drawing" width="200px"/>
 </p>
 
 <h1 align="center">TrainRecord🏋️‍♀️</h1>
