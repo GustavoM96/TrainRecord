@@ -31,7 +31,6 @@ Temos 3 tipos de users:
   - [Rotas de Usuário](#rotas-usuário)
     - [Atualizar dados do usuário](#atualizar-dados-do-usuário)
     - [Listar todas os usuários](#listar-todas-os-usuários)
-    - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
     - [Obter dados de usuário por id](#obter-dados-de-usuário-por-id)
   - [Rotas de Atividade](#rotas-atividade)
     - [Adicionar uma nova atividade](#adicionar-uma-nova-atividade)
@@ -50,6 +49,8 @@ Temos 3 tipos de users:
     - [Listar todas os professores do aluno](#listar-todas-os-professores-do-aluno)
     - [Vincular aluno no professor](#vincular-aluno-no-professor)
     - [Remover professor por aluno](#remover-professor-por-aluno)
+    - [Listar todas as atividades do aluno](#listar-todas-as-atividades-do-aluno)
+
 - [Release 📦](#release-📦)
 - [Autores 🧑‍🤝‍🧑](#autores-🧑‍🤝‍🧑)
 - [License 🪪](#license-🪪)
@@ -66,10 +67,11 @@ Temos 3 tipos de users:
 - [Mapster](https://github.com/MapsterMapper/Mapster): para mapeamento dos objetos com Adapt<>().
 - [ErrorOr](https://github.com/amantinband/error-or): para retorno de api com erro ou o response.
 - [Jwt](https://jwt.io/): para autenticação do usuário.
-- [PasswordHasher](<https://learn.microsoft.com/en-us/previous-versions/aspnet/dn468192(v%3dvs.108)>): hasher de senha do usuário.
+- [PasswordHasher](<https://github.com/BcryptNet/bcrypt.net>): hasher de senha do usuário com bcrypt.net.
 - [Sqlite](https://www.sqlite.org/docs.html): apenas como banco de dados de desenvolvimento.
 - [Xunit](https://xunit.net): projeto de testes de unidade.
 - [Moq](https://github.com/moq): mocar dependencias para testes.
+- [Testcontainers](https://dotnet.testcontainers.org/): gerar conteiners de banco de dados para testes de integração.
 
 ## Tools
 
@@ -145,7 +147,7 @@ docker compose up
 
 - Fluxos do usuário
 
-    <img src="assets/Flow.jpg" alt="drawing" width="1000px"/>
+    <img src="assets/Flow.png" alt="drawing" width="1000px"/>
 
 - Mapeamento das rotas
 
@@ -304,40 +306,6 @@ Patch /api/user/{userId}
   "email": "josé.silva@gmail.com",
   "firstName": "José#NomeTrocado",
   "lastName": "Silva"
-}
-```
-
-### Listar todas as atividades do aluno
-
-- Autenticação: Apenas o dono do recurso.
-- Detalhes: Listar todas as atividades que o aluno participa.
-
-```
-Get /api/user/{userId}/activity
-```
-
-#### Request
-
-```json
-sem corpo de requisição
-```
-
-#### Response 200 Ok
-
-```json
-{
-  "items": [
-    {
-      "name": "pular corda",
-      "id": "00000000-0000-0000-0000-000000000000"
-    },
-    {
-      "name": "flexão de braço",
-      "id": "00000000-0000-0000-0000-000000000000"
-    }
-  ],
-  "perPage": 2,
-  "pageNumber": 4
 }
 ```
 
@@ -761,6 +729,42 @@ sem corpo de requisição
 ```json
 sem corpo de resposta
 ```
+
+
+### Listar todas as atividades do aluno
+
+- Autenticação: Apenas o dono do recurso.
+- Detalhes: Listar todas as atividades que o aluno participa.
+
+```
+Get /api/student/{userId}/activity
+```
+
+#### Request
+
+```json
+sem corpo de requisição
+```
+
+#### Response 200 Ok
+
+```json
+{
+  "items": [
+    {
+      "name": "pular corda",
+      "id": "00000000-0000-0000-0000-000000000000"
+    },
+    {
+      "name": "flexão de braço",
+      "id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "perPage": 2,
+  "pageNumber": 4
+}
+```
+
 
 # Release 📦
 
