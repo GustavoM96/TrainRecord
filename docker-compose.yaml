@@ -2,8 +2,11 @@ version: "3.8"
 
 services:
   api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5001
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5000:80"
+      - "5001:5001"

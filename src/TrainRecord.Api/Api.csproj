@@ -39,6 +39,12 @@
     <ProjectReference Include="..\TrainRecord.Application\Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include=".\DataBase\**" CopyToOutputDirectory="Database">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
   <Target Name="husky" BeforeTargets="Restore;CollectPackageReferences" Condition="'$(HUSKY)' != 0">
     <Exec Command="dotnet tool restore" StandardOutputImportance="Low" StandardErrorImportance="High" />
