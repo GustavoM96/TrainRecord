@@ -1,7 +1,7 @@
 using System.Text.Json;
 using TrainRecord.Core.Services.Auth;
 
-namespace WebApp.Tests;
+namespace WebApp.Tests.Common;
 
 public abstract class CustomClassFixture : IClassFixture<CustomWebApplicationFactory>
 {

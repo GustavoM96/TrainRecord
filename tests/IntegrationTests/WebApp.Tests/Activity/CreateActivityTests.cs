@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using TrainRecord.Application.ActivityCommand;
 using TrainRecord.Application.Errors;
+using WebApp.Tests.Common;
 
 namespace WebApp.Tests.Activity;
 

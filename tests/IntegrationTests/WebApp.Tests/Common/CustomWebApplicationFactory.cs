@@ -10,7 +10,7 @@ using TrainRecord.Core.Interfaces;
 using TrainRecord.Core.Services.Auth;
 using TrainRecord.Infrastructure.Persistence;
 
-namespace WebApp.Tests;
+namespace WebApp.Tests.Common;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {

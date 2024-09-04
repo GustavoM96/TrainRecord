@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using TrainRecord.Application.Errors;
 using TrainRecord.Application.Requests;
 using TrainRecord.Core.Enum;
+using WebApp.Tests.Common;
 
 namespace WebApp.Tests.Auth;
 
