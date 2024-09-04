@@ -4,12 +4,6 @@ namespace TrainRecord.Application.Tests.Common;
 
 public static class AssertExtensions
 {
-    public static void SingleAndContains<T>(T item, IEnumerable<T> items)
-    {
-        var singleItem = Assert.Single(items);
-        Assert.Equal(item, singleItem);
-    }
-
     public static void EqualItems<T>(IEnumerable<T> listOne, IEnumerable<T> listTwo)
     {
         var listOneOrderBy = listOne.OrderBy(item => item);

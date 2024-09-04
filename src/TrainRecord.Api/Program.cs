@@ -1,7 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using LaDeak.JsonMergePatch.AspNetCore;
-using LaDeak.JsonMergePatch.Generated.SafeApi;
 using TrainRecord.Api;
 using TrainRecord.Application;
 using TrainRecord.Core;
@@ -20,12 +18,6 @@ services
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    })
-    .AddMvcOptions(options =>
-    {
-        LaDeak.JsonMergePatch.Abstractions.JsonMergePatchOptions.Repository =
-            TypeRepository.Instance;
-        options.InputFormatters.Insert(0, new JsonMergePatchInputReader());
     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -56,7 +48,7 @@ app.UseAuthorization();
 app.MapControllers();
 if (!app.Environment.IsEnvironment("Test"))
 {
-    await AddMigrations();
+    AddMigrations().Wait();
 }
 
 app.Run();
