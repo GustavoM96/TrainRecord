@@ -28,10 +28,10 @@ public static class ConfigureServices
         services.AddScoped<ITeacherStudentRepository, TeacherStudentRepository>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-        var conn = configuration.GetValue<string>("ConnectionStrings:DbSqlite")!;
+        var conn = configuration.GetValue<string>("ConnectionStrings:MySqlDb")!;
         services.AddDbContext<AppDbContext>(options =>
         {
-            options.UseSqlite(conn);
+            options.UseMySQL(conn);
         });
 
         return services;
