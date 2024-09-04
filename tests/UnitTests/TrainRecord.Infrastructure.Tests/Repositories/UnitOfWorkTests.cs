@@ -12,16 +12,15 @@ namespace TrainRecord.Infrastructure.Tests;
 public class UnitOfWorkTests : InfrastructureTesterBase
 {
     private static Guid[] Guids =>
-        new Guid[4]
-        {
-            new Guid("00000000-0000-0000-0000-000000000011"),
-            new Guid("00000000-0000-0000-0000-000000000012"),
-            new Guid("00000000-0000-0000-0000-000000000013"),
-            new Guid("00000000-0000-0000-0000-000000000014"),
-        };
+        [
+            new("00000000-0000-0000-0000-000000000011"),
+            new("00000000-0000-0000-0000-000000000012"),
+            new("00000000-0000-0000-0000-000000000013"),
+            new("00000000-0000-0000-0000-000000000014"),
+        ];
 
-    private readonly User[] _users = new User[2]
-    {
+    private readonly User[] _users =
+    [
         new()
         {
             Id = Guids[0],
@@ -38,7 +37,7 @@ public class UnitOfWorkTests : InfrastructureTesterBase
             Email = "gustavo2.teste@gmail.com",
             Password = "Adm123",
         },
-    };
+    ];
 
     private readonly IRepositoryBase<User> _repositoryBase;
     private readonly IUnitOfWork _unitOfWork;
@@ -61,7 +60,7 @@ public class UnitOfWorkTests : InfrastructureTesterBase
         await _repositoryBase.AddAsync(_users[0]);
 
         //act
-        _unitOfWork.SaveChangesAsync().Wait();
+        await _unitOfWork.SaveChangesAsync();
 
         //assert
         Assert.True(await _repositoryBase.AnyByIdAsync(_users[0].EntityId));

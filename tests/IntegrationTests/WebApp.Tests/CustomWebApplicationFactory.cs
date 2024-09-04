@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Testcontainers.MsSql;
+using Testcontainers.MySql;
 using TrainRecord.Core.Entities;
 using TrainRecord.Core.Enum;
 using TrainRecord.Core.Interfaces;
@@ -21,8 +21,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
     public User Adm = CreateUser("gustavoTestAdm@gmail.com", Role.Adm);
     public User User = CreateUser("gustavoTestUser@gmail.com", Role.User);
 
-    private readonly MsSqlContainer _mySqlContainer = new MsSqlBuilder()
-        .WithImage("mcr.microsoft.com/mssql/server:2022-CU10-ubuntu-22.04")
+    private readonly MySqlContainer _mySqlContainer = new MySqlBuilder()
+        .WithImage("mysql:8.0")
         .Build();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -36,7 +36,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>, IAsyn
                 services.Remove(descriptor);
 
                 services.AddDbContext<AppDbContext>(options =>
-                    options.UseSqlServer(_mySqlContainer.GetConnectionString())
+                    options.UseMySQL(_mySqlContainer.GetConnectionString())
                 );
 
                 using var scope = services.BuildServiceProvider().CreateScope();
