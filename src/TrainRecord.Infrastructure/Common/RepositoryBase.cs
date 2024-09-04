@@ -80,6 +80,11 @@ public abstract class RepositoryBase<TEntity> : IRepositoryBase<TEntity>
         return _dbSet.Update(entity);
     }
 
+    public EntityEntry<TEntity> Remove(TEntity entity)
+    {
+        return _dbSet.Remove(entity);
+    }
+
     public async Task<TEntity?> FindByIdAsync(EntityId<TEntity> id)
     {
         return await SingleOrDefaultAsync(t => t.Id == id);

@@ -12,6 +12,7 @@
     <PackageReference Include="AutoFixture" Version="5.0.0-preview0011" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="5.0.0-preview0011" />
     <PackageReference Include="AutoFixture.Xunit2" Version="5.0.0-preview0011" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />

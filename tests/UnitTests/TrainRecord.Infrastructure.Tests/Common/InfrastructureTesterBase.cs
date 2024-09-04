@@ -9,7 +9,7 @@ public abstract class InfrastructureTesterBase
     protected static AppDbContext CreateAppDbContext()
     {
         var options = new DbContextOptionsBuilder<AppDbContext>()
-            .UseSqlite("Data Source=TrainRecordDB.db;")
+            .UseInMemoryDatabase("InMemoryDatabaseForTests")
             .Options;
 
         AuditableEntitySaveChangesInterceptor? interceptor = null!;

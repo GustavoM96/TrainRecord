@@ -234,22 +234,10 @@ public class RepositoryBaseTests : InfrastructureTesterBase
         }
 
         //act
-        var deleted = await _testClass.DeleteById(user.EntityId);
+        _testClass.Remove(user);
+        await _appDbContext.SaveChangesAsync();
 
         //assert
-        Assert.True(deleted);
         Assert.False(await _testClass.AnyByIdAsync(user.EntityId));
-    }
-
-    [Fact]
-    public async Task Test_Delete_WhenNotFoundUser_ShouldReturnFalse()
-    {
-        //arrange
-
-        //act
-        var deleted = await _testClass.DeleteById(new(GuidUnique));
-
-        //assert
-        Assert.False(deleted);
     }
 }

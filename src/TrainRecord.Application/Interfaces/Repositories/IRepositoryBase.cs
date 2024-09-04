@@ -16,4 +16,5 @@ public interface IRepositoryBase<TEntity>
     IQueryable<TEntity> AsNoTracking();
     Page<TEntity> AsPage(Pagination pagination);
     Page<TAdapt> AsPage<TAdapt>(Pagination pagination);
+    EntityEntry<TEntity> Remove(TEntity entity);
 }
