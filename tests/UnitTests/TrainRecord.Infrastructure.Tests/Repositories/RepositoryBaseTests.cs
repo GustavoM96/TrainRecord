@@ -12,41 +12,19 @@ namespace TrainRecord.Infrastructure.Tests;
 public class RepositoryBaseTests : InfrastructureTesterBase
 {
     private static Guid[] Guids =>
-        new Guid[4]
-        {
+        [
             new Guid("00000000-0000-0000-0000-000000000001"),
             new Guid("00000000-0000-0000-0000-000000000002"),
             new Guid("00000000-0000-0000-0000-000000000003"),
             new Guid("00000000-0000-0000-0000-000000000004"),
-        };
+        ];
 
-    private readonly User[] _users = new User[3]
-    {
-        new()
-        {
-            Id = Guids[0],
-            FirstName = "Gustavo",
-            LastName = "Henrique",
-            Email = "gustavomessias@gmail.com",
-            Password = "Adm123",
-        },
-        new()
-        {
-            Id = Guids[1],
-            FirstName = "Gustavo",
-            LastName = "Messias",
-            Email = "gustavomessias@outlook.com",
-            Password = "Adm123",
-        },
-        new()
-        {
-            Id = Guids[2],
-            FirstName = "Caio",
-            LastName = "Costa",
-            Email = "caiocosta@hotmail.com",
-            Password = "Adm123",
-        },
-    };
+    private static User[] Users =>
+        [
+            CreateUser(Guids[0], "gustavomessias@gmail.com"),
+            CreateUser(Guids[1], "gustavomessias@outlook.com"),
+            CreateUser(Guids[2], "gustavomessias@hotmail.com"),
+        ];
 
     private readonly IRepositoryBase<User> _testClass;
     private readonly AppDbContext _appDbContext;
@@ -55,7 +33,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
     {
         _appDbContext = CreateAppDbContext();
         _testClass = new UserRepository(_appDbContext);
-        SeedDb(_users);
+        SeedDb(Users);
     }
 
     private void SeedDb(User[] users)
@@ -80,7 +58,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
 
         //assert
         Assert.IsType<User>(result);
-        Assert.Equal(_users[0].Id, result.Id);
+        Assert.Equal(Users[0].Id, result.Id);
     }
 
     [Fact]
@@ -176,14 +154,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
     public async Task Test_AddAsync_ShouldChangeStateAdded()
     {
         //arrange
-        var user = new User()
-        {
-            Id = Guids[3],
-            FirstName = "Marcos",
-            LastName = "Mssias",
-            Email = "marcosmessias@gmail.com",
-            Password = "Adm123",
-        };
+        var user = CreateUser(Guids[3], "gustavomessias@net.com");
 
         //act
         await _testClass.AddAsync(user);
@@ -197,14 +168,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
     public void Test_Update_ShouldChangeStateModified()
     {
         //arrange
-        var user = new User()
-        {
-            Id = Guids[3],
-            FirstName = "Marcos",
-            LastName = "Mssias",
-            Email = "marcosmessias@gmail.com",
-            Password = "Adm123",
-        };
+        var user = CreateUser(Guids[3], "gustavomessias@net.com");
 
         //act
         _testClass.Update(user);
@@ -218,14 +182,7 @@ public class RepositoryBaseTests : InfrastructureTesterBase
     public async Task Test_Delete_WhenFoundUser_ShouldReturnTrue()
     {
         //arrange
-        var user = new User()
-        {
-            Id = Guids[3],
-            FirstName = "Marcos",
-            LastName = "Mssias",
-            Email = "marcosmessias@gmail.com",
-            Password = "Adm123",
-        };
+        var user = CreateUser(Guids[3], "gustavomessias@net.com");
 
         if (!await _testClass.AnyByIdAsync(user.EntityId))
         {

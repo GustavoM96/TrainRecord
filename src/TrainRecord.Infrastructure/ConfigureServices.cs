@@ -29,10 +29,7 @@ public static class ConfigureServices
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         var conn = configuration.GetValue<string>("ConnectionStrings:MySqlDb")!;
-        services.AddDbContext<AppDbContext>(options =>
-        {
-            options.UseMySQL(conn);
-        });
+        services.AddDbContext<AppDbContext>(options => options.UseMySQL(conn));
 
         return services;
     }
