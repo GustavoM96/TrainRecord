@@ -12,32 +12,13 @@ namespace TrainRecord.Infrastructure.Tests;
 public class UnitOfWorkTests : InfrastructureTesterBase
 {
     private static Guid[] Guids =>
-        [
-            new("00000000-0000-0000-0000-000000000011"),
-            new("00000000-0000-0000-0000-000000000012"),
-            new("00000000-0000-0000-0000-000000000013"),
-            new("00000000-0000-0000-0000-000000000014"),
-        ];
+        [new("00000000-0000-0000-0000-000000000011"), new("00000000-0000-0000-0000-000000000012")];
 
-    private readonly User[] _users =
-    [
-        new()
-        {
-            Id = Guids[0],
-            FirstName = "Gustavo",
-            LastName = "Tests",
-            Email = "gustavo.teste@gmail.com",
-            Password = "Adm123",
-        },
-        new()
-        {
-            Id = Guids[1],
-            FirstName = "Gustavo2",
-            LastName = "Tests2",
-            Email = "gustavo2.teste@gmail.com",
-            Password = "Adm123",
-        },
-    ];
+    private User[] Users =>
+        [
+            CreateUser(Guids[0], "gustavomessias@gmail.com"),
+            CreateUser(Guids[1], "gustavomessias@outlook.com"),
+        ];
 
     private readonly IRepositoryBase<User> _repositoryBase;
     private readonly IUnitOfWork _unitOfWork;
@@ -49,41 +30,41 @@ public class UnitOfWorkTests : InfrastructureTesterBase
         _repositoryBase = new UserRepository(_appDbContext);
         _unitOfWork = new UnitOfWork(_appDbContext);
 
-        DeleteUserIfAny(_users[0].EntityId);
-        DeleteUserIfAny(_users[1].EntityId);
+        DeleteUserIfAny(Users[0].EntityId);
+        DeleteUserIfAny(Users[1].EntityId);
     }
 
     [Fact]
     public async Task Test_SaveChangeAsync()
     {
         //arrange
-        await _repositoryBase.AddAsync(_users[0]);
+        await _repositoryBase.AddAsync(Users[0]);
 
         //act
         await _unitOfWork.SaveChangesAsync();
 
         //assert
-        Assert.True(await _repositoryBase.AnyByIdAsync(_users[0].EntityId));
+        Assert.True(await _repositoryBase.AnyByIdAsync(Users[0].EntityId));
     }
 
     [Fact]
     public async Task Test_RollBack()
     {
         //arrange
-        await _repositoryBase.AddAsync(_users[0]);
-        await _repositoryBase.AddAsync(_users[1]);
+        await _repositoryBase.AddAsync(Users[0]);
+        await _repositoryBase.AddAsync(Users[1]);
 
         //act
         var result = _unitOfWork.RollBack();
 
         //assert
-        var user1State = _appDbContext.Entry(_users[0]).State;
-        var user2State = _appDbContext.Entry(_users[1]).State;
+        var user1State = _appDbContext.Entry(Users[0]).State;
+        var user2State = _appDbContext.Entry(Users[1]).State;
         Assert.Equal(EntityState.Detached, user1State);
         Assert.Equal(EntityState.Detached, user2State);
 
-        Assert.False(await _repositoryBase.AnyByIdAsync(_users[0].EntityId));
-        Assert.False(await _repositoryBase.AnyByIdAsync(_users[1].EntityId));
+        Assert.False(await _repositoryBase.AnyByIdAsync(Users[0].EntityId));
+        Assert.False(await _repositoryBase.AnyByIdAsync(Users[1].EntityId));
 
         Assert.Equal(2, result);
     }
