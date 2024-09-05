@@ -1,15 +1,15 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using TrainRecord.Api;
 using TrainRecord.Application;
 using TrainRecord.Core;
 using TrainRecord.Infrastructure;
+using TrainRecord.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
-
-// Add services to the container.
 
 services.AddProblemDetails();
 services
@@ -20,7 +20,6 @@ services
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
@@ -28,12 +27,25 @@ services.AddInfrastuctureServices(config);
 services.AddApplicationServices();
 services.AddApiServices();
 services.AddCoreServices(config);
+services.AddHealthChecks().AddDbContextCheck<AppDbContext>();
 
 var app = builder.Build();
 
+app.MapHealthChecks(
+    "/HealthChecks",
+    new()
+    {
+        AllowCachingResponses = false,
+        ResultStatusCodes =
+        {
+            [HealthStatus.Healthy] = StatusCodes.Status200OK,
+            [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable,
+        },
+    }
+);
+
 app.UseExceptionHandler();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -48,7 +60,7 @@ app.UseAuthorization();
 app.MapControllers();
 if (!app.Environment.IsEnvironment("Test"))
 {
-    AddMigrations().Wait();
+    await AddMigrations();
 }
 
 app.Run();
