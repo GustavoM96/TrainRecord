@@ -1,0 +1,41 @@
+
+trigger:
+- main
+
+
+variables:
+  dockerRegistryServiceConnection: 'eec2d1f6-e1d0-4683-952f-6e33b812dea8'
+  imageRepository: 'apitrainrecord'
+  containerRegistry: 'apitrainrecord.azurecr.io'
+  dockerfilePath: 'Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+pool:
+  vmImage: $(vmImageName)
+
+steps:
+
+- task: DownloadSecureFile@1
+  name: appsettings
+  displayName: Download AppSettings.Production.json
+  inputs:
+    secureFile: appsettings.Production.json
+
+- script: |
+    cp $(appsettings.secureFilePath) src/TrainRecord.Api/appsettings.Production.json
+
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs:
+    command: buildAndPush
+    repository: $(imageRepository)
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    tags: |
+      latest
+      $(tag)
+
+    
