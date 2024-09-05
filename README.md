@@ -4,6 +4,8 @@
 
 <h1 align="center">TrainRecord🏋️‍♀️</h1>
 
+[![.NET Tests](https://github.com/GustavoM96/TrainRecord/actions/workflows/build.yml/badge.svg)](https://github.com/GustavoM96/TrainRecord/actions/workflows/build.yml)
+
 <br/>
 TrainRecord é uma aplicação desenvolvida em .NET C# com a finalidade de gerenciar atividades de academia para alunos e monitoramento para os professores.
 
