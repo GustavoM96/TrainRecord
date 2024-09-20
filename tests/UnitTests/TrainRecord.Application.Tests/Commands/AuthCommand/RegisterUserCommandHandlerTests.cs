@@ -102,7 +102,7 @@ public class RegisterUserCommandHandlerTests : ApplicationTesterBase
     [InlineData("gustavo", "1234")]
     [InlineData("gustavo.com", "abcdeF")]
     [InlineData("@gustavo.com", "S1a")]
-    public async Task Test_RegisterUserCommandValidator_Error(string email, string password)
+    public async Task Test_RegisterUserCommandValidator_Error(string? email, string? password)
     {
         //arrange
         var command = new RegisterUserCommand(email, password, "gustavo", "messias", Role.User);

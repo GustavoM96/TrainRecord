@@ -16,17 +16,17 @@ public class CurrentUserService : ICurrentUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    private HttpContext? _httpContext => _httpContextAccessor.HttpContext;
+    private HttpContext? Context => _httpContextAccessor.HttpContext;
 
-    public string? UserId => _httpContext?.User?.FindFirstValue(ClaimTypes.Sid);
-    public string? UserEmail => _httpContext?.User?.FindFirstValue(ClaimTypes.Email);
-    public string? Role => _httpContext?.User?.FindFirstValue(ClaimTypes.Role);
+    public string? UserId => Context?.User?.FindFirstValue(ClaimTypes.Sid);
+    public string? UserEmail => Context?.User?.FindFirstValue(ClaimTypes.Email);
+    public string? Role => Context?.User?.FindFirstValue(ClaimTypes.Role);
     public bool IsAdmin => Role == "Adm";
     public bool IsResourceOwner => GetUserIdByRoute().EqualsIgnoreCase(UserId);
 
     public string GetUserIdByRoute()
     {
-        var userId = _httpContext?.Request.RouteValues.GetValueOrDefault("userId");
+        var userId = Context?.Request.RouteValues.GetValueOrDefault("userId");
 
         if (userId is null)
         {

@@ -52,7 +52,7 @@ public class CreateActivityCommandHandlerTests : ApplicationTesterBase
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public async Task Test_CreateActivityCommandValidator_Error(string activityName)
+    public async Task Test_CreateActivityCommandValidator_Error(string? activityName)
     {
         //arrange
         var command = new CreateActivityCommand(activityName);
