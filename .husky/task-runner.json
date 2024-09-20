@@ -8,8 +8,20 @@
     {
       "name": "Run Csharpier",
       "command": "dotnet",
-      "args": ["csharpier", "${staged}"],
-      "include": ["**/*.cs"]
+      "args": [ "csharpier", "${staged}" ],
+      "include": [ "**/*.cs" ]
+    },
+    {
+      "name": "Verify Formatting Style",
+      "command": "dotnet",
+      "args": [ "format", "style", "--verify-no-changes" ],
+      "include": [ "**/*.cs" ]
+    },
+    {
+      "name": "Verify Formatting Analyzers",
+      "command": "dotnet",
+      "args": [ "format", "analyzers", "--verify-no-changes" ],
+      "include": [ "**/*.cs" ]
     }
   ]
 }

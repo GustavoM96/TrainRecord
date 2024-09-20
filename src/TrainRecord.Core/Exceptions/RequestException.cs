@@ -1,11 +1,10 @@
 using ErrorOr;
 using TrainRecord.Core.Commum.Bases;
 
-namespace TrainRecord.Core.Exceptions
+namespace TrainRecord.Core.Exceptions;
+
+public class RequestException : HandlerException
 {
-    public class RequestException : HandlerException
-    {
-        public RequestException(Error error)
-            : base(error) { }
-    }
+    public RequestException(Error error)
+        : base(error) { }
 }
