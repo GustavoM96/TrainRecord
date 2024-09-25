@@ -1,7 +1,22 @@
 version: "3.8"
 
 services:
+  trainrecord_mysql:
+    image: mysql:8.0
+    restart: always
+    container_name: trainrecord_mysql
+    environment:
+      MYSQL_DATABASE: 'TrainRecord'
+      MYSQL_ROOT_PASSWORD: 'nzIk61KCtreLYsu4GdK798nymM80Ay0S1LM2YESoBF911PvIVq'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_volume:/var/lib/mysql
+    networks:
+      - my_network
+
   api:
+    container_name: trainrecord_api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5001
@@ -10,3 +25,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5001:5001"
+    depends_on:
+      - trainrecord_mysql
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  mysql_volume:
