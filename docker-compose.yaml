@@ -1,10 +1,10 @@
 version: "3.8"
 
 services:
-  mysql:
+  trainrecord_mysql:
     image: mysql:8.0
     restart: always
-    container_name: mysql
+    container_name: trainrecord_mysql
     environment:
       MYSQL_DATABASE: 'TrainRecord'
       MYSQL_ROOT_PASSWORD: 'nzIk61KCtreLYsu4GdK798nymM80Ay0S1LM2YESoBF911PvIVq'
@@ -26,7 +26,7 @@ services:
     ports:
       - "5001:5001"
     depends_on:
-      - mysql
+      - trainrecord_mysql
     networks:
       - my_network
 
