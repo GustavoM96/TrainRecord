@@ -1,6 +1,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using TrainRecord.Api;
 using TrainRecord.Application;
 using TrainRecord.Core;
@@ -10,6 +14,20 @@ using TrainRecord.Infrastructure.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 var services = builder.Services;
+var logging = builder.Logging;
+
+var otlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT"); // verifique se o valor eh "http://127.0.0.1:4317"
+logging.AddOpenTelemetry(options =>
+{
+    options.IncludeScopes = true;
+    options.IncludeFormattedMessage = true;
+});
+services
+    .AddOpenTelemetry()
+    .ConfigureResource(config => config.AddService("train-record-api"))
+    .WithTracing(tracing => tracing.AddAspNetCoreInstrumentation())
+    .WithMetrics(metrics => metrics.AddAspNetCoreInstrumentation())
+    .UseOtlpExporter();
 
 services.AddProblemDetails();
 services
